@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_custom_big.xml",
+        "source": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_template_icon_group.xml",
+        "source": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action_tombstone.xml",
+        "source": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\res\\merged\\release\\layout-v21\\notification_action.xml",
+        "source": "F:\\lishenkeji_project_svn\\SHANXIU06042120\\refreshlayout\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.1\\res\\layout-v21\\notification_action.xml"
+    }
+]

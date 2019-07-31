@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/white"
+	android:orientation="vertical">
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/selector_item_bg" >
+		<com.lwc.shanxiu.widget.CircleImageView
+			android:layout_marginLeft="15dp"
+			android:layout_marginTop="15dp"
+			android:id="@+id/img_icon"
+			android:layout_width="45dp"
+			android:layout_alignParentLeft="true"
+			android:background="@drawable/default_portrait_100"
+			android:layout_height="45dp" />
+		<LinearLayout
+			android:layout_margin="15dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/img_icon"
+			android:orientation="vertical">
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+
+				<TextView
+					android:id="@+id/txtName"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="李大宝"
+					android:layout_centerVertical="true"
+					android:layout_alignParentLeft="true"
+					android:textColor="@color/black_66"
+					android:textSize="16sp" />
+				<ImageView
+					android:id="@+id/iv_mx"
+					android:layout_toRightOf="@+id/txtName"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
+					android:paddingLeft="5dp"
+					android:visibility="gone"
+					android:src="@drawable/renzheng"/>
+				<TextView
+					android:id="@+id/txtDistance"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:drawableLeft="@drawable/fujindingdan_juli"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:text="0km"
+					android:textColor="@color/black_66"
+					android:textSize="13sp" />
+			</RelativeLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:gravity="center_vertical"
+				android:layout_marginTop="5dp">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="12sp"
+					android:text="综合评分:"
+					android:textColor="@color/black_4e" />
+				<RatingBar
+					style="@style/roomRatingBar"
+					android:id="@+id/ratingBar_1"
+					android:layout_width="wrap_content"
+					android:layout_height="15dp"
+					android:isIndicator="true"
+					android:numStars="5"
+					android:layout_marginLeft="5dp"
+					android:stepSize="1" />
+				<TextView
+				    android:layout_marginLeft="10dp"
+					android:id="@+id/txt_dones"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="12sp"
+					android:textColor="@color/black_4e"
+					android:gravity="right" />
+			</LinearLayout>
+			
+			<LinearLayout
+				android:layout_marginBottom="5dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:orientation="horizontal">
+				<TextView
+				    android:id="@+id/txt_phone"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="11sp"
+					android:text="电话号码"
+					android:textColor="@color/grey_99"
+					android:drawableLeft="@drawable/dl_phone_new"
+					android:drawablePadding="4dp"
+					android:gravity="center_vertical" />
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textSize="11sp"
+					android:visibility="gone"
+					android:textColor="@color/red_3c"
+					android:gravity="right" />
+			</LinearLayout>
+			
+			<View 
+			    android:background="@color/grey_f1"
+			    style="@style/line_ccStyle"/>
+			<TextView
+			    android:layout_marginTop="5dp"
+				android:id="@+id/txt_order_count"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="9sp"
+				android:textColor="@color/gray_99"
+				android:gravity="center_vertical"
+				android:layout_marginBottom="10dp"/>
+		</LinearLayout>
+		<com.lwc.shanxiu.view.TileButton
+			android:id="@+id/tb_bohao"
+			android:layout_width="20dp"
+			android:layout_height="20dp"
+			android:background="@drawable/function_textdriver_phone"
+			android:paddingLeft="40dp"
+			android:paddingRight="40dp"
+			android:layout_marginRight="20dp"
+			android:paddingTop="25dp"
+			android:paddingBottom="25dp"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:layout_marginBottom="20dp"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="10dp"
+		android:background="@color/grey_f1" />
+</LinearLayout>

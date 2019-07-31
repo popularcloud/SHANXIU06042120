@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.lwc.shanxiu.view.TitleView
+        android:id="@+id/view_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+    <GridView
+        android:id="@+id/activity_photoselect_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/activity_photoselect_view_message"
+        android:layout_below="@id/view_title"
+        android:layout_gravity="center_horizontal"
+        android:cacheColorHint="@color/transparent"
+        android:gravity="center_horizontal"
+        android:horizontalSpacing="0dip"
+        android:listSelector="@color/transparent"
+        android:numColumns="3"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:verticalSpacing="5dip" />
+
+    <RelativeLayout
+        android:id="@+id/activity_photoselect_view_message"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+         >
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_blue_selector"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="15sp"
+            android:text="@string/complete"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/edit_message"
+            style="@style/edit_white_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/btn_send"
+            android:maxLength="150"
+            android:singleLine="false"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

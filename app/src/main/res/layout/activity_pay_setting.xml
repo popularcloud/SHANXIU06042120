@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_f1"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_title"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_wechat"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@drawable/selector_item_bg">
+
+        <TextView
+            android:id="@+id/tv_wechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:drawableLeft="@drawable/account_wechat"
+            android:drawablePadding="5dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:text="微信绑定"
+            android:textColor="@color/black_0a"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_nichen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:text="(果冻)"
+            android:textColor="@color/gray_99"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_toRightOf="@+id/tv_wechat" />
+
+        <TextView
+            android:id="@+id/tv_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/you_new"
+            android:drawablePadding="5dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="绑定微信"
+            android:textColor="@color/black_0a"
+            android:textSize="13sp" />
+    </RelativeLayout>
+    <View style="@style/line_c8Style"/>
+
+    <View style="@style/line_c8Style"
+        android:layout_marginTop="10dp"/>
+    <RelativeLayout
+        android:id="@+id/rl_pay_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@drawable/selector_item_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:gravity="center_vertical"
+            android:text="支付密码"
+            android:textColor="@color/black_0a"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/tv_set_pay_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:drawableRight="@drawable/you_new"
+            android:drawablePadding="5dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:text="设置支付密码"
+            android:textColor="@color/black_0a"
+            android:textSize="13sp" />
+    </RelativeLayout>
+    <View style="@style/line_c8Style"/>
+</LinearLayout>

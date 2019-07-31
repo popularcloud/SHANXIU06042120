@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_f7"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardBackgroundColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="3dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/selector_item_bg">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设备名称"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black_66"
+                    android:drawablePadding="3dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="适用机型"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:layout_marginLeft="150dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black_66"
+                    android:textSize="14sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtXinghao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="型号："
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:textColor="@color/black_66"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_marginBottom="10dp">
+                <com.lwc.shanxiu.view.TileButton
+                    android:id="@+id/but_jian"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:text="-"
+                    android:gravity="center"
+                    android:layout_toLeftOf="@+id/txtNumber"
+                    android:textColor="@color/black_66"
+                    android:background="@drawable/jian_but" />
+                <TextView
+                    android:id="@+id/txtNumber"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black_66"
+                    android:background="@drawable/number_bg"
+                    android:gravity="center"
+                    android:text="1"
+                    android:layout_toLeftOf="@+id/but_jia"
+                    android:textSize="13sp" />
+                <com.lwc.shanxiu.view.TileButton
+                    android:id="@+id/but_jia"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:text="+"
+                    android:gravity="center"
+                    android:textColor="@color/black_66"
+                    android:background="@drawable/jia_but" />
+                <TextView
+                    android:id="@+id/txtMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="价格"
+                    android:textColor="@color/color_txt_edit"
+                    android:textSize="13sp"
+                    android:layout_alignBaseline="@+id/txt_machine_type"
+                    android:layout_alignBottom="@+id/txt_machine_type"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">密修工程师</string>
+    <!-- 二维码扫描 -->
+    <string name="double_click_to_exit_app">再按一次退出程序</string>
+
+    <string name="hint_send_image_max">您目前最多可选择的图片数量为%1$s张</string>
+    <!-- **********************SP数据模块*********************** -->
+    <string name="spkey_file_userinfo">userinfo</string>
+    <string name="spkey_file_is_system_mention">is_system_mention</string>
+    <string name="spkey_file_is_ring">is_ring</string>
+
+    <!-- <string name="spkey_value_account">account</string> -->
+    <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
+    <!-- 第三方平台 -->
+    <!-- 第三方平台id -->
+
+    <!-- **********************公用数据模块******************************************************** -->
+    <string name="complete">完成</string>
+    <string name="enter">确定</string>
+    <string name="cancel">取消</string>
+    <string name="prompt">温馨提示</string>
+    <!-- ********************Intent数据模块********************* -->
+    <string name="intent_key_data">data</string>
+    <string name="intent_key_content">content</string>
+    <string name="intent_key_image_path">imagepath</string>
+    <string name="intent_key_apkpath">apkpath</string>
+    <string name="intent_key_apksize">apksize</string>
+    <string name="intent_key_serializable">serializable</string>
+    <string name="intent_key_max_counts">max_counts</string>
+    <string name="warning_not_search_photomessage">未搜索到相册信息！</string>
+
+
+    <!-- **********************等待提示模块*********************** -->
+    <string name="process_download_wait">正在下载&#8230;</string>
+    <string name="process_handle_wait">正在处理，请稍候&#8230;</string>
+    <string name="hint_download_finish">下载完成</string>
+    <string name="hint_download_error">下载失败</string>
+    <string name="hint_download_finish_install">点击安装</string>
+    <string name="hint_download_error_check">请检查您的网络状态后重试！</string>
+
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">时</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
+    <string name="activity_image_browser_page">%1$s/%2$s</string>
+
+    <string name="search">搜索</string>
+    <string name="price">价格</string>
+    <string name="filter">筛选</string>
+    <string name="spec">规格</string>
+    <string name="search_repair_type">请输入配件名称</string>
+    <string name="search_keyword">请输入关键字</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

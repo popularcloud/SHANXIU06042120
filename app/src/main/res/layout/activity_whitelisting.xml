@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:orientation="vertical"
+	android:fitsSystemWindows="true">
+
+	<include layout="@layout/include_title"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="none">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_ms1"
+				android:textSize="14sp"
+				android:textColor="@color/black_66"
+				android:layout_margin="10dp"/>
+			<ImageView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:scaleType="fitXY"
+				android:id="@+id/miv1"/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_ms2"
+				android:textSize="14sp"
+				android:textColor="@color/black_66"
+				android:layout_margin="10dp"/>
+			<ImageView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:scaleType="fitXY"
+				android:id="@+id/miv2"/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_ms3"
+				android:textSize="14sp"
+				android:textColor="@color/black_66"
+				android:layout_margin="10dp"/>
+			<ImageView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:scaleType="fitXY"
+				android:id="@+id/miv3"/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_ms4"
+				android:textSize="14sp"
+				android:textColor="@color/black_66"
+				android:layout_margin="10dp"/>
+			<ImageView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:scaleType="fitXY"
+				android:id="@+id/miv4"/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:id="@+id/tv_ms5"
+				android:textSize="14sp"
+				android:textColor="@color/black_66"
+				android:layout_marginTop="20dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"/>
+			<ImageView
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"
+				android:layout_marginLeft="30dp"
+				android:layout_marginRight="30dp"
+				android:scaleType="fitXY"
+				android:id="@+id/miv5"/>
+		</LinearLayout>
+	</ScrollView>
+
+
+</LinearLayout>

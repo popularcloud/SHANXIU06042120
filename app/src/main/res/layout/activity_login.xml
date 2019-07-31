@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:gravity="center_horizontal"
+	android:orientation="vertical"
+	android:fitsSystemWindows="true">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:background="@drawable/dlbc_new2">
+		<ImageView
+			android:id="@+id/img_icon"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_marginTop="60dp"
+			android:layout_gravity="center_horizontal"
+			android:background="@drawable/logo_new"
+			android:scaleType="centerInside" />
+
+		<android.support.v7.widget.CardView
+			xmlns:app="http://schemas.android.com/apk/res-auto"
+			app:cardBackgroundColor="@color/white"
+			android:layout_marginLeft="20dp"
+			android:layout_marginRight="20dp"
+			android:layout_marginTop="30dp"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:cardCornerRadius="6dp"
+			app:cardElevation="5dp">
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<EditText
+					android:id="@+id/edtPhone"
+					style="@style/edit_login_new_style"
+					android:layout_marginTop="45dp"
+					android:text=""
+					android:drawableLeft="@drawable/dl_phone_new"
+					android:hint="请输入手机号" />
+
+				<View
+					style="@style/line_ccStyle"
+					android:layout_marginLeft="40dp"
+					android:layout_marginRight="40dp"
+					android:background="@color/color_txt_edit" />
+
+				<EditText
+					android:layout_marginTop="15dp"
+					android:id="@+id/edtPassword"
+					style="@style/edit_login_new_style"
+					android:drawableLeft="@drawable/dl_key_new"
+					android:hint="请输入密码"
+					android:inputType="textPassword" />
+
+				<View
+					style="@style/line_ccStyle"
+					android:layout_marginLeft="40dp"
+					android:layout_marginRight="40dp"
+					android:background="@color/color_txt_edit" />
+
+				<TextView
+					android:id="@+id/txtFindPassWord"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="right"
+					android:paddingBottom="30dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="40dp"
+					android:paddingTop="15dp"
+					android:text="找回密码"
+					android:textSize="14sp"
+					android:textColor="@color/text_blue_click" />
+
+				<Button
+					android:id="@+id/btnLogin"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:layout_marginLeft="40dp"
+					android:layout_marginRight="40dp"
+					android:layout_marginBottom="20dp"
+					android:background="@drawable/button_login_selector"
+					android:gravity="center"
+					android:textSize="15sp"
+					android:text="确认登录"
+					android:textColor="#fff" />
+
+			</LinearLayout>
+		</android.support.v7.widget.CardView>
+		<View
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_weight="1"/>
+
+		<TextView android:id="@+id/tv_bb"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_horizontal"
+			android:text="MX2.0.0"
+			android:textSize="13sp"
+			android:textColor="@color/color_txt_edit"
+			android:layout_marginBottom="20dp"/>
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,109 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/my_content_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:fitsSystemWindows="true">
+<!--	<SurfaceView android:layout_width="0dp"
+		android:layout_height="0dp"/>-->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/white"
+		android:orientation="vertical">
+		<com.lwc.shanxiu.widget.CustomViewPager
+			android:id="@+id/cViewPager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			></com.lwc.shanxiu.widget.CustomViewPager>
+		<View
+			style="@style/line_ccStyle" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="45dp">
+
+			<RadioGroup
+				android:id="@+id/group_tab"
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:background="@color/white"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<RadioButton
+					android:id="@+id/radio_map"
+					style="@style/main_menu_radiobutton_style"
+					android:checked="true"
+					android:drawableTop="@drawable/tab_map_selector"
+					android:text="地图" />
+
+				<RadioButton
+					android:id="@+id/radio_order"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_order_selector"
+					android:text="附近订单" />
+
+				<View 
+				    android:layout_width="80dp"
+				    android:layout_height="0dp"
+				    />
+
+				<RadioButton
+					android:id="@+id/radio_friend"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_friend_selector"
+					android:text="资讯" />
+
+				<RadioButton
+					android:id="@+id/radio_mine"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_mine_selector"
+					android:text="我的" />
+			</RadioGroup>
+		</LinearLayout>
+	</LinearLayout>
+
+	<RelativeLayout
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:layout_width="80dp"
+		android:paddingLeft="6dp"
+		android:background="@color/transparent"
+		android:layout_height="70dp">
+
+	    <com.lwc.shanxiu.view.TileButton
+	        android:id="@+id/img_center"
+	        android:layout_width="50dp"
+	        android:layout_height="50dp"
+			android:layout_centerHorizontal="true"
+	        android:background="@drawable/baoxiu_new"
+	        />
+	    <TextView 
+	        android:id="@+id/txt_togo"
+	        android:gravity="center"
+			android:layout_centerHorizontal="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_below="@+id/img_center"
+	        android:layout_width="match_parent"
+	        android:layout_height="7dp"
+	        android:singleLine="true"
+	        android:textSize="11sp"
+	        android:textColor="@color/gray_99"
+	        android:text="开启自动接单"
+	        />
+	</RelativeLayout>
+
+	<ImageView
+		android:id="@+id/iv_red_dian"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:layout_marginRight="20dp"
+		android:layout_marginBottom="33dp"
+		android:src="@drawable/red_mention"
+		android:visibility="gone"/>
+</RelativeLayout>

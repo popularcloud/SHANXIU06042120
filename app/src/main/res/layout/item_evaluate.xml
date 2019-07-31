@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_item_bg"
+    android:orientation="vertical">
+    <View style="@style/line_c8Style"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="1dp"
+        android:background="@drawable/xuxian"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.lwc.shanxiu.widget.CircleImageView
+            android:id="@+id/imgHead"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/xiaoxiu"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgHead"
+            android:layout_marginTop="15dp">
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="密修用户&#160;&#160;&#8201;***"
+                android:textColor="@color/black_66"
+                android:layout_alignParentTop="true"
+                android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txtSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="评价星级："
+                android:textColor="@color/black_66"
+                android:layout_below="@+id/txtName"
+                android:textSize="14sp" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/roomRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginTop="5dp"
+                android:isIndicator="true"
+                android:layout_below="@+id/txtName"
+                android:layout_toRightOf="@+id/txtSign"
+                android:numStars="5" />
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:text="2018-07"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/txtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_below="@+id/imgHead"
+            android:text="评价内容"
+            android:textColor="@color/black_66"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+
+</LinearLayout>

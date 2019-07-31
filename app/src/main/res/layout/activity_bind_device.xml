@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f7"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_title" />
+
+    <LinearLayout
+        android:id="@+id/rl_repair_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/btn_round_white_bg"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_company_name"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:paddingLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="left|center_vertical"
+            android:hint="请输入单位名称"
+            android:background="@null"
+            android:textColorHint="@color/gray_99"
+            android:textColor="@color/black_66"
+            android:textSize="14sp" />
+        <EditText
+            android:id="@+id/et_company_phone"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:paddingLeft="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:gravity="left|center_vertical"
+            android:hint="请输入单位使用人电话(非必填)"
+            android:background="@null"
+            android:inputType="number"
+            android:textColorHint="@color/gray_99"
+            android:textColor="@color/black_66"
+            android:textSize="14sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:text="单位地址"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+
+            <!--<EditText
+                android:id="@+id/tv_type"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right"
+                android:hint="请输入型号"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />-->
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/you_new"
+                android:gravity="right"
+                android:hint="请选择单位地址"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <View style="@style/line_c8Style"/>
+        <RelativeLayout
+            android:id="@+id/rl_device_type"
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:text="类别"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_device"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/you_new"
+                android:gravity="right"
+                android:hint="请选择设备类别"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <View style="@style/line_c8Style"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:text="品牌"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+
+          <!--  <EditText
+                android:id="@+id/tv_brand"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right"
+                android:hint="请输入品牌"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />-->
+            <TextView
+                android:id="@+id/tv_brand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/you_new"
+                android:gravity="right"
+                android:hint="请选择品牌"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </RelativeLayout>
+        <View style="@style/line_c8Style"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:text="型号"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+
+            <!--<EditText
+                android:id="@+id/tv_type"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right"
+                android:hint="请输入型号"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />-->
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/you_new"
+                android:gravity="right"
+                android:hint="请选择型号"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+<View
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+    <TextView
+        android:id="@+id/btnAffirm"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+       android:layout_margin="15dp"
+        android:background="@drawable/button_login_selector"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+
+</LinearLayout>

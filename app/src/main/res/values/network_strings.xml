@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <!-- **********************异常提示模块*********************** -->
+    <string name="exception_local_json_code">204</string>
+    <string name="exception_local_json_message">本地转换数据异常！</string>
+    <string name="exception_cancel">操作取消</string>
+
+</resources>

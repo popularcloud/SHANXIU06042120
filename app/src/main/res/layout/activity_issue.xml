@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:orientation="vertical"
+	android:fitsSystemWindows="true">
+
+	<include layout="@layout/include_title"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="none">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_margin="10dp"
+				android:background="@drawable/btn_round_white_bg"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:layout_marginTop="15dp"
+					android:layout_marginBottom="10dp"
+					android:text="地图页无法定位怎么办？"
+					android:textColor="@color/black_66"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="15dp"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+					android:layout_marginTop="10dp"
+					android:text="1，地图页面左下角有个定位图标，点击图标进行重新定位。\n2，打开手机设置-权限管理-应用-找到密修工程师-开启定位权限，然后重启app。"
+					android:gravity="left|top"
+					android:textColor="@color/black_66"
+					android:textSize="14sp" />
+
+			</LinearLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="10dp"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:background="@drawable/btn_round_white_bg"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:layout_marginTop="15dp"
+					android:layout_marginBottom="10dp"
+					android:text="为什么APP放后台过一段时间就掉线了？"
+					android:textColor="@color/black_66"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="15dp"
+					android:layout_marginLeft="20dp"
+					android:layout_marginRight="20dp"
+					android:layout_marginTop="10dp"
+					android:text="由于各大手机厂商对Android系统进行了深度定制，不同品牌手机对应用后台运行的限制不一样。\n1，用户使用应用时，为了确保应用的流畅性，当手机内存不足时系统会根据权限清理后台运行的应用。\n2，系统为了省电降低能耗，会在手机息屏后对没有设置白名单的应用进行断网或者清理。\n 为了使APP保持后台运行，可将密修工程师APP添加至手机白名单中。"
+					android:gravity="left|top"
+					android:textColor="@color/black_66"
+					android:textSize="14sp" />
+			</LinearLayout>
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp"
+				android:layout_marginBottom="20dp"
+				android:background="@drawable/btn_round_white_bg"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginLeft="20dp"
+					android:layout_marginTop="15dp"
+					android:layout_marginBottom="10dp"
+					android:text="如何将APP添加至手机白名单？"
+					android:textColor="@color/black_66"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="1"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:paddingRight="20dp"
+					android:text="华为手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="2"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:text="小米手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="3"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:text="OPPO手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="4"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:text="ViVO手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="5"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:text="魅族手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="6"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:text="三星手机设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+
+				<View style="@style/line_ccStyle"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="10dp"/>
+
+				<TextView
+					android:onClick="onclickBmd"
+					android:clickable="true"
+					android:tag="7"
+					android:layout_width="match_parent"
+					android:layout_height="44dp"
+					android:paddingLeft="20dp"
+					android:paddingRight="20dp"
+					android:layout_marginLeft="1dp"
+					android:layout_marginRight="1dp"
+					android:layout_marginBottom="2dp"
+					android:text="各种手机管家设置白名单"
+					android:gravity="left|center_vertical"
+					android:drawableRight="@drawable/you_new"
+					android:textColor="@color/black_66"
+					android:background="@drawable/selector_item_bg"
+					android:textSize="14sp" />
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+
+
+</LinearLayout>

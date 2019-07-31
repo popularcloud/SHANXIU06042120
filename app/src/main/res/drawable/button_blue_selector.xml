@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/button_blue_shape_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/button_blue_shape_normal" android:state_focused="true"/>
+    <item android:state_enabled="false">
+        <shape >
+            <solid android:color="@color/bt_unenable"/></shape>
+    </item>
+     <item android:drawable="@drawable/button_blue_shape_normal"/>
+
+</selector>

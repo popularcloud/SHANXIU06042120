@@ -1,0 +1,50 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- ************首页相关数值*************** -->
+    <dimen name="tab_text_size">11sp</dimen>
+    <!-- 底部功能条距离上面控件的距离 -->
+    <dimen name="tab_padding_top">10dp</dimen>
+    <!-- 底部功能条距离底部的距离 -->
+    <dimen name="tab_padding_bottom">4dp</dimen>
+    <!-- 底部功能条标题文字的大小 -->
+    <!-- 底部功能条标题文字的大小 -->
+    <!-- 顶部功能条标题距离左边的距离 -->
+    <!-- 顶部功能条标题距离右边的距离 -->
+    <!-- 顶部功能条标题距离顶部的距离 -->
+    <!-- gridview上下的padding值 -->
+    <!-- gridview左右的padding值 -->
+    <!-- 广告轮播图的高度 -->
+    <!-- 布局中线的宽度 -->
+    <!-- 布局中线的宽度 -->
+    <!-- 活动标题文字的大小 -->
+    <!-- 活动描述文字的大小 -->
+    <!-- 活动标题文字距离顶部的距离 -->
+    <!-- 活动描述信息距离顶部的距离 -->
+    <!-- 活动文字距离左边距离 -->
+    <!-- 活动图片距离左边距离 -->
+    <!-- 活动图片距离控件顶部距离 -->
+    <!-- 最新条目高度 -->
+    <!-- 功能块中文字的尺寸 -->
+    <!-- 功能块中图标与文字的距离 -->
+
+    <!-- 售前售后店轮播图片高度 -->
+    <!-- 售前售后店信息(名称)-->
+    <!-- 售前售后店信息(地址) -->
+
+    <!-- offline page -->
+
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+
+    <!-- 顶部按钮padding -->
+    <dimen name="pickerview_topbar_padding">20dp</dimen>
+
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">17sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">18sp</dimen>
+    <!-- 选项文字大小 -->
+    <dimen name="pickerview_textsize">20sp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+</resources>

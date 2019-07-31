@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="city_dialog_blue">#177efb</color>
+    <color name="city_dialog_black">#4a494a</color>
+    <color name="city_dialog_content_black">#4b4b4d</color>
+    <color name="city_dialog_content_bg">#f0eff5</color>
+
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_bg_topbar">#f5f5f5</color>
+
+    <color name="pickerview_topbar_title">#000000</color>
+    <color name="pickerview_bgColor_overlay">#60000000</color>
+
+    <color name="style_color">#2e344e</color>
+    <color name="blue_00adf4">#00adf4</color>
+    <color name="blue_00aaf5">#00aaf5</color>
+    <color name="text_blue_click">#0aa5fe</color>
+    <!--  订单 -->
+    <!-- 待评价 -->
+    <!-- 已评价 -->
+    <!-- 已取消 -->
+    <color name="canceled">#FD6470</color>
+
+    <!-- 浅灰色 -->
+    <color name="bg_f7">#F7F7F7</color>
+    <color name="bg1">#f8f8f8</color>
+    <!-- 蓝色 -->
+    <color name="text_blue_1b">#1B62AF</color>
+    <!-- 蓝色 -->
+    <color name="text_blue">#4481D2</color>
+    <!-- 纯白色 -->
+    <color name="white">#FFFFFF</color>
+    <!-- 深灰色 -->
+    <color name="line_cc">#cccccc</color>
+       <!-- 灰色c8 -->
+    <color name="gray_c8">#c8c8c8</color>
+         <!-- ******************基础颜色模块**************** -->
+    <!-- 透明色 -->
+    <color name="transparent">#00000000</color>
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 透明色 -->
+    <!-- 标题文字灰 -->
+    <!-- 橘黄色 -->
+    <!-- 透明灰 -->
+    <color name="grey_99">#99000000</color>
+    <!-- 红色 -->
+    <color name="red_3c">#FF3C00</color>
+    <!-- 绿色 -->
+    <!-- 蓝色 -->
+    <color name="blue">#4481D2</color>
+    <color name="blue_5fd">#0aa5fd</color>
+    <!-- 灰色 透明 -->
+    <color name="bg_gray_30">#30868686</color>
+    <!-- 灰色 透明 -->
+    <!-- 80透明度的文字颜色 -->
+    <!-- 纯白色 -->
+    <!-- 白色透明 -->
+    <color name="white_55">#55ffffff</color>
+    <!-- 纯黑色 -->
+    <color name="black">#ff000000</color>
+    <!-- 纯黑色 -->
+    <color name="black_20">#20000000</color>
+    <!-- 纯黑色 -->
+    <color name="black_50">#50000000</color>
+    <!-- 灰黑色 -->
+    <!-- 浅灰黑色 -->
+    <!-- 黄色 -->
+    <!-- 金色 -->
+    <!-- 灰色 -->
+    <!-- 灰白色 -->
+    <color name="gray_white">#e1e1e1</color>
+    <!-- 灰色 -->
+    <color name="gray">#ff868686</color>
+    <!-- 灰色 -->
+    <color name="gray_99">#ff999999</color>
+    <!-- 灰色 -->
+    <!-- 灰色 -->
+    <color name="gray78">#787878</color>
+    <!-- 灰色 -->
+    <!-- 灰色 -->
+    <color name="gray_btm">#999999</color>
+    <!-- 灰色 -->
+    <!-- 灰色 -->
+    <!-- 红色 -->
+    <!-- 灰色f1 -->
+    <color name="grey_f1">#fff1f1f1</color>
+    <!-- 灰色f5 -->
+    <!-- 灰色f7 -->
+    <!-- 灰色98 -->
+    <!-- 灰色9D -->
+    <!-- 灰色a8 -->
+    <!-- 灰色b4 -->
+    <!-- 灰色d2 -->
+    <!-- 黑色0a -->
+    <color name="black_0a">#0A0A0A</color>
+    <!-- 黑色66 -->
+    <color name="black_66">#666666</color>
+    <!-- 黑色 -->
+    <color name="black_4e">#4E4E4E</color>
+    <!-- 黑色 50%透明 -->
+    <color name="font_black_88">#88000000</color>
+    
+       <!-- ******************按钮颜色模块**************** -->
+    <!-- 蓝色按钮 -->
+    <color name="btn_blue_pressed">#029bf3</color>
+    <color name="btn_blue_nomal">#1481ff</color>
+    <!-- 橘色按钮 -->
+    <!-- 红色按钮 -->
+    <!-- 条目点击颜色 -->
+    <!-- 按钮不可点击 -->
+    <color name="bt_unenable">#C9C9C9</color>
+    
+    
+        <!-- 蓝色 -->
+    <!-- 蓝色 -->
+    <!-- 黑色 -->
+    <!-- 登录页面背景颜色 -->
+    <color name="color_login_bg">#E2E9F0</color>
+    <!-- 登录页面底部字体6b -->
+    <color name="color_txt_bottom">#6B6B6B</color>
+    <!-- 登录页面输入框字体c8 -->
+    <color name="color_txt_edit">#999999</color>
+    <!-- 订单详情线条颜色 -->
+    <!-- 订单详情字体颜色 -->
+    <color name="txt_color_b4">#B4B4B4</color>
+    <!-- 字体颜色 -->
+    <color name="color_33">#333333</color>
+    <color name="red_money">#FE5778</color>
+    <color name="status">#faae00</color>
+    <color name="money">#fff000</color>
+    <color name="btn_red">#ff1200</color>
+    <color name="item_bg">#f3f3f3</color>
+
+    <color name="light_grey_black">#141414</color>
+    <!-- 背景色 -->
+    <color name="f0_gray_line">#f0f1f6</color>
+    <color name="red_bf">#bf2b2b</color>
+    <color name="red_3a">#ff3a3a</color>
+</resources>

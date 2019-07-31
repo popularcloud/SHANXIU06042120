@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f7"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+    <include layout="@layout/include_title"/>
+    <RelativeLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/search_bg">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="60dp"
+            android:layout_toRightOf="@+id/img_back"
+            android:drawableLeft="@drawable/search"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:hint="请输入设备名称/适用机型/型号等"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black_66"
+            android:textColorHint="@color/gray_99"
+            android:textSize="13sp" />
+
+        <ImageView
+            android:id="@+id/iv_empty"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="70dp"
+            android:clickable="true"
+            android:onClick="clickEmptyContent"
+            android:src="@drawable/delete"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:onClick="clickCancel"
+            android:paddingRight="13dp"
+            android:text="搜索"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textTip"
+            style="@style/text_tip"
+            android:text="未搜索到相关配件信息"
+            android:visibility="gone"/>
+        <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+            android:id="@+id/mBGARefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+    </RelativeLayout>
+    <View
+        style="@style/line_ccStyle"/>
+    <RelativeLayout
+        android:id="@+id/rl_but"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black_66"
+            android:textSize="12sp"
+            android:id="@+id/txtAllMoney"/>
+
+        <com.lwc.shanxiu.view.TileButton
+            android:id="@+id/but_qd"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="确定"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@color/blue_00aaf5" />
+    </RelativeLayout>
+</LinearLayout>

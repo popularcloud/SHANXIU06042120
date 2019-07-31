@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0_gray_line"
+    android:orientation="vertical">
+
+    <ExpandableListView
+        android:id="@+id/expand_list"
+        android:layout_below="@+id/include_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:groupIndicator="@null"
+        android:divider="@null"
+        android:childDivider="@color/f0_gray_line"/>
+
+    <TextView
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/button_login_selector"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:text="修改"
+        android:textColor="#fff" />
+</LinearLayout>

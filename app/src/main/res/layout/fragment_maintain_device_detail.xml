@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f7"
+    android:orientation="vertical">
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemDeviceName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        app:text_left1="设备名称"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemDeviceType"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="设备类型"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemBrandType"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="品牌类型"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:text="设备配置信息"
+        android:textColor="@color/blue" />
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemCPU"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="CPU"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemHardDisk"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="硬盘"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemMemory"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="内存"></com.lwc.shanxiu.widget.CustomItem1>
+
+    <com.lwc.shanxiu.widget.CustomItem1
+        android:id="@+id/cItemSystem"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        app:text_left1="操作系统"></com.lwc.shanxiu.widget.CustomItem1>
+
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:background="@color/bg_f7"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true">
+
+	<include layout="@layout/include_title"/>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1">
+		<cn.bingoogolapple.refreshlayout.BGARefreshLayout
+			android:id="@+id/mBGARefreshLayout"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/recyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="0dp"
+				android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+
+		</cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+		<TextView android:id="@+id/tv_msg"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:layout_centerInParent="true"
+			android:text="暂无消息"
+			android:textColor="@color/gray_btm"
+			android:textSize="14sp"/>
+	</RelativeLayout>
+</LinearLayout>

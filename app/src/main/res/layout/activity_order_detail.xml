@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_title" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rBtnState"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="订单状态"
+            android:textColor="@drawable/blue_or_black_selector" />
+
+        <RadioButton
+            android:id="@+id/rBtnOrderDetail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="订单详情"
+            android:textColor="@drawable/blue_or_black_selector" />
+
+        <RadioButton
+            android:id="@+id/rBtnDeviceDetail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="售后服务"
+            android:textColor="@drawable/blue_or_black_selector" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/viewLine1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/btn_blue_nomal"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/viewLine2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/btn_blue_nomal"
+            android:visibility="invisible" />
+
+        <View
+            android:id="@+id/viewLine3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/btn_blue_nomal"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+
+    <com.lwc.shanxiu.widget.CustomViewPager
+        android:id="@+id/cViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.lwc.shanxiu.widget.CustomViewPager>
+
+    <TextView
+        android:id="@+id/txtEmptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有更多的订单信息"
+        android:textSize="16sp"
+        android:visibility="gone" />
+</LinearLayout>

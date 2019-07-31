@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:padding="10dp"
+    android:id="@+id/rl_main">
+
+    <LinearLayout
+        android:id="@+id/custom_dialog_view_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/dialog_show_shape"
+        android:padding="5dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:id="@+id/custom_dialog_txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="请选择导航地图"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black_66"
+            android:textSize="15sp"/>
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/delete"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/line_cc" />
+
+        <TextView
+            android:id="@+id/txt_gaode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@drawable/you_new"
+            android:minHeight="44dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/gaode"
+            android:text="高德地图"
+            android:textColor="@color/black_66"
+            android:background="@drawable/selector_item_bg"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/txt_baidu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@drawable/you_new"
+            android:minHeight="44dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/baidu"
+            android:text="百度地图"
+            android:textColor="@color/black_66"
+            android:background="@drawable/selector_item_bg"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/txt_tengxun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableRight="@drawable/you_new"
+            android:minHeight="44dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/tenxun"
+            android:text="腾讯地图"
+            android:textColor="@color/black_66"
+            android:background="@drawable/selector_item_bg"
+            android:textSize="14sp"/>
+
+        <ToggleButton
+            android:id="@+id/tBtnSecretWechat"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:button="@drawable/wallet_switch_btn"
+            android:checked="false"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/black_66"
+            android:textOff=" 记住这次选择"
+            android:textOn=" 记住这次选择"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/custom_dialog_view_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/custom_dialog_txt_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</RelativeLayout>

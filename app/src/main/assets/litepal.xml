@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <!-- 数据库名称 -->
+    <dbname value="shanxiu"></dbname>
+    <!-- 数据库版本 -->
+    <version value="5"></version>
+
+    <list>
+        <!-- 定义数据库表 -->
+        <!-- 表（实体）的路径 -->
+        <mapping class="com.lwc.shanxiu.bean.ActivityBean"></mapping>
+        <mapping class="com.lwc.shanxiu.module.message.bean.HasMsg"></mapping>
+        <mapping class="com.lwc.shanxiu.module.bean.User"></mapping>
+    </list>
+</litepal>

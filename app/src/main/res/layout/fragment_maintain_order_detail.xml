@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_f7"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemUnderTheSingle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                app:text_left1="接单人"></com.lwc.shanxiu.widget.CustomItem1>
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemUnit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="所属单位"></com.lwc.shanxiu.widget.CustomItem1>
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemContacts"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="联系电话"></com.lwc.shanxiu.widget.CustomItem1>
+
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemOrderNo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                app:text_left1="订单号"></com.lwc.shanxiu.widget.CustomItem1>
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemOrderTime"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="下单时间"></com.lwc.shanxiu.widget.CustomItem1>
+
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemMaintainType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="维修类型"></com.lwc.shanxiu.widget.CustomItem1>
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemMalfunction"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="故障描述"></com.lwc.shanxiu.widget.CustomItem1>
+
+            <LinearLayout
+                android:id="@+id/lLayoutIcon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:layout_marginTop="1dp"
+                    android:text="图片描述"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/imgPicture1"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="5dp"
+                        android:scaleType="fitXY" />
+
+                    <ImageView
+                        android:id="@+id/imgPicture2"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitXY" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.lwc.shanxiu.widget.CustomItem1
+                android:id="@+id/cItemPayType"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="1dp"
+                app:text_left1="支付方式"></com.lwc.shanxiu.widget.CustomItem1>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

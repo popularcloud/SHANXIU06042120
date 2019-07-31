@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:background="@color/white"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true">
+	<include layout="@layout/include_title"/>
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:scrollbars="none">
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="@drawable/user_info_update_shape"
+					android:orientation="vertical">
+					<TextView
+					    android:visibility="gone"
+						android:layout_marginTop="15dp"
+						android:id="@+id/txt_mention_1"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_alignParentLeft="true"
+						android:layout_marginLeft="15dp"
+						android:text="请输入旧密码："
+						android:textColor="@color/black_66"
+						android:textSize="15sp" />
+					<EditText
+					    android:visibility="gone"
+						android:id="@+id/et_mention_1"
+						android:background="@drawable/edit_default_bg_selector"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:minHeight="40dp"
+						android:textSize="13sp"
+						android:textColor="@color/black_66"
+						android:textColorHint="@color/gray_99"
+						android:padding="10dp"
+						android:inputType="textMultiLine"
+						android:maxLength="16"
+						android:layout_margin="13dp" />
+					<TextView
+					    android:visibility="gone"
+						android:layout_marginLeft="15dp"
+						android:layout_marginTop="7dp"
+						android:id="@+id/txt_mention_2"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="请输入新密码："
+						android:textColor="@color/black_66"
+						android:textSize="15sp" />
+					<EditText
+					    android:visibility="gone"
+						android:id="@+id/et_mention_2"
+						style="@style/edit_white_style"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:minHeight="40dp"
+						android:textSize="13sp"
+						android:maxLength="16"
+						android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+						android:layout_margin="13dp" />
+				</LinearLayout>
+			</LinearLayout>
+	</ScrollView>
+</LinearLayout>
