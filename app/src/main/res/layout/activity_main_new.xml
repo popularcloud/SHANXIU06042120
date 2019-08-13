@@ -76,8 +76,8 @@
 
 	    <com.lwc.shanxiu.view.TileButton
 	        android:id="@+id/img_center"
-	        android:layout_width="50dp"
-	        android:layout_height="50dp"
+	        android:layout_width="44dp"
+	        android:layout_height="44dp"
 			android:layout_centerHorizontal="true"
 	        android:background="@drawable/baoxiu_new"
 	        />
@@ -92,8 +92,7 @@
 	        android:singleLine="true"
 	        android:textSize="11sp"
 	        android:textColor="@color/gray_99"
-	        android:text="开启自动接单"
-	        />
+	        android:text="开启自动接单" />
 	</RelativeLayout>
 
 	<ImageView

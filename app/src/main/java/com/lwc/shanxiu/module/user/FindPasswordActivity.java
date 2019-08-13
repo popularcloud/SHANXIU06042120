@@ -3,10 +3,15 @@ package com.lwc.shanxiu.module.user;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
@@ -40,7 +45,10 @@ public class FindPasswordActivity extends BaseActivity {
 	Button btnCode;
 	@BindView(R.id.edtPassword)
 	EditText edtPassword;
+	@BindView(R.id.show_pwd)
+	ImageView show_pwd;
 	private int count = 60;
+	private boolean isShow = false;
 
 	@Override
 	protected int getContentViewId(Bundle savedInstanceState) {
@@ -54,6 +62,8 @@ public class FindPasswordActivity extends BaseActivity {
 
 	@Override
 	public void init() {
+		showBack();
+		setTitle("找回密码");
 	}
 
 	@Override
@@ -62,6 +72,25 @@ public class FindPasswordActivity extends BaseActivity {
 
 	@Override
 	protected void widgetListener() {
+		edtPassword.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				if (edtPassword.getText().toString().trim().length() > 0) {
+					show_pwd.setVisibility(View.VISIBLE);
+				} else {
+					edtPassword.setSelection(0);
+					show_pwd.setVisibility(View.GONE);
+				}
+			}
+		});
 	}
 
 	Handler handle = new Handler() {
@@ -79,11 +108,11 @@ public class FindPasswordActivity extends BaseActivity {
 		}
 	};
 
-	@OnClick({R.id.btnCode, R.id.btnRegister, R.id.tv_login})
+	@OnClick({R.id.btnCode, R.id.btnRegister, R.id.tvLogin,R.id.show_pwd})
 	public void onViewClicked(View view) {
 		String phone = null;
 		switch (view.getId()) {
-			case R.id.tv_login:
+			case R.id.tvLogin:
 				finish();
 				break;
 			case R.id.btnCode:
@@ -129,6 +158,18 @@ public class FindPasswordActivity extends BaseActivity {
 					return;
 				}
 				findPwd();
+				break;
+			case R.id.show_pwd:
+				if(isShow){
+					//edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+					edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+					show_pwd.setImageResource(R.drawable.ic_pwd_look);
+					isShow = false;
+				}else{
+					edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+					show_pwd.setImageResource(R.drawable.ic_pwd_close);
+					isShow = true;
+				}
 				break;
 		}
 	}

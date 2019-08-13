@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +23,7 @@ import com.lwc.shanxiu.module.wallet.WalletActivity;
 import com.lwc.shanxiu.utils.Constants;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.widget.SystemBarTintManager;
+import com.yanzhenjie.sofia.Sofia;
 
 import butterknife.ButterKnife;
 
@@ -54,17 +56,21 @@ public abstract class BaseActivity extends FragmentActivity {
 		setContentView(getContentViewId(savedInstanceState));
 		ButterKnife.bind(this);
 //		PushAgent.getInstance(this).onAppStart();
+
+		//初始化状态栏
+		initStatusBar();
+
 		/**
 		 * 注意别在此处调用  下面几个抽象方法
 		 * 在子类中
 		 * super.onCreate(savedInstanceState);先调用这个方法， 所以在子类中做UI的相关操作，会找不到控件
 		 */
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+	/*	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			setTranslucentStatus(this, true);
 			SystemBarTintManager tintManager = new SystemBarTintManager(this);
 			tintManager.setStatusBarTintEnabled(true);
 			tintManager.setStatusBarTintDrawable(getResources().getDrawable(R.drawable.title_bg_new));
-		}
+		}*/
 		try {
 			txtActionbarTitle = (TextView) findViewById(R.id.txtActionbarTitle);
 			txtRight = (TextView) findViewById(R.id.txtRight);
@@ -77,6 +83,15 @@ public abstract class BaseActivity extends FragmentActivity {
 		init();
 
 		registerReceiver();
+	}
+
+	/**
+	 * 子类可重写改方法定制状态栏样式
+	 */
+	protected void initStatusBar(){
+		Sofia.with(this)
+				.statusBarBackground(Color.parseColor("#ffffff"))
+				.statusBarDarkFont();
 	}
 
 	/**

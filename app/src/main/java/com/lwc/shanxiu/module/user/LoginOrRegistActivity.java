@@ -2,12 +2,15 @@ package com.lwc.shanxiu.module.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -20,7 +23,6 @@ import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.User;
-import com.lwc.shanxiu.module.message.bean.HasMsg;
 import com.lwc.shanxiu.utils.Constants;
 import com.lwc.shanxiu.utils.FileUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
@@ -42,6 +44,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 
 /**
@@ -51,7 +54,7 @@ import cn.jpush.android.api.JPushInterface;
  * @date 2015年11月20日
  * @Copyright: lwc
  */
-public class LoginOrRegistActivity extends BaseActivity implements OnClickListener {
+public class LoginOrRegistActivity extends BaseActivity {
     @BindView(R.id.edtPhone)
     EditText edtPhone;
     @BindView(R.id.edtPassword)
@@ -59,9 +62,14 @@ public class LoginOrRegistActivity extends BaseActivity implements OnClickListen
     @BindView(R.id.txtFindPassWord)
     TextView txtFindPassWord;
     @BindView(R.id.btnLogin)
-    Button btnLogin;
+    TextView btnLogin;
     @BindView(R.id.tv_bb)
     TextView tv_bb;
+    @BindView(R.id.del_phone)
+    ImageView del_phone;
+    @BindView(R.id.show_pwd)
+    ImageView show_pwd;
+    private boolean isShow = false;
 
     private SharedPreferencesUtils preferencesUtils;
     private User user;
@@ -82,6 +90,7 @@ public class LoginOrRegistActivity extends BaseActivity implements OnClickListen
 
     @Override
     protected void init() {
+        setTitle("登录");
         tv_bb.setText("MX"+ SystemUtil.getCurrentVersionName());
         String name = preferencesUtils.loadString("former_name");
         if(name != null && !name.equals(""))
@@ -97,20 +106,51 @@ public class LoginOrRegistActivity extends BaseActivity implements OnClickListen
 
     @Override
     protected void widgetListener() {
-        txtFindPassWord.setOnClickListener(this);
-        btnLogin.setOnClickListener(this);
+        edtPhone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (edtPhone.getText().toString().trim().length() > 0) {
+                    del_phone.setVisibility(View.VISIBLE);
+                } else {
+                    edtPhone.setSelection(0);
+                    del_phone.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnLogin:
-                login();
+    @OnClick({R.id.del_phone,R.id.btnLogin,R.id.txtFindPassWord,R.id.show_pwd})
+    public void onBtnOnClick(View view){
+        switch (view.getId()){
+            case R.id.del_phone:
+                edtPhone.setText("");
+                del_phone.setVisibility(View.GONE);
                 break;
             case R.id.txtFindPassWord:
                 IntentUtil.gotoActivity(LoginOrRegistActivity.this, FindPasswordActivity.class);
                 break;
-            default:
+            case R.id.btnLogin:
+                login();
+                break;
+            case R.id.show_pwd:
+                if(isShow){
+                    //edtPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                    edtPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    show_pwd.setImageResource(R.drawable.ic_pwd_look);
+                    isShow = false;
+                }else{
+                    edtPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    show_pwd.setImageResource(R.drawable.ic_pwd_close);
+                    isShow = true;
+                }
                 break;
         }
     }

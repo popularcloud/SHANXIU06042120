@@ -142,4 +142,5 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.2'
 
     compile 'com.github.addappcn:android-pickers:1.0.3'
+    compile 'com.yanzhenjie:sofia:1.0.5'
 }

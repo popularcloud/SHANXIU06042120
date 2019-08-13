@@ -56,11 +56,25 @@
                     android:id="@+id/txtMaintainName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/img_icon"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/black_66"
-                    android:textSize="15sp" />
+                    android:text=""
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txtDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_icon"
+                    android:layout_below="@+id/txtMaintainName"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/color_33"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/txtOrderStatus"
@@ -70,20 +84,19 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/canceled"
-                    android:textSize="13sp" />
-
+                    android:text=""
+                    android:textSize="12sp" />
                 <TextView
-                    android:id="@+id/txtDistance"
+                    android:id="@+id/txt_go_here"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/txtDaohang"
                     android:layout_below="@+id/txtOrderStatus"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="5dp"
                     android:gravity="right"
-                    android:textColor="@color/color_33"
+                    android:textColor="@color/gray_99"
+                    android:layout_marginTop="8dp"
+                    android:text="到这里去"
                     android:textSize="12sp" />
-
                 <TextView
                     android:id="@+id/txtDaohang"
                     android:layout_width="wrap_content"
@@ -91,11 +104,11 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
                     android:drawablePadding="5dp"
-                    android:drawableTop="@drawable/daohang"
+                    android:background="@drawable/daohang"
                     android:gravity="right"
                     android:textColor="@color/blue_00aaf5"
-                    android:text="到这去"
                     android:textSize="14sp" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
