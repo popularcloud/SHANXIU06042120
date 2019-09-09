@@ -92,6 +92,16 @@ public abstract class BaseActivity extends FragmentActivity {
 		Sofia.with(this)
 				.statusBarBackground(Color.parseColor("#ffffff"))
 				.statusBarDarkFont();
+
+		hideNavigationBar();
+
+	}
+
+	private void hideNavigationBar() {
+		View decorView = getWindow().getDecorView();
+		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+				| View.SYSTEM_UI_FLAG_FULLSCREEN;
+		decorView.setSystemUiVisibility(uiOptions);
 	}
 
 	/**
@@ -143,6 +153,15 @@ public abstract class BaseActivity extends FragmentActivity {
 		if (txtRight != null && right != null) {
 			txtRight.setVisibility(View.VISIBLE);
 			txtRight.setText(right);
+			txtRight.setOnClickListener(listener);
+		}
+	}
+
+	protected void setRightText(String right,String textColor, View.OnClickListener listener) {
+		if (txtRight != null && right != null) {
+			txtRight.setVisibility(View.VISIBLE);
+			txtRight.setText(right);
+			txtRight.setTextColor(Color.parseColor(textColor));
 			txtRight.setOnClickListener(listener);
 		}
 	}

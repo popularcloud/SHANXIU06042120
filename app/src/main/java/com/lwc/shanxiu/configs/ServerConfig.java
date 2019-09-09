@@ -19,7 +19,7 @@ public class ServerConfig {
  //本地服务器
  // public final static String DOMAIN = "http://192.168.0.116";
  //正式服务器
- // public final static String DOMAIN = "https://www.ls-mx.com";
+//  public final static String DOMAIN = "https://www.ls-mx.com";
 
 	public final static String SERVER_API_URL = DOMAIN+"/api";
   //  测试服务器

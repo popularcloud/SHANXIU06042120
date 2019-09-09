@@ -1,5 +1,6 @@
 package com.lwc.shanxiu.module.order.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.yanzhenjie.sofia.Sofia;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -76,6 +78,10 @@ public class FinishFragment extends BaseFragment implements IOrderListFragmentVi
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
 

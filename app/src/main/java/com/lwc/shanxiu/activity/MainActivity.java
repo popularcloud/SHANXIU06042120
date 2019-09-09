@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -32,6 +33,7 @@ import com.lwc.shanxiu.module.BaseFragmentActivity;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.common_adapter.FragmentsPagerAdapter;
 import com.lwc.shanxiu.module.message.bean.HasMsg;
+import com.lwc.shanxiu.module.message.ui.KnowledgeBaseActivity;
 import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
 import com.lwc.shanxiu.utils.ApkUtil;
 import com.lwc.shanxiu.utils.DialogUtil;
@@ -47,6 +49,7 @@ import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
 import com.lwc.shanxiu.widget.DialogStyle3;
+import com.yanzhenjie.sofia.Sofia;
 
 import org.litepal.crud.DataSupport;
 
@@ -171,13 +174,13 @@ public class MainActivity extends BaseFragmentActivity {
                         } else {
                             if (autoAcceptOrder.equals("1")) {
                                 user.setAutoAcceptOrder(1);
-                                ToastUtil.showLongToast(MainActivity.this, "您已成功开启自动接单");
-                                txtTogo.setText("自动接单中...");
+                                //ToastUtil.showLongToast(MainActivity.this, "您已成功开启自动接单");
+                              //  txtTogo.setText("自动接单中...");
                                 preferencesUtils.saveObjectData(user);
                             } else {
                                 user.setAutoAcceptOrder(0);
-                                ToastUtil.showLongToast(MainActivity.this, "您已成功关闭自动接单");
-                                txtTogo.setText("开启自动接单");
+                               // ToastUtil.showLongToast(MainActivity.this, "您已成功关闭自动接单");
+                               // txtTogo.setText("开启自动接单");
                                 preferencesUtils.saveObjectData(user);
                             }
                         }
@@ -205,11 +208,11 @@ public class MainActivity extends BaseFragmentActivity {
             ToastUtil.showLongToast(MainActivity.this, "登录失效，请重新登录!");
             return;
         }
-        if (user.getAutoAcceptOrder() == 1) {
+       /* if (user.getAutoAcceptOrder() == 1) {
             txtTogo.setText("自动接单中...");
         } else {
             txtTogo.setText("开启自动接单");
-        }
+        }*/
         hasMessage();
     }
 
@@ -247,6 +250,9 @@ public class MainActivity extends BaseFragmentActivity {
                 Utils.setNotification4(this);
             }
         }
+        Sofia.with(this)
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
     public void registerMessageReceiver() {
@@ -556,7 +562,7 @@ public class MainActivity extends BaseFragmentActivity {
                 sendBroadcast(intent2);
                 break;
             case R.id.img_center:
-                user = preferencesUtils.loadObjectData(User.class);
+              /*  user = preferencesUtils.loadObjectData(User.class);
                 if (user != null) {
                         if (!"自动接单中...".equals(txtTogo.getText().toString())) {
                             showIfOrderDialog();
@@ -566,7 +572,9 @@ public class MainActivity extends BaseFragmentActivity {
                 } else {
                     preferencesUtils.saveString("token", "");
                     IntentUtil.gotoActivityAndFinish(MainActivity.this, LoginOrRegistActivity.class);
-                }
+                }*/
+
+                IntentUtil.gotoActivity(this, KnowledgeBaseActivity.class);
                 break;
         }
     }

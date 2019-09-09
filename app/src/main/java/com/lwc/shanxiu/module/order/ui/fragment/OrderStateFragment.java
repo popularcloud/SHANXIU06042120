@@ -42,6 +42,7 @@ import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.DialogStyle1;
 import com.lwc.shanxiu.widget.PicturePopupWindow;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.HashMap;
 import java.util.List;
@@ -103,6 +104,10 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
         init();
         bindRecycleView();
         setListener();
+
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
     @Override

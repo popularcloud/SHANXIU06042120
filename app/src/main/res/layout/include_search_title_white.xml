@@ -5,7 +5,7 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:id="@+id/rl_title"
-        android:background="@drawable/title_bg_new">
+        android:background="@color/white">
         <ImageView
             android:onClick="onBack"
             android:id="@+id/img_back"
@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="15dp"
-            android:src="@drawable/back" />
+            android:src="@drawable/ic_black_back" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_marginRight="15dp"
         android:text="@string/search"
         android:textSize="15sp"

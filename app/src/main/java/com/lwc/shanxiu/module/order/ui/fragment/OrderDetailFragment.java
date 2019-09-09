@@ -33,6 +33,7 @@ import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.MyGridView;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -158,6 +159,10 @@ public class OrderDetailFragment extends BaseFragment implements IOrderDetailFra
         init();
         setListener();
         getData();
+
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
     /**

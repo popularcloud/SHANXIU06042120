@@ -157,6 +157,13 @@
         <item name="android:layout_height">0.5dp</item>
         <item name="android:background">@color/line_cc</item>
     </style>
+
+    <!-- 线条style -->
+    <style name="line_deStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/line_cc</item>
+    </style>
         <!-- 线条style -->
     <style name="line_ccStyle_white">
         <item name="android:layout_width">match_parent</item>
@@ -168,6 +175,11 @@
         <item name="android:layout_width">0.5dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/line_cc</item>
+    </style>
+    <style name="line_deStyle_h">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/line_de</item>
     </style>
        <!-- edit white style -->
     <style name="edit_white_style">
@@ -227,4 +239,8 @@
         <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
+    <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+                <item name="android:button">@drawable/checkbox_style</item>
+                <item name="android:paddingLeft">8dp</item>
+            </style>
 </resources>

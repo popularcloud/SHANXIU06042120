@@ -2,91 +2,109 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="@color/bg_f7"
-	android:orientation="vertical"
-	android:fitsSystemWindows="true">
+	android:background="@color/bg_f0"
+	android:fitsSystemWindows="true"
+	android:orientation="vertical">
 
-	<include layout="@layout/include_title"/>
+	<include layout="@layout/include_title" />
+	<View style="@style/line_c8Style" />
 	<LinearLayout
 		android:id="@+id/ll_cz"
-		android:layout_below="@+id/rl_title"
 		android:layout_width="match_parent"
-		android:background="@color/white"
-		android:layout_height="44dp">
+		android:layout_height="44dp"
+		android:layout_below="@+id/rl_title"
+		android:background="@color/white">
 		<LinearLayout
 			android:id="@+id/ll_quyu"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
 			android:gravity="center">
+
 			<TextView
 				android:id="@+id/tv_quyu"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:drawableRight="@drawable/ner_down_h"
+				android:drawablePadding="6dp"
 				android:gravity="center"
 				android:text="区域"
-				android:textSize="14sp"
-				android:drawableRight="@drawable/ner_down_h"
-				android:drawablePadding="5dp"
-				android:textColor="@color/black_66" />
+				android:textColor="@color/black"
+				android:textSize="14sp" />
 		</LinearLayout>
-		<View style="@style/line_ccStyle_h"
+
+		<View
+			style="@style/line_deStyle_h"
 			android:layout_below="@+id/ll_cz"
-			android:layout_marginBottom="15dp"
-			android:layout_marginTop="15dp"/>
+			android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp" />
+
 		<LinearLayout
 			android:id="@+id/ll_px"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
 			android:gravity="center">
+
 			<TextView
 				android:id="@+id/tv_px"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:drawableRight="@drawable/ner_down_h"
+				android:drawablePadding="6dp"
 				android:gravity="center"
 				android:text="排序"
-				android:textSize="14sp"
-				android:drawableRight="@drawable/ner_down_h"
-				android:drawablePadding="5dp"
-				android:textColor="@color/black_66" />
+				android:textColor="@color/black"
+				android:textSize="14sp" />
 		</LinearLayout>
-		<View style="@style/line_ccStyle_h"
-			android:layout_marginBottom="15dp"
-			android:layout_marginTop="15dp"/>
+
+		<View
+			style="@style/line_deStyle_h"
+			android:layout_marginTop="15dp"
+			android:layout_marginBottom="15dp" />
+
 		<LinearLayout
 			android:id="@+id/ll_sb"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_weight="1"
 			android:gravity="center">
+
 			<TextView
 				android:id="@+id/tv_sb"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:drawableRight="@drawable/ner_down_h"
+				android:drawablePadding="6dp"
 				android:gravity="center"
 				android:text="设备类型"
-				android:textSize="14sp"
-				android:drawableRight="@drawable/ner_down_h"
-				android:drawablePadding="5dp"
-				android:textColor="@color/black_66" />
+				android:textColor="@color/black"
+				android:textSize="14sp" />
 		</LinearLayout>
 	</LinearLayout>
-	<View style="@style/line_ccStyle"
-		android:layout_below="@+id/ll_cz"/>
+
+	<View
+		style="@style/line_ccStyle"
+		android:layout_below="@+id/ll_cz" />
+
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
+
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
-			<TextView style="@style/text_tip"
-				android:id="@+id/textTip"/>
+
+			<TextView
+				android:id="@+id/textTip"
+				style="@style/text_tip" />
+
 			<cn.bingoogolapple.refreshlayout.BGARefreshLayout
 				android:id="@+id/mBGARefreshLayout"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_marginTop="7dp">
+
 				<android.support.v7.widget.RecyclerView
 					android:id="@+id/recyclerView"
 					android:layout_width="match_parent"
@@ -94,29 +112,32 @@
 
 			</cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 		</RelativeLayout>
+
 		<LinearLayout
 			android:id="@+id/ll_tj"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:background="#20000000"
 			android:orientation="vertical"
 			android:paddingBottom="135dp"
-			android:background="#20000000"
 			android:visibility="gone">
+
 			<ListView
 				android:id="@+id/tjlist"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:divider="@color/line_cc"
-				android:dividerHeight="0.5dp"
-				android:listSelector="@drawable/selector_item_bg">
-			</ListView>
-			<View style="@style/line_ccStyle"
-				android:layout_below="@+id/ll_cz"/>
+				android:dividerHeight="0.5px"
+				android:listSelector="@drawable/selector_item_bg"></ListView>
+
+			<View
+				style="@style/line_ccStyle"
+				android:layout_below="@+id/ll_cz" />
+
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="0dp"
-				android:layout_weight="1"
-				/>
+				android:layout_weight="1" />
 		</LinearLayout>
 	</FrameLayout>
 </LinearLayout>

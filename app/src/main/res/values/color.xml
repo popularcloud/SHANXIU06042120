@@ -24,6 +24,7 @@
 
     <!-- 浅灰色 -->
     <color name="bg_f7">#F7F7F7</color>
+    <color name="bg_f0">#f0f1f6</color>
     <color name="bg1">#f8f8f8</color>
     <!-- 蓝色 -->
     <color name="text_blue_1b">#1B62AF</color>
@@ -33,6 +34,7 @@
     <color name="white">#FFFFFF</color>
     <!-- 深灰色 -->
     <color name="line_cc">#cccccc</color>
+    <color name="line_de">#dedede</color>
        <!-- 灰色c8 -->
     <color name="gray_c8">#c8c8c8</color>
          <!-- ******************基础颜色模块**************** -->
@@ -82,6 +84,7 @@
     <!-- 灰色 -->
     <color name="gray_99">#ff999999</color>
     <!-- 灰色 -->
+    <color name="gray_e1">#e1dfe0</color>
     <!-- 灰色 -->
     <color name="gray78">#787878</color>
     <!-- 灰色 -->
@@ -143,5 +146,18 @@
     <!-- 背景色 -->
     <color name="f0_gray_line">#f0f1f6</color>
     <color name="red_bf">#bf2b2b</color>
-    <color name="red_3a">#ff3a3a</color>
+    <color name="red_3a">#ff3a3a</color>    <!-- 引用左侧竖线的颜色 -->
+    <color name="rich_editor_quote_stripe_color">#ff717171</color>
+
+    <!-- 引用背景色 -->
+    <color name="rich_editor_quote_bg_color">#fff3f3f3</color>
+
+    <!-- 图片类型(gif或长图标识)区域背景色 -->
+    <color name="rich_editor_image_type_bg_color">#4d000000</color>
+
+    <!-- 图片类型(gif或长图标识)文字颜色 -->
+    <color name="rich_editor_image_type_text_color">#ffffffff</color>
+    <color name="blue_ff">#2db9ff</color>
+
+
 </resources>

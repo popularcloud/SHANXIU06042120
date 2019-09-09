@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_fee_standard"
     android:layout_width="match_parent"
@@ -10,17 +10,15 @@
     <include layout="@layout/include_title" android:id="@+id/include_title"/>
     <ExpandableListView
         android:id="@+id/expand_list"
-        android:layout_below="@+id/include_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:groupIndicator="@null"
         android:divider="@null"
-        android:childDivider="@color/f0_gray_line"
-        android:layout_marginBottom="125dp"/>
+        android:childDivider="@color/f0_gray_line"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:padding="15dp"
         android:orientation="vertical">
         <TextView
@@ -37,4 +35,17 @@
             android:textSize="12sp"
             android:textColor="@color/black_66"/>
     </LinearLayout>
-</RelativeLayout>
+    <TextView
+        android:id="@+id/tv_finish"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/button_login_selector"
+        android:gravity="center"
+        android:text="完成"
+        android:visibility="gone"
+        android:textColor="#fff"
+        android:textSize="15sp" />
+</LinearLayout>

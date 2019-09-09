@@ -361,4 +361,29 @@ public class RequestValue {
      */
     public static final String SCAN_GETDEVICETYPES = "/scan/getDeviceTypes";
 
+
+    /**
+     * 文章和提问列表
+     */
+    public static final String GET_KNOWLEDGE_MAINTENANCEINDEX = "/knowledge/maintenanceIndex";
+
+    /**
+     * 获取搜索关键词
+     */
+    public static final String GET_KNOWLEDGE_KNOWLEDGEKEYWORDRANK = "/knowledge/knowledgeKeywordRank";
+
+    /**
+     * 工程师发表问题或提问
+     */
+   public static final String GET_KNOWLEDGE_KNOWLEDGEPUBLISH = "/knowledge/knowledgePublish";
+
+    /**
+     * 编辑文章和提问
+ */
+   public static final String GET_KNOWLEDGE_UPDATEPUBLISH = "/knowledge/updatePublish";
+
+    /**
+     * 工程师注册
+     */
+    public static final String COMPANY_ADDBUSSINESS = "/company/addBussiness";
 }

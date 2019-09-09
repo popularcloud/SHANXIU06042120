@@ -33,7 +33,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/selector_item_bg"
             android:minHeight="60dp"
-            android:visibility="gone"
+            android:visibility="visible"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp">
@@ -59,7 +59,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_toRightOf="@+id/img_icon"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black_66"
+                    android:textColor="@color/black"
                     android:text=""
                     android:textSize="14sp" />
 
@@ -73,7 +73,7 @@
                     android:layout_marginTop="8dp"
                     android:gravity="right"
                     android:text=""
-                    android:textColor="@color/color_33"
+                    android:textColor="@color/gray_99"
                     android:textSize="12sp" />
 
                 <TextView
@@ -83,7 +83,7 @@
                     android:layout_toLeftOf="@+id/txtDaohang"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/canceled"
+                    android:textColor="@color/red_3a"
                     android:text=""
                     android:textSize="12sp" />
                 <TextView

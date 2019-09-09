@@ -12,7 +12,9 @@ import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.module.bean.FeeStandardBean;
 import com.lwc.shanxiu.module.order.ui.adapter.FeeStandardAdapter;
+import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
+import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
@@ -28,6 +30,8 @@ public class FeeStandardActivity extends BaseActivity {
     ExpandableListView expand_list;
     @BindView(R.id.tv_remark)
     TextView tv_remark;
+    @BindView(R.id.tv_finish)
+    TextView tv_finish;
     private String deviceTypeMold;
 
     @Override
@@ -38,11 +42,22 @@ public class FeeStandardActivity extends BaseActivity {
     @Override
     protected void findViews() {
         deviceTypeMold = getIntent().getStringExtra("deviceTypeMold");
+        boolean isRegister = getIntent().getBooleanExtra("isRegister",false);
         showBack();
         if("1".equals(deviceTypeMold)){  //办公设备
             setTitle("收费标准(办公设备)");
         }else{
             setTitle("收费标准(家用电器)");
+        }
+
+        if(isRegister){
+            tv_finish.setVisibility(View.VISIBLE);
+            tv_finish.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    IntentUtil.gotoActivity(FeeStandardActivity.this, LoginOrRegistActivity.class);
+                }
+            });
         }
 
         expand_list.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {

@@ -100,10 +100,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     RelativeLayout rLayoutSign;
     @BindView(R.id.rLayoutChangePwd)
     RelativeLayout rLayoutChangePwd;
-    @BindView(R.id.img_name)
-    ImageView img_name;
-    @BindView(R.id.img_phone)
-    ImageView img_phone;
     /**
      * 拍照弹出框
      **/
@@ -413,17 +409,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
         if (user.getMaintenanceName() != null && !TextUtils.isEmpty(user.getMaintenanceName())) {
             txtName.setText(user.getMaintenanceName());
-            img_name.setVisibility(View.INVISIBLE);
         } else {
-            img_name.setVisibility(View.VISIBLE);
             txtName.setText("暂无");
         }
 
         if (user.getMaintenancePhone() != null && !TextUtils.isEmpty(user.getMaintenancePhone())) {
             txtPhone.setText(user.getMaintenancePhone());
-            img_phone.setVisibility(View.INVISIBLE);
         } else {
-            img_phone.setVisibility(View.VISIBLE);
             txtPhone.setText("暂无");
         }
 

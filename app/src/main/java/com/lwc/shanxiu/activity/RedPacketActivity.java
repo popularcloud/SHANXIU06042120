@@ -45,6 +45,8 @@ public class RedPacketActivity extends BaseActivity {
     TextView tv_gz;
     private ActivityBean activityBean;
     private boolean isClick;
+    private String activityId;
+    private String knowledgeId;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -66,7 +68,16 @@ public class RedPacketActivity extends BaseActivity {
     @Override
     protected void initGetData() {
         activityBean = (ActivityBean) getIntent().getSerializableExtra("activityBean");
-        tv_desc.setText(activityBean.getActivityName());
+        activityId =  getIntent().getStringExtra("activityId");
+        knowledgeId = getIntent().getStringExtra("knowledgeId");
+
+        if(activityBean != null){
+            tv_desc.setText(activityBean.getActivityName());
+        }else{
+            tv_desc.setText("文章奖励");
+            tv_gz.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -106,7 +117,13 @@ public class RedPacketActivity extends BaseActivity {
             return;
         }
         Map<String, String> map = new HashMap<>();
-        map.put("activityId", activityBean.getActivityId());
+        if(activityBean != null){
+            map.put("activityId", activityBean.getActivityId());
+        }else{
+            map.put("activityId", activityId);
+            map.put("knowledgeId", knowledgeId);
+        }
+
         HttpRequestUtils.httpRequest(this, "openRedPacket", RequestValue.GET_RED_PACKET_MONEY, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {

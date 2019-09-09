@@ -1,9 +1,12 @@
 package com.lwc.shanxiu.module.message.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Dimension;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -19,6 +22,7 @@ import com.lwc.shanxiu.module.message.adapter.Madapter;
 import com.lwc.shanxiu.module.message.adapter.PopSelectAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.module.message.bean.SearchConditionBean;
+import com.lwc.shanxiu.module.message.bean.SearchKeyWordBean;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.DisplayUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
@@ -26,6 +30,7 @@ import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.DropDownMenu;
+import com.lwc.shanxiu.widget.TagsLayout;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -47,8 +52,8 @@ public class KnowledgeBaseActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
-/*    @BindView(R.id.textTip)
-    TextView textTip;*/
+    @BindView(R.id.tl_tags)
+    TagsLayout tl_tags;
     @BindView(R.id.tv_search)
     TextView tv_search;
     @BindView(R.id.tv_device_type)
@@ -57,6 +62,12 @@ public class KnowledgeBaseActivity extends BaseActivity {
     TextView tv_brand;
     @BindView(R.id.et_search)
     EditText et_search;
+    @BindView(R.id.tv_request)
+    TextView tv_request;
+    @BindView(R.id.tv_publish)
+    TextView tv_publish;
+    @BindView(R.id.tv_agreeList)
+    TextView tv_agreeList;
     List<KnowledgeBaseBean> beanList = new ArrayList<>();
     private KnowledgeBaseAdapter adapter;
     private int page = 1;
@@ -66,6 +77,7 @@ public class KnowledgeBaseActivity extends BaseActivity {
     private ArrayList<SearchConditionBean> searchConditionBeanList;
     private PopSelectAdapter popSelectAdapter;
     private DropDownMenu dropDownMenu;
+    private TextView theLastText;
 
     private List<SearchConditionBean.OptionsBean> typeCondition = new ArrayList<>();
     private Map<String,List<SearchConditionBean.OptionsBean>> brandConditon = new HashMap<>();
@@ -168,8 +180,66 @@ public class KnowledgeBaseActivity extends BaseActivity {
                 BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
             }
         });
+        onGetKeyWord();
     }
 
+    /**
+     * 获取搜索关键字
+     */
+    private void onGetKeyWord(){
+
+        HttpRequestUtils.httpRequest(this, "获取搜索关键词", RequestValue.GET_KNOWLEDGE_KNOWLEDGEKEYWORDRANK, null, "GET",  new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        List<SearchKeyWordBean> searchKeyWordBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"),new TypeToken<ArrayList<SearchKeyWordBean>>(){});
+                        if(searchKeyWordBeenList != null){
+                            tl_tags.setVisibility(View.VISIBLE);
+                            tl_tags.removeAllViews();
+                            for(int i = 0; i < searchKeyWordBeenList.size();i++){
+                                SearchKeyWordBean searchKeyWordBean = searchKeyWordBeenList.get(i);
+                                final TextView textView = new TextView(KnowledgeBaseActivity.this);
+                                textView.setText(searchKeyWordBean.getKeywordName());
+                                textView.setTextColor(Color.parseColor("#999999"));
+                                textView.setTextSize(Dimension.SP,12);
+                                textView.setGravity(Gravity.CENTER);
+                                textView.setPadding(20,15,20,15);
+                                textView.setBackgroundResource(R.drawable.round_square_white);
+                              /*  int index = searchKeyWordBean.getKeyword_name().indexOf("：");
+                                String tagStr = searchKeyWordBean.getKeyword_name().substring(index+1);*/
+                                //textView.setText(searchKeyWordBean.getKeyword_name());
+                                textView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        et_search.setText(((TextView)view).getText());
+                                        mBGARefreshLayout.beginRefreshing();
+                                        if(theLastText != null){
+                                            theLastText.setTextColor(Color.parseColor("#999999"));
+                                        }
+                                        theLastText =  ((TextView)view);
+                                        theLastText.setTextColor(Color.parseColor("#1481ff"));
+                                    }
+                                });
+                                tl_tags.addView(textView);
+                            }
+
+                        }else{
+                            tl_tags.setVisibility(View.GONE);
+                        }
+                        break;
+                    default:
+                        ToastUtil.showToast(KnowledgeBaseActivity.this, common.getInfo());
+                        break;
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+            }
+        });
+    }
     @Override
     protected void widgetListener() {
 
@@ -195,10 +265,12 @@ public class KnowledgeBaseActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_device_type,R.id.tv_brand,R.id.tv_search})
+    @OnClick({R.id.tv_device_type,R.id.tv_brand,R.id.tv_search,R.id.tv_request,R.id.tv_publish,R.id.tv_agreeList})
     public void onBtnClick(View v){
         switch (v.getId()){
             case R.id.tv_device_type:
+                tv_device_type.setTextColor(Color.parseColor("#1481ff"));
+                tv_brand.setTextColor(Color.parseColor("#000000"));
                 if(popSelectAdapter == null){
                     return;
                 }
@@ -212,6 +284,8 @@ public class KnowledgeBaseActivity extends BaseActivity {
                // popSelectAdapter.setItems();
                 break;
             case R.id.tv_brand:
+                tv_brand.setTextColor(Color.parseColor("#1481ff"));
+                tv_device_type.setTextColor(Color.parseColor("#000000"));
                 if(popSelectAdapter == null){
                     return;
                 }
@@ -239,6 +313,19 @@ public class KnowledgeBaseActivity extends BaseActivity {
                     return;
                 }
                 mBGARefreshLayout.beginRefreshing();
+                break;
+            case R.id.tv_request:
+                Bundle bundle = new Bundle();
+                bundle.putInt("operateType",2);
+                IntentUtil.gotoActivity(KnowledgeBaseActivity.this, PublishActivity.class,bundle);
+                break;
+            case R.id.tv_publish:
+                Bundle bundle2 = new Bundle();
+                bundle2.putInt("operateType",1);
+                IntentUtil.gotoActivity(KnowledgeBaseActivity.this, PublishActivity.class,bundle2);
+                break;
+            case R.id.tv_agreeList:
+                IntentUtil.gotoActivity(KnowledgeBaseActivity.this, PublishAndRequestListActivity.class);
                 break;
         }
     }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ll_btn"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <CheckBox
+            android:id="@+id/cb_isAnonymous"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:layout_gravity="left|center_vertical"
+            style="@style/CustomCheckBoxTheme"
+            android:checked="false"
+            android:textColor="@color/black"
+            android:text="匿名发表"/>
+        <ImageView
+            android:id="@+id/ivBold"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:clickable="true"
+            android:padding="7dp"
+            android:src="@drawable/ic_bold" />
+        <ImageView
+            android:id="@+id/ivItalic"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginRight="10dp"
+            android:padding="7dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_num_list"
+            android:layout_gravity="right|center_vertical"
+            />
+        <ImageView
+            android:id="@+id/ivPicture"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_gravity="right|center_vertical"
+            android:padding="7dp"
+            android:src="@drawable/ic_sel_pic" />
+</LinearLayout>

@@ -1,11 +1,11 @@
 package com.lwc.shanxiu.module.order.ui.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -29,6 +29,7 @@ import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,6 +81,10 @@ public class OrderDetailActivity extends BaseFragmentActivity {
 //        } else if (!TextUtils.isEmpty(orderId)){
             getOrderInfo();
 //        }
+
+        Sofia.with(this)
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
     private void initData(){

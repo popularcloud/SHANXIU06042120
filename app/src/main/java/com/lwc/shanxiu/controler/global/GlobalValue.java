@@ -30,6 +30,15 @@ public class GlobalValue {
      */
     public static final String AVATAR = "avatar";
 
+    /**
+     * 维修0获取图库吗
+     */
+    public static final int REPAIRS_PHOTO_REQUESTCODE0 = 2010;
+    /**
+     * 维修1获取图库吗
+     */
+    public static final int REPAIRS_PHOTO_REQUESTCODE1 = 2011;
+
 
     /**
      * 定义定位权限
@@ -72,4 +81,9 @@ public class GlobalValue {
      * 首页功能管理模块的显示列表
      */
     public static final String FUNCTION_MANAGE = "function_manage";
+
+    /**
+     * 维修0获取拍照功能
+     */
+    public static final int REPAIRS_CAMERA_REQUESTCODE0 = 20012;
 }

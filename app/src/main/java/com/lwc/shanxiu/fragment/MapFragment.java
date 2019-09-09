@@ -72,6 +72,7 @@ import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.view.TileButton;
 import com.lwc.shanxiu.widget.CircleImageView;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -140,7 +141,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 
     @Override
     protected void findViews(Bundle savedInstanceState) {
-        setTitle("密修");
+        setTitle("地图");
         img_location = (TileButton) view_Parent.findViewById(R.id.img_location);
         llGetOrderMention = (CardView) view_Parent.findViewById(R.id.ll_get_order_mention);
 
@@ -155,6 +156,9 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             LatLng localLatLng = new LatLng(113.75, 23.04);
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localLatLng, 18));
         }
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
     /**
      * 启动定位

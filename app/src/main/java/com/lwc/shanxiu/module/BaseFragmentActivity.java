@@ -35,14 +35,14 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        PushAgent.getInstance(this).onAppStart();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    /*    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(this, true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
             tintManager.setStatusBarTintDrawable(getResources().getDrawable(R.drawable.title_bg_new));
-        }
+        }*/
     }
-    @TargetApi(19)
+    /*@TargetApi(19)
     private static void setTranslucentStatus(Activity activity, boolean on) {
 
         Window win = activity.getWindow();
@@ -54,7 +54,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
-    }
+    }*/
 
     /**
      * 关闭返回键

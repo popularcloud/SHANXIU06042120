@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@color/bg_f7"
+        android:background="@color/white"
         android:orientation="vertical">
 
     <include layout="@layout/include_title"/>
@@ -19,18 +19,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scrollbars="none">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/bg_f7"
+                android:background="@color/bg_f0"
                 android:orientation="vertical">
-
-
                 <RelativeLayout
                     android:id="@+id/rl_head"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_item_bg"
+                    android:padding="15dp">
+                    <com.lwc.shanxiu.widget.CircleImageView
+                        android:id="@+id/imgHeadIcon"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:contentDescription="@null"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/default_portrait_100" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="头像"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/rl_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
 
                     <ImageView
@@ -39,174 +59,92 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
 
-                    <com.lwc.shanxiu.widget.CircleImageView
-                        android:id="@+id/imgHeadIcon"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_toLeftOf="@id/img_leftarrow"
-                        android:contentDescription="@null"
-                        android:src="@drawable/default_portrait_100" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:text="头像"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:id="@+id/rl_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@drawable/selector_item_bg">
-
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_toLeftOf="@+id/img_leftarrow"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="9dp"
                         android:src="@drawable/my_two_dimensional_code" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="我的二维码"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_id"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow"
-                        android:visibility="invisible" />
-
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:background="@color/white"
+                    android:padding="15dp">
                     <TextView
                         android:id="@+id/txtId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@id/img_id"
                         android:ellipsize="marquee"
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
-
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="用户ID"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_accounts"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow"
-                        android:visibility="invisible" />
-
-
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="15dp"
+                    android:layout_marginTop="1px">
                     <TextView
                         android:id="@+id/txtAccounts"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@id/img_accounts"
                         android:ellipsize="marquee"
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
-
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="账号"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rLayoutSex"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
-
                     <ImageView
                         android:id="@+id/img_sex"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
-
                     <TextView
                         android:id="@+id/txtSex"
                         android:layout_width="wrap_content"
@@ -220,86 +158,61 @@
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="性别"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_ide"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow"
-                        android:visibility="invisible" />
-
-
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp">
                     <TextView
                         android:id="@+id/txtIde"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@id/img_ide"
+                        android:layout_alignParentRight="true"
                         android:ellipsize="marquee"
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="身份"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/selector_item_bg"
+                    android:padding="15dp"
+                    android:layout_marginTop="1px"
                     android:visibility="gone">
-
                     <ImageView
                         android:id="@+id/img_apply"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
 
                     <TextView
@@ -311,131 +224,87 @@
                         android:gravity="right"
                         android:singleLine="true"
                         android:text="立即申请"
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="申请成为维修人员"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rLayoutName"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
-
-                    <ImageView
-                        android:id="@+id/img_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow" />
-
                     <TextView
                         android:id="@+id/txtName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@+id/img_name"
+                        android:layout_alignParentRight="true"
                         android:ellipsize="marquee"
                         android:gravity="right"
                         android:maxLength="12"
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
-
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:text="真实姓名（必填）"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/line_cc" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:text="真实姓名"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
 
                 <RelativeLayout
                     android:id="@+id/rLayoutPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
-
-                    <ImageView
-                        android:id="@+id/img_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow"
-                        android:visibility="visible"/>
 
                     <TextView
                         android:id="@+id/txtPhone"
                         android:layout_width="140dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@+id/img_phone"
+                        android:layout_alignParentRight="true"
                         android:gravity="right"
                         android:singleLine="true"
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:text="联系电话（必填）"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:text="联系电话"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rLayoutAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg"
                     android:visibility="gone">
 
@@ -445,7 +314,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
 
                     <TextView
@@ -457,8 +325,8 @@
                         android:layout_toLeftOf="@+id/img_city"
                         android:gravity="right"
                         android:singleLine="true"
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -467,66 +335,44 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:text="常用地址"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/img_company"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/icon_cell_leftarrow"
-                        android:visibility="invisible" />
-
                     <TextView
                         android:id="@+id/txtCompany"
                         android:layout_width="140dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_toLeftOf="@+id/img_company"
+                        android:layout_alignParentRight="true"
                         android:gravity="right"
                         android:singleLine="true"
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="所属单位"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rLayoutSign"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
 
                     <ImageView
@@ -535,7 +381,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
 
                     <TextView
@@ -543,41 +388,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginLeft="60dp"
                         android:layout_toLeftOf="@+id/img_sign"
-                        android:textColor="@color/gray_99"
-                        android:textSize="13sp" />
+                        android:layout_marginRight="15dp"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="right"
+                        android:textColor="@color/black_66"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
-                        android:text="签名"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/line_cc" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:text="个性签名"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/rLayoutChangePwd"
                     android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
                     android:background="@drawable/selector_item_bg">
 
                     <ImageView
@@ -585,31 +418,16 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
                         android:src="@drawable/icon_cell_leftarrow" />
-
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
                         android:text="修改密码"
-                        android:textColor="@color/black_0a"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentTop="true"
-                        android:background="@color/line_cc" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/line_cc" />
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
                 </RelativeLayout>
             </LinearLayout>
         </ScrollView>

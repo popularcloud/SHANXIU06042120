@@ -74,6 +74,23 @@ public class CodeActivity extends BaseActivity {
 		ButterKnife.bind(this);
 		setTitle("二维码");
 		showBack();
+		setRightImg(R.drawable.ic_share, new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				String photoUrl = preferencesUtils.loadString("share_photo_url"+user.getUserId());
+				if (!TextUtils.isEmpty(photoUrl) && new File(photoUrl).exists()) {
+					Bundle bundle = new Bundle();
+					bundle.putInt("type", 3);
+					bundle.putString("urlPhoto", photoUrl);
+					bundle.putString("goneQQ", "true");
+					IntentUtil.gotoActivity(CodeActivity.this, ShareActivity.class, bundle);
+				} else {
+					tv_desc.setText("长按识别二维码，成为专属客户");
+					ll_bottom.setVisibility(View.INVISIBLE);
+					savePic(3);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -144,23 +161,9 @@ public class CodeActivity extends BaseActivity {
 	 * 按钮点击监听
 	 * @param view
      */
-	@OnClick({R.id.btnShare, R.id.btnSava})
+	@OnClick({R.id.btnSava})
 	public void onClick(View view) {
 		switch (view.getId()) {
-			case R.id.btnShare:
-				String photoUrl = preferencesUtils.loadString("share_photo_url"+user.getUserId());
-				if (!TextUtils.isEmpty(photoUrl) && new File(photoUrl).exists()) {
-					Bundle bundle = new Bundle();
-					bundle.putInt("type", 3);
-					bundle.putString("urlPhoto", photoUrl);
-					bundle.putString("goneQQ", "true");
-					IntentUtil.gotoActivity(this, ShareActivity.class, bundle);
-				} else {
-					tv_desc.setText("长按识别二维码，成为专属客户");
-					ll_bottom.setVisibility(View.INVISIBLE);
-					savePic(3);
-				}
-				break;
 			case R.id.btnSava:
 				tv_desc.setText("长按识别二维码，成为专属客户");
 				ll_bottom.setVisibility(View.INVISIBLE);

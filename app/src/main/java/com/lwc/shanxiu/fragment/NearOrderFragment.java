@@ -2,6 +2,7 @@ package com.lwc.shanxiu.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,6 +44,7 @@ import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.ProgressUtils;
 import com.lwc.shanxiu.widget.DialogStyle2;
+import com.yanzhenjie.sofia.Sofia;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -306,6 +308,9 @@ public class NearOrderFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
         return rootView;
     }
 

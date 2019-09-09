@@ -2,6 +2,7 @@ package com.lwc.shanxiu.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.widget.CircleImageView;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.PhotoBigFrameDialog;
+import com.yanzhenjie.sofia.Sofia;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +92,9 @@ public class MineFragment extends BaseFragment {
         preferencesUtils = SharedPreferencesUtils.getInstance(getContext());
         user = preferencesUtils.loadObjectData(User.class);
         setTitle("我的");
+        Sofia.with(getActivity())
+                .statusBarBackground(Color.parseColor("#ffffff"))
+                .statusBarDarkFont();
     }
 
     @OnClick({R.id.txtEvaluate, R.id.txtUserGuide, R.id.txtFeedback, R.id.imgRight, R.id.txtMyOrder, R.id.img_head, R.id.txt_share,

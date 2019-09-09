@@ -133,13 +133,13 @@ public class PayPwdActivity extends BaseActivity {
 			String str = btnSubmit.getText().toString();
 			if (str.equals("下一步")) {
 				if (TextUtils.isEmpty(et_1.getText().toString().trim())) {
-					ToastUtil.showLongToast(PayPwdActivity.this, "请输入六位纯数字支付密码");
-					return;
-				}
-				if (TextUtils.isEmpty(et_2.getText().toString().trim())) {
-					ToastUtil.showLongToast(PayPwdActivity.this, "请输入六位纯数字支付密码");
-					return;
-				}
+                    ToastUtil.showLongToast(PayPwdActivity.this, "请输入六位纯数字支付密码");
+                    return;
+                }
+                if (TextUtils.isEmpty(et_2.getText().toString().trim())) {
+                    ToastUtil.showLongToast(PayPwdActivity.this, "请输入六位纯数字支付密码");
+                    return;
+                }
 				if (TextUtils.isEmpty(et_3.getText().toString().trim())) {
 					ToastUtil.showLongToast(PayPwdActivity.this, "请输入六位纯数字支付密码");
 					return;
@@ -386,7 +386,7 @@ public class PayPwdActivity extends BaseActivity {
 		customSelection(et_4);
 		customSelection(et_5);
 		customSelection(et_6);
-		et_1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+		/*et_1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				if(hasFocus) {
@@ -433,7 +433,7 @@ public class PayPwdActivity extends BaseActivity {
 					setFocus();
 				}
 			}
-		});
+		});*/
 		et_1.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -637,14 +637,15 @@ public class PayPwdActivity extends BaseActivity {
 		mEditText.setFocusable(true);
 		mEditText.setFocusableInTouchMode(true);
 		mEditText.requestFocus();
-		String str = mEditText.getText().toString().trim();
-		if (str.length() > 0){
+		mEditText.requestFocusFromTouch();
+		//String str = mEditText.getText().toString().trim();
+	/*	if (str.length() > 0){
 			mEditText.setSelection(str.length());
-		}
-		if(getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
+		}*/
+/*		if(getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
 			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMethodManager.showSoftInput(mEditText, 0);
-		}
+		}*/
 		isDel = false;
 	}
 

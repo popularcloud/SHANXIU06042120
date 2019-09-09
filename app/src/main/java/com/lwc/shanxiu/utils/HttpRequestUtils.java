@@ -134,7 +134,7 @@ public class HttpRequestUtils {
 								if (list != null && list.size() > 0) {
 									for (int i=0; i<list.size(); i++) {
 										ActivityBean ab = list.get(i);
-										if (ab.getConditionIndex().replace("/","").equals(URL.replace("/",""))) {
+										if (ab != null && ab.getConditionIndex() != null && ab.getConditionIndex().replace("/","").equals(URL.replace("/",""))) {
 											gotoRedPacket(ab, context);
 											return;
 										}
@@ -197,11 +197,11 @@ public class HttpRequestUtils {
 									for (int i=0; i<list.size(); i++) {
 										ActivityBean ab = list.get(i);
 										if (URL.equals(RequestValue.FINISH_ORDER)) {
-											if (ab.getConditionIndex().replace("/","").equals(URL.replace("/","")) && map.get("hasAward").equals("1")) {
+											if (ab.getConditionIndex() != null && ab.getConditionIndex().replace("/","").equals(URL.replace("/","")) && map.get("hasAward").equals("1")) {
 												gotoRedPacket(ab, context);
 												return;
 											}
-										} else if (ab.getConditionIndex().replace("/","").equals(URL.replace("/",""))) {
+										} else if (ab.getConditionIndex() != null && ab.getConditionIndex().replace("/","").equals(URL.replace("/",""))) {
 											gotoRedPacket(ab, context);
 											return;
 										}

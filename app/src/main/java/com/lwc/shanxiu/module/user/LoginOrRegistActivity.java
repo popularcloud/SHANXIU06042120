@@ -127,7 +127,7 @@ public class LoginOrRegistActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.del_phone,R.id.btnLogin,R.id.txtFindPassWord,R.id.show_pwd})
+    @OnClick({R.id.del_phone,R.id.btnLogin,R.id.txtFindPassWord,R.id.show_pwd,R.id.tvRegist})
     public void onBtnOnClick(View view){
         switch (view.getId()){
             case R.id.del_phone:
@@ -139,6 +139,9 @@ public class LoginOrRegistActivity extends BaseActivity {
                 break;
             case R.id.btnLogin:
                 login();
+                break;
+            case R.id.tvRegist:
+                IntentUtil.gotoActivity(LoginOrRegistActivity.this, RegistActivity.class);
                 break;
             case R.id.show_pwd:
                 if(isShow){

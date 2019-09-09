@@ -1,5 +1,6 @@
 package com.lwc.shanxiu.module.order.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import com.lwc.shanxiu.module.order.ui.fragment.FinishFragment;
 import com.lwc.shanxiu.module.order.ui.fragment.ProceedFragment;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.widget.CustomViewPager;
+import com.yanzhenjie.sofia.Sofia;
 
 import java.util.HashMap;
 
@@ -72,6 +74,9 @@ public class MyOrderListActivity extends BaseFragmentActivity {
 				IntentUtil.gotoActivity(MyOrderListActivity.this, OrderListActivity.class);
 			}
 		});
+		Sofia.with(this)
+				.statusBarBackground(Color.parseColor("#ffffff"))
+				.statusBarDarkFont();
 	}
 
 	@Override

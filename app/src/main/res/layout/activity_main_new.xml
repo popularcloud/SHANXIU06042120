@@ -92,7 +92,7 @@
 	        android:singleLine="true"
 	        android:textSize="11sp"
 	        android:textColor="@color/gray_99"
-	        android:text="开启自动接单" />
+	        android:text="知识库" />
 	</RelativeLayout>
 
 	<ImageView
