@@ -16,6 +16,7 @@
     <color name="blue_00adf4">#00adf4</color>
     <color name="blue_00aaf5">#00aaf5</color>
     <color name="text_blue_click">#0aa5fe</color>
+    <color name="transparent_white_55">#33ffffff</color>
     <!--  订单 -->
     <!-- 待评价 -->
     <!-- 已评价 -->
@@ -58,6 +59,7 @@
     <!-- 绿色 -->
     <!-- 蓝色 -->
     <color name="blue">#4481D2</color>
+    <color name="blue_37">#378EFF</color>
     <color name="blue_5fd">#0aa5fd</color>
     <!-- 灰色 透明 -->
     <color name="bg_gray_30">#30868686</color>
@@ -115,6 +117,7 @@
     <!-- 蓝色按钮 -->
     <color name="btn_blue_pressed">#029bf3</color>
     <color name="btn_blue_nomal">#1481ff</color>
+    <color name="btn_blue_16">#1682ff</color>
     <!-- 橘色按钮 -->
     <!-- 红色按钮 -->
     <!-- 条目点击颜色 -->
@@ -158,6 +161,7 @@
     <!-- 图片类型(gif或长图标识)文字颜色 -->
     <color name="rich_editor_image_type_text_color">#ffffffff</color>
     <color name="blue_ff">#2db9ff</color>
+    <color name="yellow_52">#fdf052</color>
 
 
 </resources>

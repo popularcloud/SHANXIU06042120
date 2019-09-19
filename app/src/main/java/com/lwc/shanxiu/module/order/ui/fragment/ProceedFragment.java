@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.BaseFragment;
@@ -73,9 +74,10 @@ public class ProceedFragment extends BaseFragment implements IOrderListFragmentV
         setListener();
         bindRecycleView();
 
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
+        ImmersionBar.with(getActivity())
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
     @Override

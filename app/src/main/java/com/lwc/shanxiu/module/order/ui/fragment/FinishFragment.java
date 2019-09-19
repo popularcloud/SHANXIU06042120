@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.BaseFragment;
 import com.lwc.shanxiu.module.bean.Order;
@@ -79,9 +80,10 @@ public class FinishFragment extends BaseFragment implements IOrderListFragmentVi
             e.printStackTrace();
         }
 
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
 

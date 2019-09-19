@@ -80,7 +80,7 @@ public class TagsLayout extends ViewGroup{
             // 得到child的lp
             LayoutParams lp = child.getLayoutParams();
             // 当前子空间实际占据的宽度
-            int childWidth = child.getMeasuredWidth() + childHorizontalSpace;
+            int childWidth = child.getMeasuredWidth() + 2*childHorizontalSpace;
             // 当前子空间实际占据的高度
             int childHeight = child.getMeasuredHeight() + childVerticalSpace;
 
@@ -100,9 +100,9 @@ public class TagsLayout extends ViewGroup{
                 height += lineHeight;
                 // 开启记录下一行的高度
                 lineHeight = childHeight;
-                child.setTag(new Location(left, top + height, childWidth + left - childHorizontalSpace, height + child.getMeasuredHeight() + top));
+                child.setTag(new Location(left, top + height, childWidth + left - 2*childHorizontalSpace, height + child.getMeasuredHeight() + top));
             } else {// 否则累加值lineWidth,lineHeight取最大高度
-                child.setTag(new Location(lineWidth + left, top + height, lineWidth + childWidth - childHorizontalSpace + left, height + child.getMeasuredHeight() + top));
+                child.setTag(new Location(lineWidth + left, top + height, lineWidth + childWidth - 2*childHorizontalSpace + left, height + child.getMeasuredHeight() + top));
                 lineWidth += childWidth;
                 lineHeight = Math.max(lineHeight, childHeight);
             }

@@ -20,7 +20,7 @@
 			android:background="@color/white"
 			android:paddingRight="15dp"
 			android:textSize="15sp"
-			android:text="请选择你成为的服务商类型"/>
+			android:text="请选择您成为的服务商类型"/>
 		<LinearLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
 		android:textSize="14sp"
 		android:textColor="@color/btn_blue_nomal"
 		android:layout_marginLeft="15sp"
-		android:text="注:请根据你的实际情况选择"/>
+		android:text="注:请根据您的实际情况选择"/>
 	<TextView
 		android:id="@+id/tv_next"
 		android:layout_width="match_parent"

@@ -49,9 +49,7 @@ public class PublishAndRequestAdapter extends SuperAdapter<PublishAndRequestBean
         }
         String dateStr = TimeUtil.getTimeFormatText(date);
         holder.setText(R.id.tv_create_time, dateStr);
-        if(item.getStatus() == 1){
-
-        }
+        holder.setVisibility(R.id.tv_status,View.VISIBLE);
         switch (item.getStatus()){
             case 1:
                 holder.setText(R.id.tv_status,"处理中");
@@ -63,7 +61,6 @@ public class PublishAndRequestAdapter extends SuperAdapter<PublishAndRequestBean
                 }else{
                     holder.setVisibility(R.id.tv_status,View.GONE);
                 }
-
                 break;
             case 3:
                 holder.setText(R.id.tv_status,"不通过");

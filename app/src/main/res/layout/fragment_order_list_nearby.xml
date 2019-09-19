@@ -5,9 +5,8 @@
 	android:background="@color/bg_f0"
 	android:fitsSystemWindows="true"
 	android:orientation="vertical">
-
 	<include layout="@layout/include_title" />
-	<View style="@style/line_c8Style" />
+	<View style="@style/line_f0Style" />
 	<LinearLayout
 		android:id="@+id/ll_cz"
 		android:layout_width="match_parent"
@@ -95,15 +94,18 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<TextView
-				android:id="@+id/textTip"
-				style="@style/text_tip" />
+			<ImageView
+				android:id="@+id/iv_nodate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:src="@drawable/ic_no_data"
+				android:visibility="gone"/>
 
 			<cn.bingoogolapple.refreshlayout.BGARefreshLayout
 				android:id="@+id/mBGARefreshLayout"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_marginTop="7dp">
+				android:layout_height="match_parent">
 
 				<android.support.v7.widget.RecyclerView
 					android:id="@+id/recyclerView"
@@ -131,7 +133,7 @@
 				android:listSelector="@drawable/selector_item_bg"></ListView>
 
 			<View
-				style="@style/line_ccStyle"
+				style="@style/line_f0Style"
 				android:layout_below="@+id/ll_cz" />
 
 			<TextView

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
@@ -14,17 +15,20 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.bean.Update;
 import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.fragment.InformationFragment;
+import com.lwc.shanxiu.fragment.KnowledgeBaseFragment;
 import com.lwc.shanxiu.fragment.MapFragment;
 import com.lwc.shanxiu.fragment.MineFragment;
 import com.lwc.shanxiu.fragment.NearOrderFragment;
@@ -33,7 +37,6 @@ import com.lwc.shanxiu.module.BaseFragmentActivity;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.common_adapter.FragmentsPagerAdapter;
 import com.lwc.shanxiu.module.message.bean.HasMsg;
-import com.lwc.shanxiu.module.message.ui.KnowledgeBaseActivity;
 import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
 import com.lwc.shanxiu.utils.ApkUtil;
 import com.lwc.shanxiu.utils.DialogUtil;
@@ -49,7 +52,6 @@ import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
 import com.lwc.shanxiu.widget.DialogStyle3;
-import com.yanzhenjie.sofia.Sofia;
 
 import org.litepal.crud.DataSupport;
 
@@ -85,11 +87,15 @@ public class MainActivity extends BaseFragmentActivity {
     RadioButton radioFriend;
     @BindView(R.id.radio_mine)
     RadioButton radioMine;
+    @BindView(R.id.radio_knowledge)
+    RadioButton radioKnowledge;
     @BindView(R.id.txt_togo)
     TextView txtTogo;
     @BindView(R.id.iv_red_dian)
     ImageView iv_red_dian;
     private DialogStyle3 dialogStyle3 = null;
+
+
 
     private SharedPreferencesUtils preferencesUtils;
     private User user;
@@ -225,6 +231,12 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            //透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_main_new);
         ButterKnife.bind(this);
         activity = this;
@@ -250,9 +262,10 @@ public class MainActivity extends BaseFragmentActivity {
                 Utils.setNotification4(this);
             }
         }
-        Sofia.with(this)
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
     public void registerMessageReceiver() {
@@ -272,8 +285,9 @@ public class MainActivity extends BaseFragmentActivity {
         rButtonHashMap = new HashMap<>();
         rButtonHashMap.put(0, radioMap);
         rButtonHashMap.put(1, radioOrder);
-        rButtonHashMap.put(2, radioFriend);
-        rButtonHashMap.put(3, radioMine);
+        rButtonHashMap.put(2, radioKnowledge);
+        rButtonHashMap.put(3, radioFriend);
+        rButtonHashMap.put(4, radioMine);
     }
 
     /**
@@ -286,14 +300,15 @@ public class MainActivity extends BaseFragmentActivity {
         mineFragment = new MineFragment();
         fragmentHashMap.put(0, mapFragment);
         fragmentHashMap.put(1, nearOrderFragment);
-        fragmentHashMap.put(2, new InformationFragment());
-        fragmentHashMap.put(3, mineFragment);
+        fragmentHashMap.put(2, new KnowledgeBaseFragment());
+        fragmentHashMap.put(3, new InformationFragment());
+        fragmentHashMap.put(4, mineFragment);
     }
 
     private void bindViewPage(HashMap<Integer, Fragment> fragmentList) {
         //是否滑动
         cViewPager.setPagingEnabled(false);
-        cViewPager.setOffscreenPageLimit(4);
+        cViewPager.setOffscreenPageLimit(5);
         cViewPager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), fragmentList));
         cViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -531,12 +546,13 @@ public class MainActivity extends BaseFragmentActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.radio_map:
-                if (cViewPager.getCurrentItem() == 0) {
+              /*  if (cViewPager.getCurrentItem() == 0) {
                     return;
-                }
+                }*/
                 cViewPager.setCurrentItem(0, false);
                 mapFragment.getNewestOrder();
                 nearOrderFragment.goneTj();
+                txtTogo.setTextColor(Color.parseColor("#333333"));
                 break;
             case R.id.radio_order:
                 if (cViewPager.getCurrentItem() == 1) {
@@ -544,22 +560,25 @@ public class MainActivity extends BaseFragmentActivity {
                 }
                 nearOrderFragment.goneTj();
                 cViewPager.setCurrentItem(1, false);
+                txtTogo.setTextColor(Color.parseColor("#333333"));
                 break;
             case R.id.radio_friend:
-                if (cViewPager.getCurrentItem() == 2) {
-                    return;
-                }
-                nearOrderFragment.goneTj();
-                cViewPager.setCurrentItem(2, false);
-                break;
-            case R.id.radio_mine:
                 if (cViewPager.getCurrentItem() == 3) {
                     return;
                 }
                 nearOrderFragment.goneTj();
                 cViewPager.setCurrentItem(3, false);
+                txtTogo.setTextColor(Color.parseColor("#333333"));
+                break;
+            case R.id.radio_mine:
+                if (cViewPager.getCurrentItem() == 4) {
+                    return;
+                }
+                nearOrderFragment.goneTj();
+                cViewPager.setCurrentItem(4, false);
                 Intent intent2 = new Intent(BroadcastFilters.NOTIFI_GET_ORDER_COUNT);
                 sendBroadcast(intent2);
+                txtTogo.setTextColor(Color.parseColor("#333333"));
                 break;
             case R.id.img_center:
               /*  user = preferencesUtils.loadObjectData(User.class);
@@ -574,7 +593,18 @@ public class MainActivity extends BaseFragmentActivity {
                     IntentUtil.gotoActivityAndFinish(MainActivity.this, LoginOrRegistActivity.class);
                 }*/
 
-                IntentUtil.gotoActivity(this, KnowledgeBaseActivity.class);
+                //IntentUtil.gotoActivity(this, KnowledgeBaseActivity.class);
+
+                if (cViewPager.getCurrentItem() == 2) {
+                    return;
+                }
+                nearOrderFragment.goneTj();
+                cViewPager.setCurrentItem(2, false);
+                txtTogo.setTextColor(Color.parseColor("#1481ff"));
+            /*    for (Object radioButton : rButtonHashMap.values()){
+                    ((RadioButton)radioButton).setChecked(false);
+                }*/
+                radioKnowledge.setChecked(true);
                 break;
         }
     }

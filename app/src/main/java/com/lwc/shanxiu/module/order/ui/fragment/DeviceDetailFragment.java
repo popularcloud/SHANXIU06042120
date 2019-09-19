@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.adapter.AfterServiceAdapter;
 import com.lwc.shanxiu.module.BaseFragment;
@@ -70,6 +71,11 @@ public class DeviceDetailFragment extends BaseFragment implements IDeviceDetailF
         bindRecycleView();
         setListener();
         getData();
+
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
     private void bindRecycleView() {

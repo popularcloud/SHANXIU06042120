@@ -72,6 +72,11 @@ public class GlobalValue {
     public static final int CAMERA_REQUESTCODE = 2001;
 
     /**
+     * 裁剪功能
+     */
+    public static final int TAILORING_REQUESTCODE = 2003;
+
+    /**
      * 修改图片
      */
     public static final int ACTIVITY_MODIFY_PHOTO_REQUESTCODE = 2002;

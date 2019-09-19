@@ -40,7 +40,7 @@ public abstract class BaseFragment extends Fragment {
 	/** 广播过滤器 */
 	public IntentFilter filter;
 	private TextView txtActionbarTitle;
-	private ImageView imgBack;
+	protected ImageView imgBack;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

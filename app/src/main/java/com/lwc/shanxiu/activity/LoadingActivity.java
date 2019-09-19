@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.google.gson.reflect.TypeToken;
@@ -48,6 +50,12 @@ public class LoadingActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //去掉窗口标题
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //隐藏顶部状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_loading);
 //        PushAgent.getInstance(this).onAppStart();
         imageView = (ImageView) findViewById(R.id.imageView);

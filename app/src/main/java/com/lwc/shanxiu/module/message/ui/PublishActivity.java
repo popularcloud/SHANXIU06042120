@@ -1,6 +1,7 @@
 package com.lwc.shanxiu.module.message.ui;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +35,7 @@ import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.PhotoToken;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.message.bean.PublishAndRequestBean;
+import com.lwc.shanxiu.utils.DisplayUtil;
 import com.lwc.shanxiu.utils.FileUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -63,8 +67,8 @@ import jp.wasabeef.richeditor.RichEditor;
 
 public class PublishActivity extends BaseActivity {
 
-     private static final int GET_PHOTO_REQUEST_CODE = 1;
-     private static final int CROP_REQUEST_CODE = 2;
+    private static final int GET_PHOTO_REQUEST_CODE = 1;
+    private static final int CROP_REQUEST_CODE = 2;
     @BindView(R.id.ivBold)
     ImageView ivBold;
     @BindView(R.id.ivItalic)
@@ -79,12 +83,18 @@ public class PublishActivity extends BaseActivity {
     TextView tv_error_tip;
     @BindView(R.id.ll_tips)
     LinearLayout ll_tips;
+    @BindView(R.id.tv_tips_title)
+    TextView tv_tips_title;
+    @BindView(R.id.tv_tips_content)
+    TextView tv_tips_content;
     @BindView(R.id.ll_btn)
     LinearLayout ll_btn;
     @BindView(R.id.sl_scroll)
     ScrollView sl_scroll;
     @BindView(R.id.cb_isAnonymous)
     CheckBox cb_isAnonymous;  //是否匿名
+
+    private boolean isAnonymous = false;
 
     private PhotoToken token;
     private ProgressDialog pd;
@@ -104,10 +114,10 @@ public class PublishActivity extends BaseActivity {
     @Override
     protected void findViews() {
         Intent intent = getIntent();
-        operateType = intent.getIntExtra("operateType",1);
+        operateType = intent.getIntExtra("operateType", 1);
 
         String rightBtnTxt = "发表";
-        switch (operateType){
+        switch (operateType) {
             case 1:
                 setTitle("撰写文章");
                 rightBtnTxt = "发表";
@@ -127,14 +137,16 @@ public class PublishActivity extends BaseActivity {
                 break;
             case 2:
                 setTitle("提个问题");
-                rightBtnTxt = "提问";
+                rightBtnTxt = "提交";
                 editTextTitle.setHint("请输入问题标题(5-49个字)");
                 mEditor.setPlaceholder("请详细描述问题(选填)...");
+                tv_tips_title.setVisibility(View.GONE);
+                tv_tips_content.setText("·保持文字简练，表达清晰问题的关键点\n·可添加图片方便解答");
                 checkedCache();
                 break;
             case 4:
                 setTitle("提个问题(编辑)");
-                rightBtnTxt = "提问";
+                rightBtnTxt = "提交";
                 editTextTitle.setHint("请输入问题标题(5-49个字)");
                 mEditor.setPlaceholder("请详细描述问题(选填)...");
                 knowledgeId = intent.getStringExtra("knowledgeId");
@@ -142,7 +154,7 @@ public class PublishActivity extends BaseActivity {
                 break;
         }
 
-        setRightText(rightBtnTxt, "#1481ff",new View.OnClickListener() {
+        setRightText(rightBtnTxt, "#1481ff", new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 publishData();
@@ -154,26 +166,55 @@ public class PublishActivity extends BaseActivity {
     /**
      * 检查是否有缓存数据
      */
-    private void checkedCache(){
-        switch (operateType){
+    private void checkedCache() {
+        switch (operateType) {
             case 1://文章
-                String articleTitle = (String) SharedPreferencesUtils.getParam(this,"articleTitle","");
-                String articleContent = (String) SharedPreferencesUtils.getParam(this,"articleContent","");
-                if(!TextUtils.isEmpty(articleTitle)){
+                String articleTitle = (String) SharedPreferencesUtils.getParam(this, "articleTitle", "");
+                String articleContent = (String) SharedPreferencesUtils.getParam(this, "articleContent", "");
+                if (!TextUtils.isEmpty(articleTitle)) {
                     editTextTitle.setText(articleTitle);
                 }
-                if(!TextUtils.isEmpty(articleContent)){
+                if (!TextUtils.isEmpty(articleContent)) {
                     mEditor.setHtml(articleContent);
                 }
                 break;
             case 2://提问
-                String questionTitle = (String) SharedPreferencesUtils.getParam(this,"questionTitle","");
-                String questionContent = (String) SharedPreferencesUtils.getParam(this,"questionContent","");
-                if(!TextUtils.isEmpty(questionTitle)){
+                String questionTitle = (String) SharedPreferencesUtils.getParam(this, "questionTitle", "");
+                String questionContent = (String) SharedPreferencesUtils.getParam(this, "questionContent", "");
+                if (!TextUtils.isEmpty(questionTitle)) {
                     editTextTitle.setText(questionTitle);
                 }
-                if(!TextUtils.isEmpty(questionContent)){
+                if (!TextUtils.isEmpty(questionContent)) {
                     mEditor.setHtml(questionContent);
+                }
+                break;
+        }
+    }
+
+    /**
+     * 保存缓存数据
+     */
+    private void saveCache() {
+        switch (operateType) {
+            case 1://文章
+                String articleTitle = editTextTitle.getText().toString();
+                String articleContent = mEditor.getHtml();
+                if (!TextUtils.isEmpty(articleTitle)) {
+                    SharedPreferencesUtils.getInstance(this).setParam(this, "articleTitle", articleTitle);
+                }
+                if (!TextUtils.isEmpty(articleContent)) {
+                    SharedPreferencesUtils.getInstance(this).setParam(this, "articleContent", articleContent);
+                }
+                break;
+            case 2://提问
+                String questionTitle = editTextTitle.getText().toString();
+                String questionContent = mEditor.getHtml();
+
+                if (!TextUtils.isEmpty(questionTitle)) {
+                    SharedPreferencesUtils.getInstance(this).setParam(this, "questionTitle", questionTitle);
+                }
+                if (!TextUtils.isEmpty(questionContent)) {
+                    SharedPreferencesUtils.getInstance(this).setParam(this, "questionContent", questionContent);
                 }
                 break;
         }
@@ -183,28 +224,15 @@ public class PublishActivity extends BaseActivity {
     /**
      * 保存缓存数据
      */
-    private void saveCache(){
-        switch (operateType){
+    private void clearCache() {
+        switch (operateType) {
             case 1://文章
-                String articleTitle = editTextTitle.getText().toString().trim();
-                String articleContent = mEditor.getHtml();
-                if(!TextUtils.isEmpty(articleTitle)){
-                    SharedPreferencesUtils.getInstance(this).setParam(this,"articleTitle",articleTitle);
-                }
-                if(!TextUtils.isEmpty(articleContent)){
-                    SharedPreferencesUtils.getInstance(this).setParam(this,"articleContent",articleContent);
-                }
+                SharedPreferencesUtils.getInstance(this).setParam(this, "articleTitle", "");
+                SharedPreferencesUtils.getInstance(this).setParam(this, "articleContent", "");
                 break;
             case 2://提问
-                String questionTitle = editTextTitle.getText().toString().trim();
-                String questionContent = mEditor.getHtml().trim();
-
-                if(!TextUtils.isEmpty(questionTitle)){
-                    SharedPreferencesUtils.getInstance(this).setParam(this,"questionTitle",questionTitle);
-                }
-                if(!TextUtils.isEmpty(questionContent)){
-                    SharedPreferencesUtils.getInstance(this).setParam(this,"questionContent",questionContent);
-                }
+                SharedPreferencesUtils.getInstance(this).setParam(this, "questionTitle", "");
+                SharedPreferencesUtils.getInstance(this).setParam(this, "questionContent", "");
                 break;
         }
 
@@ -213,46 +241,52 @@ public class PublishActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         saveCache();
     }
 
-    private void loadEditData(){
-        HttpRequestUtils.httpRequest(this, "获取编辑信息", RequestValue.GET_KNOWLEDGE_DETAILS+"/"+knowledgeId, null, "GET", new HttpRequestUtils.ResponseListener() {
+    private void loadEditData() {
+        HttpRequestUtils.httpRequest(this, "获取编辑信息", RequestValue.GET_KNOWLEDGE_DETAILS + "/" + knowledgeId, null, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        PublishAndRequestBean knowledgeBean = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"),PublishAndRequestBean.class);
-                        knowledgeId  = knowledgeBean.getKnowledgeId();
+                        PublishAndRequestBean knowledgeBean = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"), PublishAndRequestBean.class);
+                        knowledgeId = knowledgeBean.getKnowledgeId();
                         editTextTitle.setText(knowledgeBean.getKnowledgeTitle());
-                        switch (operateType){
+                        switch (operateType) {
                             case 1:
                                 mEditor.setHtml(knowledgeBean.getKnowledgeDetails());
                                 break;
                             case 3:
                                 mEditor.setHtml(knowledgeBean.getKnowledgeDetails());
-                                if(knowledgeBean.getStatus() == 3){
+                                if (knowledgeBean.getStatus() == 3) {
                                     ll_tips.setVisibility(View.GONE);
                                     tv_error_tip.setVisibility(View.VISIBLE);
-                                    tv_error_tip.setText(TextUtils.isEmpty(knowledgeBean.getReason())?"暂无":knowledgeBean.getReason());
+                                    tv_error_tip.setText(TextUtils.isEmpty(knowledgeBean.getReason()) ? "暂无" : knowledgeBean.getReason());
                                 }
                                 break;
                             case 2:
                                 mEditor.setHtml(knowledgeBean.getKnowledgeDetails());
                                 break;
                             case 4:
-                                mEditor.setHtml(knowledgeBean.getKnowledgeQuesion());
-                                if(knowledgeBean.getStatus() == 3){
+                                mEditor.setHtml(knowledgeBean.getKnowledgeDetails());
+                                if (knowledgeBean.getStatus() == 3) {
                                     ll_tips.setVisibility(View.GONE);
                                     tv_error_tip.setVisibility(View.VISIBLE);
-                                    tv_error_tip.setText(TextUtils.isEmpty(knowledgeBean.getReason())?"暂无":knowledgeBean.getReason());
+                                    tv_error_tip.setText(TextUtils.isEmpty(knowledgeBean.getReason()) ? "暂无" : knowledgeBean.getReason());
                                 }
                                 break;
                         }
                         break;
                     default:
-                        ToastUtil.showToast(PublishActivity.this,common.getInfo());
+                        ToastUtil.showToast(PublishActivity.this, common.getInfo());
                         break;
                 }
             }
@@ -269,60 +303,75 @@ public class PublishActivity extends BaseActivity {
      */
     private void publishData() {
 
-        String title = editTextTitle.getText().toString().trim();
+        final String title = editTextTitle.getText().toString().trim();
         String content = mEditor.getHtml();
 
-        Map<String,String> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
 
         String requestPath = RequestValue.GET_KNOWLEDGE_KNOWLEDGEPUBLISH;
-        if(!TextUtils.isEmpty(knowledgeId)){
-            params.put("knowledge_id",knowledgeId);
+        if (!TextUtils.isEmpty(knowledgeId)) {
+            params.put("knowledge_id", knowledgeId);
             requestPath = RequestValue.GET_KNOWLEDGE_UPDATEPUBLISH;
         }
 
         int titleLength = title.length();
-        if(titleLength < 5 || titleLength > 49){
-            ToastUtil.showToast(PublishActivity.this,"请输入5-49个字的标题");
+        if (titleLength < 5 || titleLength > 49) {
+            ToastUtil.showToast(PublishActivity.this, "请输入5-49个字的标题");
             return;
         }
-        params.put("knowledge_title",title);
+        params.put("knowledge_title", title);
 
-        switch (operateType){
+        switch (operateType) {
             case 1:
             case 3: //文章
-              if(content == null || content.length() < 1){
-                  ToastUtil.showToast(PublishActivity.this,"请填写文章内容");
-                  return;
-              }
-                params.put("type","1");
-                params.put("knowledge_details",content);
+                if (content == null || content.length() < 1) {
+                    ToastUtil.showToast(PublishActivity.this, "请填写文章内容");
+                    return;
+                }
+                params.put("type", "1");
+                params.put("knowledge_details", content);
                 break;
             case 2:
             case 4: //提问
-                params.put("type","2");
-                if(content != null && content.length() > 0){
-                    params.put("knowledge_quesion",content);
+                params.put("type", "2");
+                if (content != null && content.length() > 0) {
+                    params.put("knowledge_details", content);
                 }
                 break;
         }
 
-        if(!cb_isAnonymous.isChecked()){
+        if (!isAnonymous) {
             user = SharedPreferencesUtils.getInstance(PublishActivity.this).loadObjectData(User.class);
-            params.put("maintenance_name",user.getMaintenanceName());
+            params.put("maintenance_name", user.getMaintenanceName());
         }
 
-        HttpRequestUtils.httpRequest(this, "发表问题和文章",requestPath, params, "POST", new HttpRequestUtils.ResponseListener() {
+        pd.setMessage("提交数据中,请稍后...");
+        pd.show();
+        txtRight.setEnabled(false);
+        HttpRequestUtils.httpRequest(this, "发表问题和文章", requestPath, params, "POST", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
+                txtRight.setEnabled(true);
+                pd.dismiss();
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        ToastUtil.showToast(PublishActivity.this,"发布成功!");
+                        ToastUtil.showToast(PublishActivity.this, "发布成功!");
+
+                        editTextTitle.setText("");
+                        mEditor.setHtml("");
+                        clearCache();
                         finish();
-                        IntentUtil.gotoActivity(PublishActivity.this, PublishAndRequestListActivity.class);
+                        Bundle bundle = new Bundle();
+                        if (operateType == 1 || operateType == 3) {
+                            bundle.putInt("searchType", 1);
+                        } else {
+                            bundle.putInt("searchType", 2);
+                        }
+                        IntentUtil.gotoActivity(PublishActivity.this, PublishAndRequestListActivity.class, bundle);
                         break;
                     default:
-                        ToastUtil.showToast(PublishActivity.this,common.getInfo());
+                        ToastUtil.showToast(PublishActivity.this, common.getInfo());
                         break;
                 }
             }
@@ -346,12 +395,15 @@ public class PublishActivity extends BaseActivity {
 
         View contentView = LayoutInflater.from(PublishActivity.this).inflate(R.layout.include_btn, null);
         popWnd = new PopupWindow(contentView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-/*        popWnd.setOutsideTouchable(false);
-        popWnd.setFocusable(false);*/
+        popWnd.setTouchable(true);
+        popWnd.setOutsideTouchable(false);
+        popWnd.setFocusable(false);
+        popWnd.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         final ImageView boldBtn = (ImageView) contentView.findViewById(R.id.ivBold);
         ImageView italicBtn = (ImageView) contentView.findViewById(R.id.ivItalic);
         ImageView pictureBtn = (ImageView) contentView.findViewById(R.id.ivPicture);
+        final CheckBox isAnonymousBtn = (CheckBox) contentView.findViewById(R.id.cb_isAnonymous);
 
         boldBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -381,6 +433,18 @@ public class PublishActivity extends BaseActivity {
             }
         });
 
+        isAnonymousBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    isAnonymousBtn.setTextColor(Color.parseColor("#000000"));
+                    isAnonymous = true;
+                }else{
+                    isAnonymousBtn.setTextColor(Color.parseColor("#cccccc"));
+                    isAnonymous = false;
+                }
+            }
+        });
     }
 
     @Override
@@ -397,27 +461,61 @@ public class PublishActivity extends BaseActivity {
             }
         });
 
+        editTextTitle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    InputMethodManager imm = (InputMethodManager) view.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                    }
+                }
+            }
+        });
         SoftKeyBoardListener.setListener(this, new SoftKeyBoardListener.OnSoftKeyBoardChangeListener() {
             @Override
             public void keyBoardShow(int height) {
+
+                if (editTextTitle.isFocused()) {
+                    return;
+                }
+
                 ll_btn.setVisibility(View.GONE);
                 Display defaultDisplay = getWindowManager().getDefaultDisplay();
                 Point point = new Point();
                 defaultDisplay.getSize(point);
                 int y = point.y;
                 //ToastUtil.showToast(PublishActivity.this,"屏幕高度:"+y+"键盘高度:"+height);
-                popWnd.setOutsideTouchable(false);
-                popWnd.setFocusable(false);
-                popWnd.showAtLocation(sl_scroll, Gravity.CENTER_HORIZONTAL,0,80);
-               // popWnd.showAsDropDown(sl_scroll,0,height);
+
+                if(DisplayUtil.isAllScreenDevice(PublishActivity.this)){
+                    popWnd.showAtLocation(sl_scroll, Gravity.BOTTOM, 0,height+80);
+                }else{
+                    popWnd.showAtLocation(sl_scroll, Gravity.BOTTOM, 0,height);
+                }
+
+                // popWnd.showAsDropDown(sl_scroll,0,-(y-height));
             }
 
             @Override
             public void keyBoardHide(int height) {
-                if(ll_btn.getVisibility() == View.GONE){
+                if (ll_btn.getVisibility() == View.GONE) {
                     ll_btn.setVisibility(View.VISIBLE);
                 }
                 popWnd.dismiss();
+            }
+        });
+
+        cb_isAnonymous.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    cb_isAnonymous.setTextColor(Color.parseColor("#000000"));
+                    isAnonymous = true;
+                } else {
+                    cb_isAnonymous.setTextColor(Color.parseColor("#cccccc"));
+                    isAnonymous = false;
+                }
             }
         });
     }

@@ -41,6 +41,7 @@ public class KnowledgeDetailBean {
     private String typeId;
     private String knowledgeDetails;
     private int browseNum;
+    private String maintenanceName;//工程师名称
 
     public String getBrandName() {
         return brandName;
@@ -160,5 +161,13 @@ public class KnowledgeDetailBean {
 
     public void setBrowseNum(int browseNum) {
         this.browseNum = browseNum;
+    }
+
+    public String getMaintenanceName() {
+        return maintenanceName;
+    }
+
+    public void setMaintenanceName(String maintenanceName) {
+        this.maintenanceName = maintenanceName;
     }
 }

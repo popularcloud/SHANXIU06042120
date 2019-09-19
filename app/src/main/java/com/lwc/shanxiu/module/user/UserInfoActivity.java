@@ -243,6 +243,9 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 //                        }
 //                    }
                     break;
+                case REQUEST_CODE_UPDATE:
+                    getUserInfor();
+                    break;
             }
         }
     }
@@ -389,8 +392,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             user = preferencesUtils.loadObjectData(User.class);
         }
         isSecrecy = user.getIsSecrecy();
-        txtId.setText(user.getMaintenanceId());
-        txtAccounts.setText(user.getMaintenancePhone());
+        txtId.setText(user.getUserId());
+        txtAccounts.setText(user.getUserPhone());
         //设置性别
         if (1 == user.getMaintenanceSex()) {
             txtSex.setText("男");
@@ -413,8 +416,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             txtName.setText("暂无");
         }
 
-        if (user.getMaintenancePhone() != null && !TextUtils.isEmpty(user.getMaintenancePhone())) {
-            txtPhone.setText(user.getMaintenancePhone());
+        if (user.getUserPhone() != null && !TextUtils.isEmpty(user.getUserPhone())) {
+            txtPhone.setText(user.getUserPhone());
         } else {
             txtPhone.setText("暂无");
         }
@@ -468,12 +471,22 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdateUserInfoActivity.class, REQUEST_CODE_UPDATE);
                 break;
             case R.id.rLayoutSign:
-                UpdateUserInfoActivity.type = 3;
+              /*  UpdateUserInfoActivity.type = 3;
                 IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdateUserInfoActivity.class, REQUEST_CODE_UPDATE);
+*/
+                Bundle bundle3 = new Bundle();
+                bundle3.putInt("type", 3);
+                if(!TextUtils.isEmpty(user.getMaintenanceSignature())){
+                    bundle3.putString("signature", user.getMaintenanceSignature());
+                }
+                IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdateSignActivity.class, bundle3, REQUEST_CODE_UPDATE);
                 break;
             case R.id.rLayoutChangePwd:
-                UpdateUserInfoActivity.type = 0;
-                IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdateUserInfoActivity.class, REQUEST_CODE_UPDATE);
+                /*UpdateUserInfoActivity.type = 0;
+                IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdateUserInfoActivity.class, REQUEST_CODE_UPDATE);*/
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("type", 0);
+                IntentUtil.gotoActivityForResult(UserInfoActivity.this, UpdatePassWordActivity.class, bundle1, REQUEST_CODE_UPDATE);
                 break;
             case R.id.rl_head:
                 if (isSecrecy.equals("1") || isSecrecy.equals("2")) {

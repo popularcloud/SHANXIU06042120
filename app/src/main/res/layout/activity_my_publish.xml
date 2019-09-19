@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:lee="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_knowledge_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg1"
+    android:background="@color/f0_gray_line"
     android:fitsSystemWindows="true">
     <include android:id="@+id/in_title" layout="@layout/include_search_title_white"/>
     <RelativeLayout
@@ -57,7 +56,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+            android:layout_weight="1" />
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
     <ImageView
         android:id="@+id/iv_no_data"

@@ -1,15 +1,19 @@
 package com.lwc.shanxiu.module.user;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.textservice.TextInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -41,9 +45,11 @@ import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.PictureUtils;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.view.RoundAngleImageView;
 import com.zhihu.matisse.Matisse;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,11 +67,11 @@ import id.zelory.compressor.Compressor;
 public class RegistActivity extends BaseActivity {
 
     @BindView(R.id.iv_id_back)
-    ImageView iv_id_back;
+    RoundAngleImageView iv_id_back;
     @BindView(R.id.iv_id_positive)
-    ImageView iv_id_positive;
+    RoundAngleImageView iv_id_positive;
     @BindView(R.id.iv_business_license)
-    ImageView iv_business_license;
+    RoundAngleImageView iv_business_license;
     @BindView(R.id.cb_boy)
     CheckBox cb_boy;
     @BindView(R.id.cb_girl)
@@ -127,6 +133,7 @@ public class RegistActivity extends BaseActivity {
      */
     private Xian selectedXian;
     private String phone;
+    private File cutfile;
 
 
     @Override
@@ -222,7 +229,7 @@ public class RegistActivity extends BaseActivity {
             ToastUtil.showToast(this,"两次输入的密码不一致");
             return;
         }
-        SharedPreferencesUtils.getInstance(RegistActivity.this).setParam(RegistActivity.this,"former_pwd", DecodeUtils.encode("passWord"));
+        SharedPreferencesUtils.getInstance(RegistActivity.this).setParam(RegistActivity.this,"former_pwd", DecodeUtils.encode(passWord));
         params.put("user_password", Utils.md5Encode(passWord));
 
         String idCard =et_idCard.getText().toString().trim();
@@ -233,18 +240,18 @@ public class RegistActivity extends BaseActivity {
         params.put("user_idcard",idCard);
 
         if(TextUtils.isEmpty(idPositivePath)){
-            ToastUtil.showToast(this,"请选择身份证正面照");
+            ToastUtil.showToast(this,"请上传身份证正面照");
             return;
         }
         params.put("idcard_face",idPositivePath);
 
         if(TextUtils.isEmpty(idBackPath)){
-            ToastUtil.showToast(this,"请选择身份证背面照");
+            ToastUtil.showToast(this,"请上传身份证背面照");
             return;
         }
         params.put("Idcard_back",idBackPath);
 
-        if(selectedSheng == null){
+        if(selectedSheng == null || selectedShi == null || selectedXian == null){
             ToastUtil.showToast(this,"请选择店铺/公司地址");
             return;
         }else{
@@ -278,7 +285,7 @@ public class RegistActivity extends BaseActivity {
         params.put("company_no",addressDetail);
 
         if(TextUtils.isEmpty(businessLicensePath)){
-            ToastUtil.showToast(this,"请选择营业执照");
+            ToastUtil.showToast(this,"请上传营业执照");
             return;
         }
         params.put("company_img",businessLicensePath);
@@ -483,7 +490,7 @@ public class RegistActivity extends BaseActivity {
                     if(mSelected != null && mSelected.size() > 0){
                         String picPath = PictureUtils.getPath(RegistActivity.this,mSelected.get(0));
                         if(presentImgView != null){
-                            ImageLoaderUtil.getInstance().displayFromLocal(RegistActivity.this,presentImgView,picPath);
+                            ImageLoaderUtil.getInstance().displayFromLocal(RegistActivity.this,presentImgView,picPath,900,600);
                         }
                         switch (presentImgView.getId()){
                             case R.id.iv_id_positive:
@@ -499,37 +506,111 @@ public class RegistActivity extends BaseActivity {
                     }
                     break;
                 case GlobalValue.CAMERA_REQUESTCODE:
+                    Bitmap bm = (Bitmap) data.getExtras().get("data");
+                    if (bm == null) {
+                        return;
+                    }
+                    File f = null;
                     try {
-                        Bitmap bm = (Bitmap) data.getExtras().get("data");
-                        if (bm == null) {
-                            return;
-                        }
-                        File f = FileUtil.saveMyBitmap(bm);
-                        File file = new Compressor.Builder(RegistActivity.this).setMaxHeight(1080).setMaxWidth(1920)
-                                .setQuality(85).setCompressFormat(Bitmap.CompressFormat.PNG).setDestinationDirectoryPath(FileConfig.PATH_IMAGES)
-                                .build().compressToFile(f);
-                        String filePath = file.getAbsolutePath();
-
-                        if(presentImgView != null){
-                            ImageLoaderUtil.getInstance().displayFromLocal(RegistActivity.this,presentImgView,filePath);
-                        }
-
-                        switch (presentImgView.getId()){
-                            case R.id.iv_id_positive:
-                                idPositivePath = filePath;
-                                break;
-                            case R.id.iv_id_back:
-                                idBackPath = filePath;
-                                break;
-                            case R.id.iv_business_license:
-                                businessLicensePath = filePath;
-                                break;
-                        }
-                    } catch (Exception e) {
+                        f = FileUtil.saveMyBitmap(bm);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    File file = new Compressor.Builder(RegistActivity.this).setMaxHeight(1080).setMaxWidth(1920)
+                            .setQuality(85).setCompressFormat(Bitmap.CompressFormat.PNG).setDestinationDirectoryPath(FileConfig.PATH_IMAGES)
+                            .build().compressToFile(f);
+                    String filePath = file.getAbsolutePath();
+                    if(presentImgView != null){
+                        ImageLoaderUtil.getInstance().displayFromLocal(RegistActivity.this,presentImgView,filePath,900,600);
+                    }
+                    switch (presentImgView.getId()){
+                        case R.id.iv_id_positive:
+                            idPositivePath = filePath;
+                            break;
+                        case R.id.iv_id_back:
+                            idBackPath = filePath;
+                            break;
+                        case R.id.iv_business_license:
+                            businessLicensePath = filePath;
+                            break;
                     }
                     break;
+                case GlobalValue.TAILORING_REQUESTCODE:
+                    if(cutfile == null){
+                        return;
+                    }
+                    break;
+
             }
         }
+    }
+
+
+    @NonNull
+    private Intent CutForPhoto(Uri uri) {
+        try {
+            //直接裁剪
+            Intent intent = new Intent("com.android.camera.action.CROP");
+            //设置裁剪之后的图片路径文件
+            cutfile = new File(Environment.getExternalStorageDirectory().getPath(),
+                    "cutcamera"+ System.currentTimeMillis()+".jpg"); //随便命名一个
+            if (cutfile.exists()){ //如果已经存在，则先删除,这里应该是上传到服务器，然后再删除本地的，没服务器，只能这样了
+                cutfile.delete();
+            }
+            cutfile.createNewFile();
+            //初始化 uri
+            Uri imageUri = uri; //返回来的 uri
+            Uri outputUri = null; //真实的 uri
+            outputUri = Uri.fromFile(cutfile);
+
+            // crop为true是设置在开启的intent中设置显示的view可以剪裁
+            intent.putExtra("crop",true);
+            // aspectX,aspectY 是宽高的比例，这里设置正方形
+            //String sss= android.os.Build.MODEL;
+            if(android.os.Build.MODEL.contains("EDI-AL10")||android.os.Build.MODEL.contains("HUAWEI"))
+            {//华为特殊处理 不然会显示圆
+                intent.putExtra("aspectX", 9998);
+                intent.putExtra("aspectY", 9999);
+            }
+            else
+            {
+                intent.putExtra("aspectX", 900);
+                intent.putExtra("aspectY", 600);
+            }
+            //设置要裁剪的宽高
+            intent.putExtra("outputX", 900); //200dp
+            intent.putExtra("outputY",600);
+            intent.putExtra("scale",true);
+            //如果图片过大，会导致oom，这里设置为false
+            intent.putExtra("return-data",false);
+            if (imageUri != null) {
+                intent.setDataAndType(imageUri, "image/*");
+            }
+            if (outputUri != null) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
+            }
+            intent.putExtra("noFaceDetection", true);
+            //压缩图片
+            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            return intent;
+        } catch (IOException e) {
+            e.toString();
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Uri stringToUri(String path){
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //如果是7.0android系统
+            ContentValues contentValues = new ContentValues(1);
+            contentValues.put(MediaStore.Images.Media.DATA,path);
+            uri=getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,contentValues);
+        }else{
+            uri = Uri.fromFile(new File(path));
+        }
+        return uri;
     }
 
     @Override

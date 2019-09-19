@@ -1,7 +1,6 @@
 package com.lwc.shanxiu.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +14,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.AndroidJSInterface;
 import com.lwc.shanxiu.activity.InformationDetailsActivity;
 import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.utils.IntentUtil;
-import com.yanzhenjie.sofia.Sofia;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,9 +41,6 @@ public class InformationFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
         return rootView;
 
     }
@@ -56,6 +52,18 @@ public class InformationFragment extends BaseFragment {
 
     @Override
     protected void findViews(Bundle savedInstanceState) {
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser  && getActivity() != null){
+            ImmersionBar.with(getActivity())
+                    .statusBarColor(R.color.white)
+                    .statusBarDarkFont(true)
+                    .navigationBarColor(R.color.white).init();
+        }
     }
 
     @Override

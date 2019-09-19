@@ -96,8 +96,10 @@ public class PopSelectAdapter extends Madapter{
          */
         if(selectedPosition == position){
             holder.employeesquery.setBackgroundColor(selectColor);
+            holder.name.setTextColor(Color.parseColor("#1481ff"));
         }else{
             holder.employeesquery.setBackgroundColor(Color.WHITE);
+            holder.name.setTextColor(Color.parseColor("#000000"));
         }
         holder.name.setText(items.get(position).getBrand_name());
         holder.code.setText(items.get(position).getBrand_id());  //也可在ITTM里去掉这一项，写在Tag里

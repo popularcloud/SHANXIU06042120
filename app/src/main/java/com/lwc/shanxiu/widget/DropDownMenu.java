@@ -31,7 +31,7 @@ public class DropDownMenu {
     private String selectName;                      //搜索用的key
     private int itemNum = 6;
     private int indexColor = Color.parseColor("#000000");                         //设置外部所点击的View的颜色
-    private int viewColor = Color.parseColor("#ff999999");                    //外部所点击的View本来的颜色
+    private int viewColor = Color.parseColor("#1481ff");                    //外部所点击的View本来的颜色
 
 
     public static DropDownMenu getInstance(Context context, OnListCkickListence mListener) {
@@ -111,11 +111,11 @@ public class DropDownMenu {
          *
          */
 
-        if (indexColor != 0){
+     /*   if (indexColor != 0){
             modifyText.setTextColor(indexColor);
         }else {
             modifyText.setTextColor(viewColor);
-        }
+        }*/
         popupWindow.showAsDropDown(dropview, -5, 3);// 在控件下方显示popwindow
         popupWindow.setFocusable(true);
         popupWindow.setOutsideTouchable(true);
@@ -136,7 +136,7 @@ public class DropDownMenu {
                                                 if(modifyText != null){
                                                     modifyText.setText(searchAdapter.getShowKey(position,showName));
                                                 }
-                                                mListener.search(searchAdapter.getShowKey(position,selectName), type);
+                                                mListener.search(searchAdapter.getShowKey(position,selectName), type,searchAdapter.getShowKey(position,showName));
                                                 mListener.changeSelectPanel(searchAdapter,dropview);
                                                 popupWindow.dismiss();
                                                 modifyText.setTextColor(viewColor);
@@ -166,7 +166,7 @@ public class DropDownMenu {
     }
 
     public interface OnListCkickListence {
-        void search(String code, String type);  //根据选择的数据进行查询
+        void search(String code, String type,String text);  //根据选择的数据进行查询
         void changeSelectPanel(Madapter madapter,View view); //修改选中后item的颜色，以及点击后对View进行一些修改
     }
 

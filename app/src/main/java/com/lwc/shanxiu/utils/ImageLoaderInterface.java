@@ -43,6 +43,13 @@ public interface ImageLoaderInterface {
 
     /**
      * 加载网络图片
+     * @param path       图片地址
+     * @param imageView 控件id
+     */
+    void displayFromLocal(Context context, ImageView imageView, String path,int width,int height);
+
+    /**
+     * 加载网络图片
      * @param url       图片地址
      * @param imageView 控件id
      */

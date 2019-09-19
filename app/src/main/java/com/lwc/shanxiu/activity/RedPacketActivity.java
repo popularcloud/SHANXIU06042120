@@ -4,9 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
@@ -16,7 +15,6 @@ import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.utils.Constants;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
-import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
@@ -31,22 +29,19 @@ import butterknife.OnClick;
 
 public class RedPacketActivity extends BaseActivity {
 
-    @BindView(R.id.rl_open)
-    LinearLayout rl_open;
-    @BindView(R.id.img_close)
-    Button img_close;
-    @BindView(R.id.tv_desc)
-    TextView tv_desc;
+    @BindView(R.id.iv_close)
+    ImageView iv_close;
+    @BindView(R.id.tv_money_unit)
+    TextView tv_money_unit;
     @BindView(R.id.tv_money)
     TextView tv_money;
-    @BindView(R.id.iv_bg)
-    ImageView iv_bg;
-    @BindView(R.id.tv_gz)
-    TextView tv_gz;
+    @BindView(R.id.rl_bg)
+    RelativeLayout rl_bg;
     private ActivityBean activityBean;
     private boolean isClick;
     private String activityId;
     private String knowledgeId;
+    private boolean isOpen = false;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -70,42 +65,26 @@ public class RedPacketActivity extends BaseActivity {
         activityBean = (ActivityBean) getIntent().getSerializableExtra("activityBean");
         activityId =  getIntent().getStringExtra("activityId");
         knowledgeId = getIntent().getStringExtra("knowledgeId");
-
-        if(activityBean != null){
-            tv_desc.setText(activityBean.getActivityName());
-        }else{
-            tv_desc.setText("文章奖励");
-            tv_gz.setVisibility(View.GONE);
-        }
-
     }
 
     @Override
     protected void widgetListener() {
     }
 
-    @OnClick({R.id.img_close, R.id.btnFind, R.id.tv_open, R.id.tv_gz})
+    @OnClick({R.id.iv_close, R.id.rl_bg})
     public void onViewClick(View v) {
         switch (v.getId()) {
-            case R.id.img_close:
+            case R.id.iv_close:
                 setResult(Constants.RED_ID_RESULT);
                 finish();
                 break;
-            case R.id.tv_open:
-                if (!isClick) {
-                    isClick = true;
+            case R.id.rl_bg:
+                if(!isOpen){
                     openRedPacket();
+                }else{
+                    setResult(Constants.RED_ID_TO_RESULT);
+                    finish();
                 }
-                break;
-            case R.id.btnFind:
-                setResult(Constants.RED_ID_TO_RESULT);
-                finish();
-                break;
-            case R.id.tv_gz:
-                Bundle bundle = new Bundle();
-                bundle.putString("url", activityBean.getRuleUrl());
-                bundle.putString("title", "活动规则");
-                IntentUtil.gotoActivity(RedPacketActivity.this, InformationDetailsActivity.class, bundle);
                 break;
             default:
                 break;
@@ -114,6 +93,9 @@ public class RedPacketActivity extends BaseActivity {
 
     public void openRedPacket() {
         if (Utils.isFastClick(1000)) {
+            return;
+        }
+        if (isOpen){
             return;
         }
         Map<String, String> map = new HashMap<>();
@@ -131,21 +113,21 @@ public class RedPacketActivity extends BaseActivity {
                 switch (common.getStatus()) {
                     case "1":
                         try {
+                            if (isOpen){
+                                return;
+                            }
+                            isOpen = true;
                             JSONObject obj = new JSONObject(JsonUtil.getGsonValueByKey(response, "data"));
                             String str = "";
                             double money = obj.optDouble("money");
-                            img_close.setVisibility(View.VISIBLE);
                             if (money > 0) {
-                                rl_open.setVisibility(View.VISIBLE);
-                                str = Utils.getMoney("" + money) + "元现金红包";
-                                tv_money.setText(Utils.getSpannableStringBuilder(0, str.length() - 5, getResources().getColor(R.color.money), str, 25));
-                                iv_bg.setImageResource(R.drawable.invitation_activities_redbag_open);
-                                tv_desc.setVisibility(View.GONE);
+                                str = Utils.getMoney("" + money) + "元";
+                                tv_money.setVisibility(View.VISIBLE);
+                                tv_money.setText(Utils.getSpannableStringBuilder(0, str.length() - 1, getResources().getColor(R.color.money), str, 25));
+                                rl_bg.setBackgroundResource(R.drawable.open_red_envelope_bg);
                             } else {
                                 //TODO 未中奖处理
-                                tv_gz.setVisibility(View.GONE);
-                                tv_desc.setVisibility(View.GONE);
-                                iv_bg.setBackgroundResource(R.drawable.red_envelope_ubg);
+                                rl_bg.setBackgroundResource(R.drawable.red_envelope_ubg);
                             }
                         } catch (Exception e) {
                         }

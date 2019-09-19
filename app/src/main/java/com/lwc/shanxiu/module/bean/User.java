@@ -48,7 +48,6 @@ public class User extends DataSupport implements Serializable {
     private int orderCount;//": 0,              //完成订单数量
     private String maintenanceSignature;//": "没有签名啦"  //维修时签名
     private String pwd;
-
     private String lat;
     private String lon;
 

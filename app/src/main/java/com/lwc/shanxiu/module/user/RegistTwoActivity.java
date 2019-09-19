@@ -149,6 +149,25 @@ public class RegistTwoActivity extends BaseActivity {
                 }
             }
         });
+
+        ll_work.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!cb_work.isChecked()){
+                    cb_work.setChecked(true);
+                    cb_electric.setChecked(false);
+                }
+            }
+        });
+        ll_electric.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!cb_electric.isChecked()){
+                    cb_electric.setChecked(true);
+                    cb_work.setChecked(false);
+                }
+            }
+        });
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,7 +178,7 @@ public class RegistTwoActivity extends BaseActivity {
                 }
 
                 if(TextUtils.isEmpty(selectDeviceModel)){
-                    ToastUtil.showToast(RegistTwoActivity.this,"请选择你的服务商类型");
+                    ToastUtil.showToast(RegistTwoActivity.this,"请选择您的服务商类型");
                     return;
                 }
                 params.put("device_type_mold",selectDeviceModel);
@@ -171,7 +190,7 @@ public class RegistTwoActivity extends BaseActivity {
                     }
                 }
                 if(TextUtils.isEmpty(company_maintenance_margin.toString())){
-                ToastUtil.showToast(RegistTwoActivity.this,"请选择你擅长的维修项目");
+                ToastUtil.showToast(RegistTwoActivity.this,"请选择您擅长的维修项目");
                     return;
                 }
                 params.put("company_maintenance_margin",company_maintenance_margin.toString());

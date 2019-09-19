@@ -65,6 +65,13 @@ public class ImageLoaderUtil implements ImageLoaderInterface {
     }
 
     @Override
+    public void displayFromLocal(Context context, ImageView imageView, String path,int width,int height) {
+        if (context != null) {
+            Glide.with(context).load(new File(path)).override(width,height).into(imageView);
+        }
+    }
+
+    @Override
     public void displayFromFile(Context context, ImageView imageView, File file) {
         if (context != null) {
             Glide.with(context).load(file).fitCenter().into(imageView);

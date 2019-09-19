@@ -22,6 +22,7 @@
         android:orientation="horizontal"
         android:layout_gravity="center_vertical">
         <LinearLayout
+            android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -42,6 +43,7 @@
                 android:id="@+id/et_search"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
+                android:singleLine="true"
                 android:textSize="12sp"
                 android:drawablePadding="10dp"
                 android:background="@null"

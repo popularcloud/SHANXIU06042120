@@ -170,4 +170,10 @@
         <!-- 正文中标题字体大小 -->
         <attr name="editor_headline_text_size" format="dimension"/>
     </declare-styleable>
+
+    <declare-styleable name="RoundAngleImageView">  
+            <attr name="roundWidth" format="dimension" />  
+            <attr name="roundHeight" format="dimension" />  
+    </declare-styleable>
+
 </resources>

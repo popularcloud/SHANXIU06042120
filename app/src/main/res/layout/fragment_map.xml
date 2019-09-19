@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/include_title" />
+    <include layout="@layout/include_title_map" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -81,9 +81,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toLeftOf="@+id/txtDaohang"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/red_3a"
+                    android:gravity="right"
                     android:text=""
                     android:textSize="12sp" />
                 <TextView

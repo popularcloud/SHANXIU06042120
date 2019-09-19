@@ -61,8 +61,6 @@ public class PublishAndRequestListActivity extends BaseActivity {
     private String type_id = "";
     private String search_txt = "";
 
-    private List<SearchConditionBean.OptionsBean> typeCondition = new ArrayList<>();
-    private Map<String,List<SearchConditionBean.OptionsBean>> brandConditon = new HashMap<>();
     private int searchType = 1; //1是发表 2.是提问
 
     @Override
@@ -72,6 +70,17 @@ public class PublishAndRequestListActivity extends BaseActivity {
 
     @Override
     protected void findViews() {
+        searchType = getIntent().getIntExtra("searchType",1);
+        if(searchType == 1){
+            tv_device_type.setTextColor(Color.parseColor("#1481ff"));
+            tv_brand.setTextColor(Color.parseColor("#000000"));
+            searchType = 1;
+        }else{
+            tv_brand.setTextColor(Color.parseColor("#1481ff"));
+            tv_device_type.setTextColor(Color.parseColor("#000000"));
+            searchType = 2;
+        }
+
         BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout);
         bindRecycleView();
     }
@@ -92,11 +101,11 @@ public class PublishAndRequestListActivity extends BaseActivity {
                 bundle2.putString("knowledgeId",beanList.get(position).getKnowledgeId());
                 bundle2.putString("hasAward",beanList.get(position).getHasAward());
 
-                if(adapter.getData().get(position).getStatus() == 2){
+              //  if(adapter.getData().get(position).getStatus() == 2){
                     IntentUtil.gotoActivity(PublishAndRequestListActivity.this, PublishDetailActivity.class,bundle2);
-                }else{
+              /*  }else{
                     IntentUtil.gotoActivity(PublishAndRequestListActivity.this, PublishActivity.class,bundle2);
-                }
+                }*/
             }
         });
     }
@@ -131,6 +140,13 @@ public class PublishAndRequestListActivity extends BaseActivity {
         mBGARefreshLayout.beginRefreshing();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mBGARefreshLayout != null){
+            mBGARefreshLayout.beginRefreshing();
+        }
+    }
 
     @OnClick({R.id.tv_device_type,R.id.tv_brand,R.id.tv_search,R.id.iv_no_data})
     public void onBtnClick(View v){
@@ -207,10 +223,10 @@ public class PublishAndRequestListActivity extends BaseActivity {
                 iv_no_data.setVisibility(View.GONE);
                 mBGARefreshLayout.setVisibility(View.VISIBLE);
             }
-
+            beanList.clear();
             beanList = datas;
-            adapter.replaceAll(datas);
-
+            adapter.clear();
+            adapter.addAll(beanList);
         }else{
             BGARefreshLayoutUtils.endLoadingMore(mBGARefreshLayout);
             if(datas == null || datas.size() < 1){

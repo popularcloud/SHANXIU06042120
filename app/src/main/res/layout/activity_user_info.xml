@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
     <include layout="@layout/include_title"/>
-
+    <View style="@style/line_c8Style" />
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +92,8 @@
                         android:maxWidth="200dp"
                         android:singleLine="true"
                         android:text=""
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
                         android:textColor="@color/black_66"
                         android:textSize="15sp" />
                     <TextView
@@ -117,6 +119,8 @@
                         android:layout_centerVertical="true"
                         android:ellipsize="marquee"
                         android:maxWidth="200dp"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
                         android:singleLine="true"
                         android:text=""
                         android:textColor="@color/black_66"

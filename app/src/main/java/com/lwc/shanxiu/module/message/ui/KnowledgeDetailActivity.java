@@ -1,6 +1,8 @@
 package com.lwc.shanxiu.module.message.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -41,6 +43,9 @@ public class KnowledgeDetailActivity extends BaseActivity{
     TextView tv_create_time;
     @BindView(R.id.wv_detail)
     WebView wv_detail;
+    @BindView(R.id.tv_author)
+    TextView tv_author;
+
 
     private String knowledgeId;
 
@@ -97,6 +102,12 @@ public class KnowledgeDetailActivity extends BaseActivity{
         tv_title.setText(detailBean.getKnowledgeTitle());
         tv_view_count.setText(detailBean.getBrowseNum()+"次");
 
+        if(TextUtils.isEmpty(detailBean.getMaintenanceName())){
+            tv_author.setVisibility(View.GONE);
+        }else{
+            tv_author.setVisibility(View.VISIBLE);
+            tv_author.setText(detailBean.getMaintenanceName());
+        }
 
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//小写的mm表示的是分钟
         Date date= null;

@@ -48,6 +48,7 @@ import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkPath;
 import com.amap.api.services.route.WalkRouteResult;
 import com.google.gson.reflect.TypeToken;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.activity.NavigationActivity;
@@ -57,6 +58,7 @@ import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.bean.User;
+import com.lwc.shanxiu.module.message.ui.MyMsgActivity;
 import com.lwc.shanxiu.module.order.ui.activity.OrderDetailActivity;
 import com.lwc.shanxiu.module.zxing.ui.CaptureActivity;
 import com.lwc.shanxiu.utils.DialogUtil;
@@ -72,7 +74,6 @@ import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.view.TileButton;
 import com.lwc.shanxiu.widget.CircleImageView;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -97,6 +98,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     TextView txtDistance;
     @BindView(R.id.txtDaohang)
     TextView txtDaohang;
+    @BindView(R.id.imgRightTwo)
+    ImageView imgRightTwo;
 
     CardView llGetOrderMention;
     /**
@@ -156,9 +159,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             LatLng localLatLng = new LatLng(113.75, 23.04);
             aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(localLatLng, 18));
         }
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
     }
     /**
      * 启动定位
@@ -269,6 +269,19 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapView.onResume();
         registerSensorListener();
         getNewestOrder();
+
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser && getActivity() != null){
+            ImmersionBar.with(getActivity())
+                    .statusBarColor(R.color.white)
+                    .statusBarDarkFont(true)
+                    .navigationBarColor(R.color.white).init();
+        }
     }
 
     /**
@@ -787,7 +800,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                                 if (!TextUtils.isEmpty(picture)) {
                                     imageLoaderUtil.displayFromNet(getContext(), newestOrder.getUserHeadImage(), imgIcon);
                                 } else {
-                                    imageLoaderUtil.displayFromLocal(getContext(), imgIcon, R.drawable.default_portrait_100);
+                                    imageLoaderUtil.displayFromLocal(getContext(), imgIcon, R.drawable.ic_default_user);
                                 }
                                 txtOrderStatus.setText(newestOrder.getStatusName());
                                 txtMaintainName.setText(newestOrder.getOrderContactName());
@@ -832,8 +845,16 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
         imgRight.setVisibility(View.VISIBLE);
-        imgRight.setImageResource(R.drawable.sweep_code);
+        imgRight.setImageResource(R.drawable.ic_msg);
         imgRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtil.gotoActivity(getActivity(), MyMsgActivity.class);
+            }
+        });
+        imgRightTwo.setVisibility(View.VISIBLE);
+        imgRightTwo.setImageResource(R.drawable.sweep_code);
+        imgRightTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentUtil.gotoActivityForResult(getActivity(), CaptureActivity.class, 8869);

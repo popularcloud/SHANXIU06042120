@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
@@ -22,6 +23,7 @@ import com.lwc.shanxiu.utils.CommonUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
+import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import java.util.HashMap;
@@ -49,6 +51,8 @@ public class FindPasswordActivity extends BaseActivity {
 	ImageView show_pwd;
 	private int count = 60;
 	private boolean isShow = false;
+	@BindView(R.id.tv_bb)
+	TextView tv_bb;
 
 	@Override
 	protected int getContentViewId(Bundle savedInstanceState) {
@@ -64,6 +68,7 @@ public class FindPasswordActivity extends BaseActivity {
 	public void init() {
 		showBack();
 		setTitle("找回密码");
+		tv_bb.setText("MX"+ SystemUtil.getCurrentVersionName());
 	}
 
 	@Override

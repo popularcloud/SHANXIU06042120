@@ -2,7 +2,6 @@ package com.lwc.shanxiu.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.adapter.MyNameAdapter;
 import com.lwc.shanxiu.adapter.NearbyOrderAdapter;
@@ -44,7 +45,6 @@ import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.ProgressUtils;
 import com.lwc.shanxiu.widget.DialogStyle2;
-import com.yanzhenjie.sofia.Sofia;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -66,8 +66,8 @@ public class NearOrderFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
-    @BindView(R.id.textTip)
-    TextView textTip;
+    @BindView(R.id.iv_nodate)
+    ImageView iv_nodate;
 
     @BindView(R.id.tv_quyu)
     TextView tv_quyu;
@@ -184,6 +184,17 @@ public class NearOrderFragment extends BaseFragment {
         getOrderList();
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser  && getActivity() != null){
+            ImmersionBar.with(getActivity())
+                    .statusBarColor(R.color.white)
+                    .statusBarDarkFont(true)
+                    .navigationBarColor(R.color.white).init();
+        }
+    }
+
     public void getDeviceType(){
         aCache = ACache.get(getContext());
         if (deviceTypes != null && deviceTypes.size() > 0) {
@@ -278,9 +289,11 @@ public class NearOrderFragment extends BaseFragment {
                         }
                         nearbyOrderAdapter.replaceAll(orders);
                         if (orders != null && orders.size() > 0) {
-                            textTip.setVisibility(View.GONE);
+                            iv_nodate.setVisibility(View.GONE);
+                            mBGARefreshLayout.setVisibility(View.VISIBLE);
                         } else {
-                            textTip.setVisibility(View.VISIBLE);
+                            iv_nodate.setVisibility(View.VISIBLE);
+                            mBGARefreshLayout.setVisibility(View.GONE);
                         }
                         break;
                     default:
@@ -308,9 +321,6 @@ public class NearOrderFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
         return rootView;
     }
 
@@ -462,7 +472,7 @@ public class NearOrderFragment extends BaseFragment {
         setDrawable();
     }
 
-    @OnClick({R.id.ll_sb, R.id.ll_quyu, R.id.ll_px, R.id.ll_tj})
+    @OnClick({R.id.ll_sb, R.id.ll_quyu, R.id.ll_px, R.id.ll_tj,R.id.iv_nodate})
     public void onViewClicked(View view) {
         int d = R.drawable.ner_up_h;
         switch (view.getId()) {
@@ -519,6 +529,11 @@ public class NearOrderFragment extends BaseFragment {
                     adapter.notifyDataSetChanged();
                     ll_tj.setVisibility(View.VISIBLE);
                 }
+                break;
+            case R.id.iv_nodate:
+                iv_nodate.setVisibility(View.GONE);
+                mBGARefreshLayout.setVisibility(View.VISIBLE);
+                mBGARefreshLayout.beginRefreshing();
                 break;
             default:
                 setDrawable();

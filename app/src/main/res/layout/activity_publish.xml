@@ -2,9 +2,10 @@
 <LinearLayout android:layout_width="fill_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     xmlns:android="http://schemas.android.com/apk/res/android" >
     <include layout="@layout/include_title" />
-    <View style="@style/line_c8Style" />
+    <View style="@style/line_f0Style" />
 <ScrollView
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
@@ -28,6 +29,7 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="20dp"
+        android:maxLength="49"
         android:text=""
         android:textColorHint="@color/line_cc" />
     <LinearLayout
@@ -40,20 +42,23 @@
         android:padding="15dp"
         android:orientation="vertical">
             <TextView
+                android:id="@+id/tv_tips_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="@color/red_3a"
+                android:layout_marginBottom="5dp"
                 android:text="您的文章被密修平台采纳后可获得红包奖励"
                 />
             <TextView
+                android:id="@+id/tv_tips_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:layout_marginTop="5dp"
                 android:textColor="@color/gray_99"
+                android:gravity="center_vertical"
                 android:lineSpacingExtra="5dp"
-                android:text=".保存文字简练，表述清晰问题的关键点\n.发表文章，旨在提供问题的解决方案\n.可添加图片丰富文章内容" />
+                android:text="·保持文字简练，表述清晰问题的关键点\n·发表文章，旨在提供问题的解决方案\n·可添加图片丰富文章内容" />
     </LinearLayout>
         <TextView
             android:id="@+id/tv_error_tip"
@@ -62,7 +67,7 @@
             android:textSize="12sp"
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
-            android:background="@color/f0_gray_line"
+            android:background="@drawable/btn_round_tips_bg"
             android:padding="15dp"
             android:textColor="@color/red_3a"
             android:lineSpacingExtra="5dp"
@@ -99,7 +104,7 @@
             android:layout_gravity="left|center_vertical"
             style="@style/CustomCheckBoxTheme"
             android:checked="false"
-            android:textColor="@color/black"
+            android:textColor="@color/line_cc"
             android:text="匿名发表"/>
         <ImageView
             android:id="@+id/ivBold"

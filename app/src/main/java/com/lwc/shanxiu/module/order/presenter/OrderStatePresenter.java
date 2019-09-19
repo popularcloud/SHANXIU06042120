@@ -17,6 +17,7 @@ import com.lwc.shanxiu.module.order.ui.IOrderStateFragmentView;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -256,6 +257,52 @@ public class OrderStatePresenter {
             url = RequestValue.CHANGE_ORDER_QR;
         } else if (orderType == Order.STATUS_DAODAXIANCHANG) {
             url = RequestValue.POST_ARRIVE_SCENE;
+            map.put("lat", String.valueOf(SharedPreferencesUtils.getParam(context,"presentLat","")));
+            map.put("lon", String.valueOf(SharedPreferencesUtils.getParam(context,"presentLon","")));
+        } else if (orderType == Order.STATUS_SONGHUIANZHUANG) {
+            url =RequestValue.POST_ORDER_BACK;
+        }
+        HttpRequestUtils.httpRequest((Activity) context, "updateOrderStatus", url, map, "POST", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                LLog.iNetSucceed(TAG, response);
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        getOrderState(oId);
+                        break;
+                    default:
+                        ToastUtil.showLongToast(context, common.getInfo());
+                        break;
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                LLog.eNetError(TAG, e.toString());
+            }
+        });
+    }
+
+    public void upDataOrder(final String oId, int orderType,String lat,String lon) {
+        if (Utils.isFastClick(1000)) {
+            return;
+        }
+        Map<String, String> map = new HashMap<>();
+        map.put("orderId", oId);
+        String url = "";
+        if (orderType == Order.STATUS_CHULI) {
+            url = RequestValue.DISPOSE_ORDER;
+        } else if (orderType == Order.STATUS_JIEDAN) {
+            url = RequestValue.UPDATE_ORDER;
+        } else if (orderType == Order.STATUS_YIWANCHENGDAIQUEREN) {
+            url = RequestValue.FINISH_ORDER;
+        } else if (orderType == Order.STATUS_TONGYIFENJI) {
+            url = RequestValue.CHANGE_ORDER_QR;
+        } else if (orderType == Order.STATUS_DAODAXIANCHANG) {
+            url = RequestValue.POST_ARRIVE_SCENE;
+            map.put("lat",lat);
+            map.put("lon",lon);
         } else if (orderType == Order.STATUS_SONGHUIANZHUANG) {
             url =RequestValue.POST_ORDER_BACK;
         }

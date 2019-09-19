@@ -6,24 +6,24 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.module.wallet.WalletActivity;
 import com.lwc.shanxiu.utils.Constants;
 import com.lwc.shanxiu.utils.IntentUtil;
-import com.lwc.shanxiu.widget.SystemBarTintManager;
-import com.yanzhenjie.sofia.Sofia;
 
 import butterknife.ButterKnife;
 
@@ -45,7 +45,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public IntentFilter filter;
 	public Bundle savedInstanceState;
 	/** 头部组件对象 */
-	private TextView txtActionbarTitle, txtRight;
+	protected TextView txtActionbarTitle, txtRight;
 	private ImageView imgBack, imgRight;
 
 	@Override
@@ -53,6 +53,7 @@ public abstract class BaseActivity extends FragmentActivity {
 //		EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
 		super.onCreate(savedInstanceState);
 		this.savedInstanceState = savedInstanceState;
+
 		setContentView(getContentViewId(savedInstanceState));
 		ButterKnife.bind(this);
 //		PushAgent.getInstance(this).onAppStart();
@@ -89,12 +90,27 @@ public abstract class BaseActivity extends FragmentActivity {
 	 * 子类可重写改方法定制状态栏样式
 	 */
 	protected void initStatusBar(){
+
+	/*	View view = new View(this);
+		view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,45));
 		Sofia.with(this)
 				.statusBarBackground(Color.parseColor("#ffffff"))
-				.statusBarDarkFont();
+				.statusBarDarkFont()
+				.navigationBarBackground(Color.parseColor("#ffffff"));*/
+		//hideNavigationBar();
 
-		hideNavigationBar();
+		ImmersionBar.with(this)
+				.statusBarColor(R.color.white)
+				.statusBarDarkFont(true)
+				.navigationBarColor(R.color.white).init();
+	}
 
+	private int getNavigationBarHeight() {
+		Resources resources = getResources();
+		int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+		int height = resources.getDimensionPixelSize(resourceId);
+		Log.d("联网成功", "Navi height:" + height);
+		return height;
 	}
 
 	private void hideNavigationBar() {

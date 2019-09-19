@@ -22,14 +22,14 @@ public class RouteTool extends WalkRouteOverlay {
 	 */
 	@Override
 	protected BitmapDescriptor getEndBitmapDescriptor() {
-		BitmapDescriptor reBitmapDescriptor = new BitmapDescriptorFactory().fromResource(R.drawable.ditu_zhongdian);
+		BitmapDescriptor reBitmapDescriptor = new BitmapDescriptorFactory().fromResource(R.drawable.ic_location_customer);
 		return reBitmapDescriptor;
 	}
 
 	/* 修改起点marker样式 */
 	@Override
 	protected BitmapDescriptor getStartBitmapDescriptor() {
-		BitmapDescriptor reBitmapDescriptor = new BitmapDescriptorFactory().fromResource(R.drawable.ditu_qidian);
+		BitmapDescriptor reBitmapDescriptor = new BitmapDescriptorFactory().fromResource(R.drawable.location_marker);
 
 		return reBitmapDescriptor;
 	}

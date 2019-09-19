@@ -149,4 +149,12 @@ dependencies {
     compile 'com.yanzhenjie:sofia:1.0.5'
     compile 'jp.wasabeef:richeditor-android:1.2.2'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    // 基础依赖包，必须要依赖
+    compile 'com.gyf.immersionbar:immersionbar:3.0.0'
+// fragment快速实现（可选）
+    compile 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
+    //评分控件
+    compile 'com.hedgehog.ratingbar:app:1.1.2'
 }

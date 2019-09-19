@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.PERMISSIONS_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
@@ -59,10 +60,19 @@
         android:label="@string/app_name"
         android:persistent="true"
         android:supportsRtl="true"
+        android:resizeableActivity="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.1" />
+            android:value="2.4" />
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true"/>
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58c8823b677baa0d81001491" />
@@ -483,7 +493,6 @@
             android:value="@integer/google_play_services_version" />
         <!-- </>值来自开发者平台取得的AppKey -->
         <!-- 知识库列表 -->
-        <activity android:name=".module.message.ui.KnowledgeBaseActivity" />
         <!-- 知识库详情 -->
         <activity android:name=".module.message.ui.KnowledgeDetailActivity" />
         <activity android:name=".module.order.ui.activity.UpdateDeviceMsgActivity" />
@@ -493,14 +502,17 @@
         <activity android:name=".module.order.ui.activity.ScrapActivity" />
         <activity android:name=".module.order.ui.activity.FeeStandardActivity" />
         <activity android:name=".module.user.RegistActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".module.message.ui.PublishActivity"  android:screenOrientation="portrait"></activity>
+        <activity android:name=".module.message.ui.PublishActivity"    android:configChanges="keyboardHidden" android:screenOrientation="portrait"></activity>
         <activity android:name=".module.message.ui.PublishDetailActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".module.message.ui.PublishAndRequestListActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan|stateHidden"></activity>
         <activity android:name=".module.user.RegistTwoActivity"  android:screenOrientation="portrait"></activity>
         <activity android:name=".module.user.UserAgreementActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".module.user.UpdatePassWordActivity"></activity>
+        <activity android:name=".module.user.UpdateSignActivity"></activity>
     </application>
 
 </manifest>

@@ -107,7 +107,7 @@ public class RouteOverlay {
 	 * @since V2.1.0
 	 */
 	protected BitmapDescriptor getWalkBitmapDescriptor() {
-		return BitmapDescriptorFactory.fromResource(R.drawable.amap_man);
+		return BitmapDescriptorFactory.fromResource(R.drawable.ic_no_point);
 	}
 
 	protected BitmapDescriptor getDriveBitmapDescriptor() {
@@ -202,7 +202,7 @@ public class RouteOverlay {
 	}
 
 	protected int getWalkColor() {
-		return Color.parseColor("#6db74d");
+		return Color.parseColor("#1481ff");
 	}
 
 	/**

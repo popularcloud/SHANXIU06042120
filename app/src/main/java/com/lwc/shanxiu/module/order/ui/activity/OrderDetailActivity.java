@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.bean.Common;
@@ -82,9 +83,10 @@ public class OrderDetailActivity extends BaseFragmentActivity {
             getOrderInfo();
 //        }
 
-        Sofia.with(this)
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
     private void initData(){

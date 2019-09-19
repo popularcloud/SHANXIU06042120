@@ -2,6 +2,7 @@ package com.lwc.shanxiu.module.message.ui;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -11,7 +12,6 @@ import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.RedPacketActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
-import com.lwc.shanxiu.module.message.bean.KnowledgeDetailBean;
 import com.lwc.shanxiu.module.message.bean.PublishAndRequestBean;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -101,7 +101,27 @@ public class PublishDetailActivity extends BaseActivity{
 
     }
 
-    private void showData(PublishAndRequestBean detailBean){
+    private void showData(final PublishAndRequestBean detailBean){
+
+        if(detailBean.getStatus() == 3){
+            setRightText("重新编辑","#1481ff", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    finish();
+                    Bundle bundle2 = new Bundle();
+                    if(detailBean.getType() == 1){
+                        bundle2.putInt("operateType",3);
+                    }else{
+                        bundle2.putInt("operateType",4);
+                    }
+                    bundle2.putString("knowledgeId",detailBean.getKnowledgeId());
+                    bundle2.putString("hasAward",detailBean.getHasAward());
+                    IntentUtil.gotoActivity(PublishDetailActivity.this, PublishActivity.class,bundle2);
+                }
+            });
+        }
+
         tv_title.setText(detailBean.getKnowledgeTitle());
         tv_view_count.setText(detailBean.getBrowseNum()+"次");
 
@@ -114,7 +134,12 @@ public class PublishDetailActivity extends BaseActivity{
         }
         String dateStr = TimeUtil.getTimeFormatText(date);
         tv_create_time.setText(dateStr);
-        tv_author.setText(TextUtils.isEmpty(detailBean.getMaintenanceName())?"匿名":detailBean.getMaintenanceName());
+        if(TextUtils.isEmpty(detailBean.getMaintenanceName())){
+            tv_author.setVisibility(View.GONE);
+        }else{
+            tv_author.setText(detailBean.getMaintenanceName());
+        }
+
 
         WebSettings webSettings = wv_detail.getSettings();//获取webview设置属性
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
@@ -125,7 +150,7 @@ public class PublishDetailActivity extends BaseActivity{
 
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
 
-        String context = getNewContent(TextUtils.isEmpty(detailBean.getKnowledgeDetails())?detailBean.getKnowledgeQuesion():detailBean.getKnowledgeDetails());
+        String context = getNewContent(TextUtils.isEmpty(detailBean.getKnowledgeDetails())?detailBean.getKnowledgeDetails():detailBean.getKnowledgeDetails());
 
         wv_detail.loadDataWithBaseURL(null, context, "text/html", "UTF-8", null);
 

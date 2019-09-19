@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.ImageBrowseActivity;
 import com.lwc.shanxiu.adapter.MyGridViewPhotoAdpter;
@@ -160,9 +161,10 @@ public class OrderDetailFragment extends BaseFragment implements IOrderDetailFra
         setListener();
         getData();
 
-        Sofia.with(getActivity())
-                .statusBarBackground(Color.parseColor("#ffffff"))
-                .statusBarDarkFont();
+        ImmersionBar.with(this)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .navigationBarColor(R.color.white).init();
     }
 
     /**

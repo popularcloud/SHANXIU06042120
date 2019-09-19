@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
@@ -36,7 +35,7 @@ public class MyNameAdapter extends BaseAdapter {
 			rowView = inflater.inflate(R.layout.item_list_province, null);
 			holder = new ViewHolder();
 			holder.name = (TextView) rowView.findViewById(R.id.name);
-			holder.iv_select = (ImageView)rowView.findViewById(R.id.iv_select);
+			//holder.iv_select = (ImageView)rowView.findViewById(R.id.iv_select);
 			rowView.setTag(holder);
 		} else {
 			holder = (ViewHolder) rowView.getTag();
@@ -46,16 +45,16 @@ public class MyNameAdapter extends BaseAdapter {
 		holder.name.setText(name);
 		if (value != null && name.equals(value)) {
 			holder.name.setTextColor(this.context.getResources().getColor(R.color.btn_blue_nomal));
-			holder.iv_select.setVisibility(View.VISIBLE);
+			//holder.iv_select.setVisibility(View.VISIBLE);
 		} else {
-			holder.iv_select.setVisibility(View.GONE);
+			//holder.iv_select.setVisibility(View.GONE);
 			holder.name.setTextColor(this.context.getResources().getColor(R.color.black_66));
 		}
 		return rowView;
 	}
 
 	public class ViewHolder {
-		public ImageView iv_select;
+		//public ImageView iv_select;
 		public TextView name;
 	}
 

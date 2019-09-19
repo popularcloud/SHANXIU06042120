@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/bg1"
+    android:background="@color/f0_gray_line"
     android:fitsSystemWindows="true">
     <include android:id="@+id/in_title" layout="@layout/include_search_title_white"/>
     <com.lwc.shanxiu.widget.TagsLayout
@@ -15,7 +15,7 @@
         android:layout_gravity="center_vertical"
         android:layout_below="@+id/in_title"
         android:background="@color/f0_gray_line"
-        android:padding="15dp"
+        android:layout_margin="15dp"
         lee:tagHorizontalSpace="5dp"
         lee:tagVerticalSpace="5dp" />
     <RelativeLayout
@@ -29,7 +29,7 @@
             android:id="@+id/line_type"
             android:layout_width="1dp"
             android:layout_height="30dp"
-            android:background="@color/bg1"
+            android:background="@color/f0_gray_line"
             android:layout_centerInParent="true"/>
         <TextView
             android:id="@+id/tv_device_type"
@@ -38,7 +38,8 @@
             android:textColor="@color/black"
             android:textSize="14sp"
             android:text="设备类型"
-            android:padding="10dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/line_type"
             android:drawablePadding="5dp"
@@ -50,7 +51,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:padding="10dp"
+            android:paddingBottom="14dp"
+            android:paddingTop="14dp"
             android:layout_toRightOf="@+id/line_type"
             android:drawableRight="@drawable/ic_sel_down"
             android:drawablePadding="5dp"
@@ -61,12 +63,19 @@
  <!--   <TextView style="@style/text_tip"
         android:id="@+id/textTip"
         android:visibility="gone"/>-->
+    <ImageView
+        android:id="@+id/iv_no_data"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_no_data"/>
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mBGARefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg1"
-        android:layout_marginTop="1px"
+        android:layout_marginTop="8px"
         android:layout_below="@+id/rl_type">
 
         <android.support.v7.widget.RecyclerView
