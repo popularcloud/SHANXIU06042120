@@ -229,6 +229,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 page = 1;
+                changeVisibleGone(View.VISIBLE);
                 if(isClearCondition){
                     clearTextAndTagSearch();
                     clearTypeSearch();
@@ -292,12 +293,11 @@ public class KnowledgeBaseFragment extends BaseFragment {
 
     }
 
-
     public synchronized void changeVisibleGone(int viGo){
         if(viGo != tl_tags.getVisibility()){
             tl_tags.setVisibility(viGo);
-            scrollDistance = 0;
         }
+        scrollDistance = 0;
     }
 
     private void clearTypeSearch(){

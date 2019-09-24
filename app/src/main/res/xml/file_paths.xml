@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <external-path
+            name="download"
+            path="" />
+        <files-path
+            name="download1"
+            path="" />
+        <cache-path
+            name="download2"
+            path="" />
+        <external-files-path
+            name="download3"
+            path="" />
+        <external-cache-path
+            name="download4"
+            path="" />
+    </paths>
+</resources>

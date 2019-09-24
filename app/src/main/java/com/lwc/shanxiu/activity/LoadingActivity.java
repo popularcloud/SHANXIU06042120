@@ -1,8 +1,11 @@
 package com.lwc.shanxiu.activity;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,8 +24,11 @@ import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
+import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.CountDownProgressView;
 import com.lwc.shanxiu.view.ImageCycleView;
+import com.wkp.runtimepermissions.callback.PermissionCallBack;
+import com.wkp.runtimepermissions.util.RuntimePermissionUtil;
 
 import org.litepal.crud.DataSupport;
 
@@ -44,8 +50,12 @@ public class LoadingActivity extends Activity {
     private User user = null;
     private ImageView imageView, iv_gz;
     private CountDownProgressView countdownProgressView;
-    private boolean gotoLogin = false;
     private ImageCycleView ad_view;
+    //记录是否跳过倒计时
+    private boolean skip = false;
+
+    int hasPermissionCount = 0;
+    int noPermissionCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +74,16 @@ public class LoadingActivity extends Activity {
         countdownProgressView = (CountDownProgressView) findViewById(R.id.countdownProgressView);
 
         initEngines();
-        init();
 
         countdownProgressView.setProgressListener(new CountDownProgressView.OnProgressListener() {
             @Override
             public void onProgress(int progress) {
-                if (progress == 0 && !gotoLogin) {
+                if (skip){
+                    countdownProgressView.stop();
+                    return;
+                }
+
+                if (progress == 1) {
                     gotoActivity();
                 }
             }
@@ -77,10 +91,10 @@ public class LoadingActivity extends Activity {
         countdownProgressView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoLogin = true;
                 gotoActivity();
             }
         });
+        applyPermission();
     }
 //友盟推送
 //    @Override
@@ -90,7 +104,93 @@ public class LoadingActivity extends Activity {
 //        Log.i(TAG, body);
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void applyPermission() {
+        //权限检查，回调是权限申请结果
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.CAMERA, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+
+                onPermissionFinish();
+            }
+        });
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.LOCATION, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+                onPermissionFinish();
+            }
+        });
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.CONTACTS, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+                onPermissionFinish();
+            }
+        });
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.PHONE, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+                onPermissionFinish();
+            }
+        });
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.STORAGE, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+                onPermissionFinish();
+            }
+        });
+    }
+
+    private void toSettingPage(){
+        ToastUtil.showLongToast(this,"检测到该应用部分权限未授予，将影响app的正常使用，请前往应用管理中授权");
+    }
+
     private void gotoActivity() {
+        skip = true;
         if (user == null) {
             IntentUtil.gotoActivityAndFinish(LoadingActivity.this, LoginOrRegistActivity.class);
             return;
@@ -103,8 +203,19 @@ public class LoadingActivity extends Activity {
         }
     }
 
+    public void onPermissionFinish(){
+
+        if(hasPermissionCount + noPermissionCount < 5){
+            return;
+        }
+
+        preferencesUtils = SharedPreferencesUtils.getInstance(LoadingActivity.this);
+        user = preferencesUtils.loadObjectData(User.class);
+        init();
+    }
+
     public void init() {
-        boolean isFirstTime = preferencesUtils.loadBooleanData("isfirsttime");
+ //       boolean isFirstTime = preferencesUtils.loadBooleanData("isfirsttime");
 //        if (!isFirstTime) {
 //            preferencesUtils.saveBooleanData("isfirsttime", true);
 //            IntentUtil.gotoActivityAndFinish(LoadingActivity.this, UserGuideActivity.class);

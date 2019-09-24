@@ -251,7 +251,11 @@
         <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
     </style>
     <style name="CustomCheckBoxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-                <item name="android:button">@drawable/checkbox_style</item>
-                <item name="android:paddingLeft">8dp</item>
-            </style>
+    <item name="android:button">@drawable/checkbox_style</item>
+    <item name="android:paddingLeft">8dp</item>
+</style>
+    <style name="CustomCheckBoxThemeWhite" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_white_style</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
 </resources>

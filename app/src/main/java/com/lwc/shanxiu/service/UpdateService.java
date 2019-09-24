@@ -306,7 +306,7 @@ public class UpdateService extends Service {
 //				TApplication.isShowUpdate = true;
 //			}
 //		}
-		ApkUtil.installApk(new File(apkLocal));
+		ApkUtil.installApk(new File(apkLocal),this);
 
 	}
 

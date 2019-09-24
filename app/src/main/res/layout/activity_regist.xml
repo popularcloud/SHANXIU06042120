@@ -177,7 +177,7 @@
 			android:id="@+id/et_idCard"
 			android:layout_width="0dp"
 			android:layout_weight="1"
-			android:hint="请确认身份证号码"
+			android:hint="请填写身份证号码"
 			android:textColor="@color/black"
 			android:textColorHint="@color/line_cc"
 			android:paddingLeft="15dp"
@@ -379,7 +379,7 @@
 		<com.lwc.shanxiu.view.RoundAngleImageView
 			android:id="@+id/iv_business_license"
 			android:layout_width="228dp"
-			android:layout_height="191dp"
+			android:layout_height="141dp"
 			android:layout_marginTop="18dp"
 			android:scaleType="fitXY"
 			android:layout_gravity="center_horizontal"

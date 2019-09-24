@@ -172,8 +172,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     private void initLocation() {
         if (getContext() != null) {
             MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
-            myLocationStyle.strokeColor(Color.parseColor("#1B62AF"));
-            myLocationStyle.radiusFillColor(Color.parseColor("#331B62AF"));// 设置圆形的填充颜色
+            myLocationStyle.strokeColor(Color.parseColor("#2E1481FF"));
+            myLocationStyle.radiusFillColor(Color.parseColor("#2E1481FF"));// 设置圆形的填充颜色
             myLocationStyle.strokeWidth(1);
             myLocationStyle.anchor(0.5f, 0.5f);
             myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.location_marker)));

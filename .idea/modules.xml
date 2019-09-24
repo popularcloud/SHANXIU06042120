@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" />
       <module fileurl="file://$PROJECT_DIR$/mzbanner/mzbanner.iml" filepath="$PROJECT_DIR$/mzbanner/mzbanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/refreshlayout/refreshlayout.iml" filepath="$PROJECT_DIR$/refreshlayout/refreshlayout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" filepath="$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" />
     </modules>
   </component>
 </project>

@@ -74,7 +74,7 @@ public class LocationService extends NotiService {
                 getBroadcast(this.getApplicationContext(), 0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // 在API16之后，可以使用build()来进行Notification的构建 Notification
-        notification = new Notification.Builder(this.getApplicationContext()).setContentTitle("密修工程师").setContentText("工程师在线").setContentIntent(pendingIntent).setSmallIcon(R.mipmap.ic_launcher).setWhen(System.currentTimeMillis()).build();
+        notification = new Notification.Builder(this.getApplicationContext()).setContentTitle("密修工程师").setContentText("工程师在线").setContentIntent(pendingIntent).setSmallIcon(R.mipmap.ic_app_launcher).setWhen(System.currentTimeMillis()).build();
         startForeground(1, notification);
 
         if (mWifiAutoCloseDelegate.isUseful(getApplicationContext())) {

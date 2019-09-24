@@ -1,19 +1,22 @@
 package com.lwc.shanxiu.activity;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -49,18 +52,13 @@ import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SpUtil;
 import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.utils.VersionUpdataUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
 import com.lwc.shanxiu.widget.DialogStyle3;
 
 import org.litepal.crud.DataSupport;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -220,6 +218,8 @@ public class MainActivity extends BaseFragmentActivity {
             txtTogo.setText("开启自动接单");
         }*/
         hasMessage();
+
+        startUptateAPP();
     }
 
     @Override
@@ -318,6 +318,7 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onPageSelected(int position) {
                 cViewPager.setChecked(rButtonHashMap, position);
+                startUptateAPP();
             }
 
             @Override
@@ -335,7 +336,6 @@ public class MainActivity extends BaseFragmentActivity {
             ToastUtil.showLongToast(MainActivity.this, "登录失效，请重新登录!");
             return;
         }
-        startUptateAPP();
     }
 
     @Override
@@ -376,45 +376,20 @@ public class MainActivity extends BaseFragmentActivity {
                     case "1":
                         Update update = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"), Update.class);
                         if (update != null && !TextUtils.isEmpty(update.getVersionCode())) {
+                            String versionCode = String.valueOf(getAppVersionCode(MainActivity.this));
                             version = Integer.valueOf(update.getVersionCode());
-                            String versionCode = preferencesUtils.loadString("versionCode");
-                            if (version > SystemUtil.getCurrentVersionCode()) {
-                                iv_red_dian.setVisibility(View.VISIBLE);
-                            } else {
-                                iv_red_dian.setVisibility(View.GONE);
-                            }
+
                             if (versionCode != null && update.getVersionCode().equals(versionCode)) {
                                 return;
                             }
                             final String akpPath = update.getUrl();
                             //需要更新
-                            if (version > SystemUtil.getCurrentVersionCode() && update.getIsValid().equals("1")) {
-                                preferencesUtils.saveString("versionCode", update.getVersionCode());
+                            if (VersionUpdataUtil.isNeedUpdate(MainActivity.this, version) && update.getIsValid().equals("1")) {
                                 if (mineFragment != null) {
                                     mineFragment.updateVersion();
                                 }
-                                isForce = update.getIsForce();
-                                if (isForce.equals("1")) {
-                                    DialogUtil.showUpdateAppDg(MainActivity.this, "版本更新", "立即更新", update.getMessage(), new CustomDialog.OnClickListener() {
-
-                                        @Override
-                                        public void onClick(CustomDialog dialog, int id, Object object) {
-                                            downloadAPK(akpPath);
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                } else {
-                                    DialogUtil.showUpdateAppDg(MainActivity.this, "版本更新",  "立即更新", "稍后再说", update.getMessage(), new CustomDialog.OnClickListener() {
-                                        @Override
-                                        public void onClick(CustomDialog dialog, int id, Object object) {
-                                            downloadAPK(akpPath);
-                                            dialog.dismiss();
-                                        }
-                                    }, null);
-                                }
+                                startUpdateDialog(update,akpPath);
                             }
-                        } else {
-                            preferencesUtils.saveString("versionCode", "0");
                         }
                         break;
                     default:
@@ -427,8 +402,72 @@ public class MainActivity extends BaseFragmentActivity {
             }
         });
     }
-    private int lastProgress;
-    private void downloadAPK(final String path) {
+
+    private void startUpdateDialog(Update update,final String akpPath){
+        isForce = update.getIsForce();
+        if (isForce.equals("1")) {
+            DialogUtil.showUpdateAppDg(MainActivity.this, "版本更新", "立即更新", update.getMessage(), new CustomDialog.OnClickListener() {
+
+                @Override
+                public void onClick(CustomDialog dialog, int id, Object object) {
+                    checkpInstallPrmission(akpPath,dialog);
+                }
+            });
+        } else {
+            DialogUtil.showMessageUp(MainActivity.this, "版本更新", "立即更新", "稍后再说", update.getMessage(), new CustomDialog.OnClickListener() {
+                @Override
+                public void onClick(CustomDialog dialog, int id, Object object) {
+                    checkpInstallPrmission(akpPath,dialog);
+                }
+            }, null);
+        }
+    }
+
+    /**
+     * 检查是否有安装权限
+     */
+    private void checkpInstallPrmission(final String apkPath,CustomDialog updateDialog){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if(getPackageManager().canRequestPackageInstalls()){
+                ApkUtil.downloadAPK(MainActivity.this,apkPath);
+                updateDialog.dismiss();
+            }else{
+                updateDialog.dismiss();
+                DialogUtil.showMessageUp(MainActivity.this, "授予安装权限", "立即设置", "取消", "检测到您没有授予安装应用的权限，请在设置页面授予", new CustomDialog.OnClickListener() {
+                    @Override
+                    public void onClick(CustomDialog dialog, int id, Object object) {
+                        Uri uri = Uri.parse("package:"+getPackageName());
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,uri);
+                        startActivityForResult(intent, 19900);
+                        dialog.dismiss();
+                    }
+                }, null);
+            }
+        }else{
+            ApkUtil.downloadAPK(MainActivity.this,apkPath);
+            updateDialog.dismiss();
+        }
+    }
+
+    public static long getAppVersionCode(Context context) {
+        long appVersionCode = 0;
+        try {
+            PackageInfo packageInfo = context.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                appVersionCode = packageInfo.versionCode;
+            } else {
+                appVersionCode = packageInfo.versionCode;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("", e.getMessage());
+        }
+        return appVersionCode;
+    }
+
+   // private int lastProgress;
+    /*private void downloadAPK(final String path) {
         pd = new ProgressDialog(this, AlertDialog.THEME_HOLO_LIGHT);
         pd.setCancelable(false);
         pd.setMessage("正在下载最新版APP，请稍后...");
@@ -498,7 +537,7 @@ public class MainActivity extends BaseFragmentActivity {
                 }
             }
         }.start();
-    }
+    }*/
 
     /**
      * 显示接单对话框

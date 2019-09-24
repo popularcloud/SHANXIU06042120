@@ -234,7 +234,7 @@ public class RegistActivity extends BaseActivity {
 
         String idCard =et_idCard.getText().toString().trim();
         if(TextUtils.isEmpty(idCard)){
-            ToastUtil.showToast(this,"请填写身份证号");
+            ToastUtil.showToast(this,"请填写身份证号码");
             return;
         }
         params.put("user_idcard",idCard);
@@ -516,10 +516,10 @@ public class RegistActivity extends BaseActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    File file = new Compressor.Builder(RegistActivity.this).setMaxHeight(1080).setMaxWidth(1920)
+/*                    File file = new Compressor.Builder(RegistActivity.this).setMaxHeight(1920).setMaxWidth(1080)
                             .setQuality(85).setCompressFormat(Bitmap.CompressFormat.PNG).setDestinationDirectoryPath(FileConfig.PATH_IMAGES)
-                            .build().compressToFile(f);
-                    String filePath = file.getAbsolutePath();
+                            .build().compressToFile(f);*/
+                    String filePath = f.getAbsolutePath();
                     if(presentImgView != null){
                         ImageLoaderUtil.getInstance().displayFromLocal(RegistActivity.this,presentImgView,filePath,900,600);
                     }

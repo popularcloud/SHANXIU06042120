@@ -193,20 +193,22 @@ public class UserAgreementActivity extends BaseActivity {
 							}
 							urlStrs.remove(path.getPath());
 //                            Utils.deleteFile(path.getPath(), CannotMaintainActivity.this);
+
+							switch (urlStrs.size()){
+								case 2:
+									params.put("idcard_face",url);
+									break;
+								case 1:
+									params.put("Idcard_back",url);
+									break;
+								case 0:
+									params.put("company_img",url);
+									break;
+							}
+
 							if (urlStrs.size() > 0 && !TextUtils.isEmpty(urlStrs.get(0))){
 								uploadPhoto(new File(urlStrs.get(0)));
 							} else {
-								switch (urlStrs.size()){
-									case 2:
-										params.put("idcard_face",url);
-										break;
-									case 1:
-										params.put("Idcard_back",url);
-										break;
-									case 0:
-										params.put("company_img",url);
-										break;
-								}
 								if(urlStrs.size() == 0){
 									submitData();
 								}

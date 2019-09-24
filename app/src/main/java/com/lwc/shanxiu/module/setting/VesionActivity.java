@@ -2,8 +2,12 @@ package com.lwc.shanxiu.module.setting;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +24,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.utils.VersionUpdataUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 
 import java.io.File;
@@ -61,12 +66,31 @@ public class VesionActivity extends BaseActivity {
 		tvNew.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (update != null && !TextUtils.isEmpty(update.getUrl()) && !TextUtils.isEmpty(update.getVersionCode()) && Integer.parseInt(update.getVersionCode()) > SystemUtil.getCurrentVersionCode()) {
+				if (update != null && !TextUtils.isEmpty(update.getUrl()) && !TextUtils.isEmpty(update.getVersionCode()) && VersionUpdataUtil.isNeedUpdate(VesionActivity.this, Integer.parseInt(update.getVersionCode()))) {
 					DialogUtil.showMessageDg(VesionActivity.this, "版本更新", "立即更新", "稍后再说", update.getMessage(), new CustomDialog.OnClickListener() {
 						@Override
 						public void onClick(CustomDialog dialog, int id, Object object) {
-							downloadAPK(update.getUrl());
-							dialog.dismiss();
+
+							if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+								if(getPackageManager().canRequestPackageInstalls()){
+									downloadAPK(update.getUrl());
+									dialog.dismiss();
+								}else{
+									dialog.dismiss();
+									DialogUtil.showMessageUp(VesionActivity.this, "授予安装权限", "立即设置", "取消", "检测到您没有授予安装应用的权限，请在设置页面授予", new CustomDialog.OnClickListener() {
+										@Override
+										public void onClick(CustomDialog dialog, int id, Object object) {
+											Uri uri = Uri.parse("package:"+getPackageName());
+											Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,uri);
+											startActivityForResult(intent, 19900);
+											dialog.dismiss();
+										}
+									}, null);
+								}
+							}else{
+								downloadAPK(update.getUrl());
+								dialog.dismiss();
+							}
 						}
 					}, null);
 				}
@@ -137,9 +161,10 @@ public class VesionActivity extends BaseActivity {
 								}
 							}
 						});
-						ApkUtil.installApk(file);
+						ApkUtil.installApk(file,VesionActivity.this);
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}.start();

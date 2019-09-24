@@ -188,7 +188,7 @@
                     android:gravity="center_vertical"
                     android:text="0"
                     android:textColor="@color/btn_blue_16"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
             <View style="@style/line_f0Style_h" android:layout_marginTop="10dp" android:layout_marginBottom="10dp"/>
             <LinearLayout
@@ -219,7 +219,7 @@
                     android:gravity="center_vertical"
                     android:text="0"
                     android:textColor="@color/btn_blue_16"
-                    android:textSize="18sp" />
+                    android:textSize="15sp" />
             </LinearLayout>
 
         </LinearLayout>

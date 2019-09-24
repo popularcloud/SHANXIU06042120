@@ -45,6 +45,33 @@ public class DialogUtil {
 		return dialog;
 	}
 
+	public static void showMessageUp(Context context, String title, String butText, String cancel, String msg, CustomDialog.OnClickListener listener, CustomDialog.OnClickListener listener2) {
+		dialog = new CustomDialog(context);
+		if (!TextUtils.isEmpty(title)) {
+			dialog.setTitle(title);
+		} else {
+			dialog.setTitle(context.getString(R.string.prompt));
+		}
+		dialog.setButton1Text(butText);
+		dialog.setMsgGra();
+		dialog.setMessage(msg);
+
+		dialog.setEnterBtn(listener);
+		dialog.setButton2Text(cancel);
+		if (listener2 != null) {
+			dialog.setCancelBtn(listener2);
+		} else {
+			dialog.setCancelBtn(new CustomDialog.OnClickListener() {
+
+				@Override
+				public void onClick(CustomDialog dialog, int id, Object object) {
+					dialog.dismiss();
+				}
+			});
+		}
+		dialog.show();
+	}
+
 	public static void showUpdateAppDg(Context context, String title,String butText, String cancel, String msg, CustomDialog.OnClickListener listener, CustomDialog.OnClickListener listener2) {
 		dialog = new CustomDialog(context);
 		if (!TextUtils.isEmpty(title)) {
