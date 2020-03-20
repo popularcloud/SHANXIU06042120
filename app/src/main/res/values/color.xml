@@ -41,6 +41,9 @@
          <!-- ******************基础颜色模块**************** -->
     <!-- 透明色 -->
     <color name="transparent">#00000000</color>
+
+    <!-- 透明色 -->
+    <color name="transparent_white_25">#BFffffff</color>
     <!-- 透明色 -->
     <!-- 透明色 -->
     <!-- 透明色 -->
@@ -70,6 +73,7 @@
     <color name="white_55">#55ffffff</color>
     <!-- 纯黑色 -->
     <color name="black">#ff000000</color>
+    <color name="gray_db">#dbdbdb</color>
     <!-- 纯黑色 -->
     <color name="black_20">#20000000</color>
     <!-- 纯黑色 -->
@@ -98,6 +102,7 @@
     <!-- 灰色f1 -->
     <color name="grey_f1">#fff1f1f1</color>
     <!-- 灰色f5 -->
+    <color name="gray_f5">#f5f5f5</color>
     <!-- 灰色f7 -->
     <!-- 灰色98 -->
     <!-- 灰色9D -->
@@ -118,6 +123,7 @@
     <color name="btn_blue_pressed">#029bf3</color>
     <color name="btn_blue_nomal">#1481ff</color>
     <color name="btn_blue_16">#1682ff</color>
+    <color name="blue_35">#3599ff</color>
     <!-- 橘色按钮 -->
     <!-- 红色按钮 -->
     <!-- 条目点击颜色 -->

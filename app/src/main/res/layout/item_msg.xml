@@ -35,13 +35,20 @@
 
             <TextView
                 android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:text="系统消息"
+                android:lines="1"
+                android:ellipsize="end"
                 android:textColor="@color/color_33"
                 android:textSize="14sp" />
-
+            <TextView
+                android:id="@+id/tv_isMsgRed"
+                android:layout_width="4dp"
+                android:layout_height="4dp"
+                android:visibility="gone"
+                android:background="@drawable/small_red_circular_shape"/>
             <TextView
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"

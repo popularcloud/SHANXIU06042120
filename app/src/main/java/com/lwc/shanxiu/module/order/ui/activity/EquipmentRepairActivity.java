@@ -93,7 +93,7 @@ public class EquipmentRepairActivity extends BaseActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("正在上传图片...");
         pd.setCancelable(false);
-        setTitle("设备返修");
+        setTitle("返厂维修");
         showBack();
         urlStrs.add("");
         adpter = new MyGridViewPhotoAdpter(this, urlStrs);

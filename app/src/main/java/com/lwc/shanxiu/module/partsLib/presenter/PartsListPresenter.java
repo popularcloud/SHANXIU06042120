@@ -40,9 +40,9 @@ public class PartsListPresenter {
      * @param sortType 排序(价格) 1(顺序)/ 2(倒序)  0不排序
      */
     public void searchPartsData(String typeId,String searchText,String otherSearch,String sortType,int currentPages){
-        if(currentPages > pagesAll){
+     /*   if(currentPages > pagesAll){
             return;
-        }
+        }*/
         Map<String,String> params = new HashMap<>();
         params.put("type_id",typeId);
         params.put("vague_accessories_name",searchText); //配件名称

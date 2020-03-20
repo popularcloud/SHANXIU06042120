@@ -22,6 +22,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.zhihu.matisse.engine.ImageEngine;
 
 /**
@@ -32,44 +34,58 @@ public class GlideEngine implements ImageEngine {
 
     @Override
     public void loadThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView, Uri uri) {
+        RequestOptions mRequestOptions = RequestOptions.centerCropTransform()
+            .placeholder(placeholder)
+                .override(resize,resize)
+                .centerCrop();
+
         Glide.with(context)
+                .asBitmap()
                 .load(uri)
-                .asBitmap()  // some .jpeg files are actually gif
-                .placeholder(placeholder)
-                .override(resize, resize)
-                .centerCrop()
+                .apply(mRequestOptions)
                 .into(imageView);
     }
 
     @Override
     public void loadGifThumbnail(Context context, int resize, Drawable placeholder, ImageView imageView,
                                  Uri uri) {
-        Glide.with(context)
-                .load(uri)
-                .asBitmap()
+
+        RequestOptions mRequestOptions = RequestOptions.centerCropTransform()
                 .placeholder(placeholder)
-                .override(resize, resize)
-                .centerCrop()
+                .override(resize,resize)
+                .centerCrop();
+
+        Glide.with(context)
+                .asBitmap()
+                .load(uri)
+                .apply(mRequestOptions)
                 .into(imageView);
     }
 
     @Override
     public void loadImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
+
+        RequestOptions mRequestOptions = RequestOptions.fitCenterTransform()
+                .override(resizeX,resizeY)
+                .priority(Priority.HIGH)
+                .fitCenter();
         Glide.with(context)
                 .load(uri)
-                .override(resizeX, resizeY)
-                .priority(Priority.HIGH)
-                .fitCenter()
+                .apply(mRequestOptions)
                 .into(imageView);
     }
 
     @Override
     public void loadGifImage(Context context, int resizeX, int resizeY, ImageView imageView, Uri uri) {
-        Glide.with(context)
-                .load(uri)
-                .asGif()
+
+        RequestOptions mRequestOptions = RequestOptions.centerCropTransform()
                 .override(resizeX, resizeY)
                 .priority(Priority.HIGH)
+                .centerCrop();
+        Glide.with(context)
+                .asGif()
+                .load(uri)
+                .apply(mRequestOptions)
                 .into(imageView);
     }
 

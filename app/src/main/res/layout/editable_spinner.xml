@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/et_companyName"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textCursorDrawable="@null"
+        android:maxLines="1"
+        android:inputType="text"
+        android:textColor="@color/black_66"
+        android:textColorHint="@color/line_cc"
+        android:textSize="15sp"
+        android:hint="请输入承租方公司名称"
+        android:background="@color/white"/>

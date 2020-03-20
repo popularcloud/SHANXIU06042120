@@ -27,7 +27,7 @@ public class DialogStyle1 extends Dialog {
     private EditText edtContent;
 
     public DialogStyle1(Context context) {
-        super(context);
+        super(context,R.style.dialog2);
 
         //去掉标题栏
         Window win = getWindow();

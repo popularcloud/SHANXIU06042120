@@ -1,15 +1,20 @@
 package com.lwc.shanxiu.module.message.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.Dimension;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.TimeUtil;
+import com.lwc.shanxiu.widget.TagsLayout;
 
 import org.byteam.superadapter.SuperAdapter;
 import org.byteam.superadapter.SuperViewHolder;
@@ -38,19 +43,40 @@ public class KnowledgeBaseAdapter extends SuperAdapter<KnowledgeBaseBean>{
         holder.setText(R.id.tv_desc, item.getKnowledgePaper());
         holder.setText(R.id.tv_view_count,item.getBrowseNum()+"次");
 
-        //String转date
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//小写的mm表示的是分钟
-        Date date= null;
-        try {
-            date = sdf.parse(item.getCreateTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(!TextUtils.isEmpty(item.getCreateTime())){
+            holder.setText(R.id.tv_create_time, item.getCreateTime().substring(0,10));
         }
-        String dateStr = TimeUtil.getTimeFormatText(date);
-        holder.setText(R.id.tv_create_time, dateStr);
+
         ImageView iv_header = holder.findViewById(R.id.iv_header);
         ImageView iv_is_video = holder.findViewById(R.id.iv_is_video);
+        TagsLayout tl_tags = holder.findViewById(R.id.tl_tags);
         RelativeLayout rl_header = holder.findViewById(R.id.rl_header);
+
+
+        if(!TextUtils.isEmpty(item.getLabelName())){
+            tl_tags.setVisibility(View.VISIBLE);
+            String[] tags =item.getLabelName().split(",");
+            tl_tags.removeAllViews();
+            for (int i = 0; i < tags.length; i++) {
+                if(i > 3){
+                    break;
+                }
+                TextView textView = new TextView(mContext);
+                textView.setText(tags[i]);
+                textView.setTextColor(Color.parseColor("#1481ff"));
+                textView.setTextSize(Dimension.SP,12);
+                textView.setGravity(Gravity.CENTER);
+                textView.setPadding(5,0,5,0);
+                textView.setBackgroundResource(R.drawable.round_square_blue_line);
+         /*       int index = tags[i].indexOf("：");
+                String tagStr = tags[i].substring(index+1);*/
+                textView.setText(tags[i]);
+                tl_tags.addView(textView);
+            }
+        }else{
+            tl_tags.setVisibility(View.GONE);
+        }
+
         if(item.getKnowledgeImageType() != 3){ //图片类型
             if(!TextUtils.isEmpty(item.getKnowledgeImage())){
                 String[] images = item.getKnowledgeImage().split(",");

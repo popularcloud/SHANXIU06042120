@@ -34,7 +34,7 @@ public class OrderListAdapter extends SuperAdapter<Order> {
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, Order item) {
         TextView textView = holder.findViewById(R.id.txtId);
-        textView.setText("订单号:" + item.getOrderId());// 订单号
+        textView.setText("订单号：" + item.getOrderId());// 订单号
         holder.setText(R.id.txtTime, item.getCreateTime());
         holder.setText(R.id.txtMachineType, item.getDeviceTypeName()); //设备类型
         if (item.getOrderType().equals("3")) {

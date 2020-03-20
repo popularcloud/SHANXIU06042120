@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="70dp"
-    android:layout_height="70dp"
-    android:background="@drawable/selector_item_bg">
-
+    android:layout_width="83dp"
+    android:layout_height="83dp">
     <ImageView
         android:id="@+id/add_img"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
         android:scaleType="fitXY"
-        android:src="@drawable/add_pic"/>
+        android:src="@drawable/add_img"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/hello_world"/>
     <ImageView
         android:id="@+id/delete_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:paddingBottom="5dp"
-        android:paddingLeft="5dp"
         android:visibility="gone"
         android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/hello_world"
         android:src="@drawable/bbs_icon_delete_image"/>
 </RelativeLayout>
+

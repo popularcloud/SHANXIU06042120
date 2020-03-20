@@ -96,46 +96,6 @@ public class ScrapActivity extends BaseActivity {
     }
 
     public void onYearMonthDayTimePicker() {
-       /* DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setActionButtonTop(true);
-        picker.setDateRangeStart(2017, 1, 1);
-        picker.setDateRangeEnd(2025, 11, 11);
-
-        //当前年
-        int year = calendar.get(Calendar.YEAR);
-        //当前月
-        int month = (calendar.get(Calendar.MONTH))+1;
-        //当前月的第几天：即当前日
-        int day_of_month = calendar.get(Calendar.DAY_OF_MONTH);
-        //当前时：HOUR_OF_DAY-24小时制；HOUR-12小时制
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        //当前分
-        int minute = calendar.get(Calendar.MINUTE);
-        picker.setSelectedItem(year,month,day_of_month,hour,minute);
-        picker.setTimeRangeStart(9, 0);
-        picker.setTimeRangeEnd(20, 30);
-        picker.setCanLinkage(false);
-        picker.setTitleText("请选择");
-        picker.setLabel("年","月","日","时","分");
-
-//        picker.setStepMinute(5);
-        picker.setWeightEnable(true);
-        picker.setWheelModeEnable(true);
-        LineConfig config = new LineConfig();
-        config.setColor(Color.WHITE);//线颜色
-        config.setAlpha(120);//线透明度
-        config.setVisible(false);//线不显示 默认显示
-        picker.setLineConfig(config);
-        picker.setLabel(null,null,null,null,null);
-        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
-            @Override
-            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                tvTime.setText(year + "-" + month + "-" + day + " " + hour + ":" + minute);
-            }
-        });
-        picker.show();*/
-
-
         final DatePicker picker = new DatePicker(this);
 
         //当前年
@@ -152,6 +112,7 @@ public class ScrapActivity extends BaseActivity {
         picker.setSelectedItem(year,month,day_of_month);
         picker.setWeightEnable(true);
         picker.setLabel("年","月","日");
+        picker.setSelectedTextColor(Color.parseColor("#1481ff"));
         picker.setLineColor(Color.WHITE);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override

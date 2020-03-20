@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lwc.shanxiu">
-
     <!--
     Required
     <permission
@@ -45,13 +44,11 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -61,26 +58,26 @@
         android:icon="@mipmap/ic_app_launcher"
         android:label="@string/app_name"
         android:persistent="true"
-        android:supportsRtl="true"
         android:resizeableActivity="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.lwc.shanxiu.fileProvider"
-            android:grantUriPermissions="true"
-            android:exported="false">
+            android:exported="false"
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <meta-data
             android:name="android.max_aspect"
-            android:value="2.4" />
-        <!--适配华为（huawei）刘海屏-->
+            android:value="2.4" /> <!-- 适配华为（huawei）刘海屏 -->
         <meta-data
             android:name="android.notch_support"
-            android:value="true"/>
-        <!--适配小米（xiaomi）刘海屏-->
+            android:value="true" /> <!-- 适配小米（xiaomi）刘海屏 -->
         <meta-data
             android:name="notch.config"
             android:value="portrait|landscape" />
@@ -89,8 +86,7 @@
             android:value="58c8823b677baa0d81001491" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="c339d69b0208ab6bb77e7147ca168e8a" />
-        <!-- 定位需要的服务 -->
+            android:value="c339d69b0208ab6bb77e7147ca168e8a" /> <!-- 定位需要的服务 -->
         <service android:name="com.amap.api.location.APSService" />
         <service
             android:name=".map.LocationService"
@@ -146,9 +142,9 @@
             android:name=".activity.MainActivity"
             android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 魅族push应用定义消息receiver声明 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 魅族push应用定义消息receiver声明 -->
         <!-- <receiver android:name=".MeizuReceiver"> -->
         <!-- <intent-filter> -->
         <!-- &lt;!&ndash; 接收push消息 &ndash;&gt; -->
@@ -160,8 +156,6 @@
         <!-- &lt;!&ndash; 兼容低版本Flyme3推送服务配置 &ndash;&gt; -->
         <!-- <action android:name="com.meizu.c2dm.intent.REGISTRATION" /> -->
         <!-- <action android:name="com.meizu.c2dm.intent.RECEIVE" /> -->
-
-
         <!-- <category android:name="com.lwc.shanxiu"></category> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
@@ -176,27 +170,13 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- <activity -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
         <!-- android:name="com.lwc.shanxiu.activity.MipushActivity" -->
         <!-- android:configChanges="orientation|keyboardHidden|navigation|screenSize" -->
         <!-- android:launchMode="singleTask" -->
         <!-- android:exported="true"> -->
         <!-- </activity> -->
         <!-- 支付宝支付 -->
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name="com.alipay.sdk.app.H5AuthActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-        <!-- 支付宝支付截止 -->
         <!-- 完成订单 -->
         <activity
             android:name=".module.order.ui.activity.AccomplishActivity"
@@ -222,8 +202,7 @@
             android:name=".module.order.ui.activity.EquipmentRepairActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 故障确认单 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 故障确认单 -->
         <activity
             android:name=".module.order.ui.activity.QuoteAffirmActivity"
             android:launchMode="singleTask"
@@ -234,8 +213,7 @@
             android:name=".module.order.ui.activity.CannotMaintainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 工程师信息 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 工程师信息 -->
         <activity
             android:name=".module.user.RepairmanInfoActivity"
             android:screenOrientation="portrait"
@@ -250,27 +228,22 @@
             android:name=".activity.NavigationActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <!-- 版本信息 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 版本信息 -->
         <activity
             android:name=".module.setting.VesionActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 我的技能 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 我的技能 -->
         <activity
             android:name=".module.user.MySkillsActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 我的设置 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 我的设置 -->
         <activity
             android:name=".module.setting.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 意见反馈 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 意见反馈 -->
         <activity
             android:name=".module.order.ui.activity.RepairHistoryActivity"
             android:screenOrientation="portrait"
@@ -309,7 +282,7 @@
             android:name=".module.wallet.PayPwdActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".module.wallet.InputPayPwdActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
@@ -322,9 +295,7 @@
             android:name=".module.wallet.WithdrawPayActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <!-- 工程师列表 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 工程师列表 -->
         <activity
             android:name=".module.setting.ShareActivity"
             android:screenOrientation="portrait"
@@ -334,33 +305,28 @@
             android:name=".module.order.ui.activity.RepairsListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 进行报价 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 进行报价 -->
         <activity
             android:name=".module.order.ui.activity.ToBillActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 设备添加 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 设备添加 -->
         <activity
             android:name=".module.user.UpdateUserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!-- 设备详情页面 -->
+            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 设备详情页面 -->
         <!-- 个人信息页面 -->
         <activity
             android:name=".module.user.UserInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 二维码页面 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 二维码页面 -->
         <activity
             android:name=".activity.CodeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 登录注册部分 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 登录注册部分 -->
         <activity
             android:name=".module.user.LoginOrRegistActivity"
             android:screenOrientation="portrait"
@@ -370,8 +336,7 @@
             android:name=".module.user.FindPasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 图片展示部分 ======================================================= -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 图片展示部分 ======================================================= -->
         <activity
             android:name=".activity.PhotoSelectActivity"
             android:screenOrientation="portrait"
@@ -412,8 +377,7 @@
             android:name=".module.order.ui.activity.OrderListActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-        <!-- 友盟分享 -->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- 友盟分享 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -441,24 +405,16 @@
             android:name="com.umeng.qq.tencent.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <!-- 我的配件库首页 -->
-        <activity android:name=".module.partsLib.ui.activity.PartsMainActivity" />
-        <!-- 配件库列表 -->
-        <activity android:name=".module.partsLib.ui.activity.MyPartsListActivity" />
-        <!-- 配件详情 -->
-        <activity android:name=".module.partsLib.ui.activity.PartsDetailActivity" />
-        <!-- 硬件清单 -->
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" /> <!-- 我的配件库首页 -->
+        <activity android:name=".module.partsLib.ui.activity.PartsMainActivity" /> <!-- 配件库列表 -->
+        <activity android:name=".module.partsLib.ui.activity.MyPartsListActivity" /> <!-- 配件详情 -->
+        <activity android:name=".module.partsLib.ui.activity.PartsDetailActivity" /> <!-- 硬件清单 -->
         <activity android:name=".module.partsLib.ui.activity.BuyListActivity" />
-
         <!--
          <service
              android:name="com.lwc.shanxiu.service.BackService"/>
          Required  SDK核心功能
         -->
-
-
         <!-- User defined.  For test only  用户自定义的广播接收器 -->
         <receiver
             android:name=".service.MyReceiver"
@@ -501,8 +457,7 @@
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-        <!-- </>值来自开发者平台取得的AppKey -->
+            android:value="@integer/google_play_services_version" /> <!-- </>值来自开发者平台取得的AppKey -->
         <!-- 知识库列表 -->
         <!-- 知识库详情 -->
         <activity android:name=".module.message.ui.KnowledgeDetailActivity" />
@@ -512,18 +467,43 @@
             android:launchMode="singleTask" />
         <activity android:name=".module.order.ui.activity.ScrapActivity" />
         <activity android:name=".module.order.ui.activity.FeeStandardActivity" />
-        <activity android:name=".module.user.RegistActivity"  android:screenOrientation="portrait" />
-        <activity android:name=".module.message.ui.PublishActivity"    android:configChanges="keyboardHidden" android:screenOrientation="portrait"></activity>
-        <activity android:name=".module.message.ui.PublishDetailActivity"  android:screenOrientation="portrait"></activity>
-        <activity android:name=".module.message.ui.PublishAndRequestListActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name=".module.user.RegistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.message.ui.PublishActivity"
+            android:configChanges="keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.message.ui.PublishDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.message.ui.PublishAndRequestListActivity"
             android:configChanges="keyboardHidden"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
-        <activity android:name=".module.user.RegistTwoActivity"  android:screenOrientation="portrait"></activity>
-        <activity android:name=".module.user.UserAgreementActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".module.user.UpdatePassWordActivity"></activity>
-        <activity android:name=".module.user.UpdateSignActivity"></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".module.user.RegistTwoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.user.UserAgreementActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".module.user.UpdatePassWordActivity" />
+        <activity android:name=".module.user.UpdateSignActivity" />
+        <!-- 租赁设备 -->
+        <activity android:name=".module.order.ui.activity.LeaseDevicesActivity" />
+        <!-- 搜索知识库 -->
+        <activity android:name=".module.message.ui.KnowledgeSearchActivity" />
+        <!-- 租赁设备维修记录 -->
+        <activity android:name=".module.order.ui.activity.LeaseDevicesHistoryActivity" />
+        <activity android:name=".module.question.ui.activity.MyRequestActivity" android:launchMode="singleTask" />
+        <activity android:name=".module.question.ui.activity.MyAnswerActivity" android:launchMode="singleTask"/>
+        <activity android:name=".module.question.ui.activity.PublishQuestionActivity" />
+        <activity android:name=".module.question.ui.activity.QuestionDetailActivity" />
+        <activity android:name=".module.question.ui.activity.AnswerQuestionActivity" />
+        <activity android:name=".module.question.ui.activity.QuestionSearchActivity" />
+        <activity android:name=".activity.InformationActivity" />
     </application>
 
 </manifest>

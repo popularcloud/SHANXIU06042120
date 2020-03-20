@@ -15,13 +15,14 @@ public class ServerConfig {
    */
   public static final String RESPONSE_STATUS_SUCCESS = "1";
  //测试服务器
-  //public final static String DOMAIN = "https://47.97.217.243";
- //本地服务器‘；
- // public final static String DOMAIN = "http://192.168.0.116";
+ //public final static String DOMAIN = "https://47.97.217.243";
+ //本地服务器
+  //public final static String DOMAIN = "http://192.168.0.116";
+ // public final static String DOMAIN = "http://192.168.3.7";
  //正式服务器
   public final static String DOMAIN = "https://www.ls-mx.com";
 
-	public final static String SERVER_API_URL = DOMAIN+"/api";
+  public final static String SERVER_API_URL = DOMAIN+"/api";
   //  测试服务器
 //	public final static String SERVER_API_URL = "http://192.168.2.166/api";
 //	public final static String SERVER_API_URL = "http://192.168.0.53/api";
@@ -66,5 +67,15 @@ public class ServerConfig {
    * 压缩图片完毕完毕
    */
   public static final int WHAT_COMPRESS_IMAGE_FINISH = 20;
+
+  /**
+   * 知识库搜索
+   */
+  public static final int REQUESTCODE_KNOWLEDGESEARCH = 00012;
+
+  /**
+   * 问题搜索
+   */
+  public static final int REQUESTCODE_QUESTION = 00013;
 
 }

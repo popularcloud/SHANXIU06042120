@@ -54,7 +54,8 @@ public class PhotoAlbumActivity extends BaseActivity {
 	private final static int WHAT_GET_PHOTOALBUM = 1;
 
 	/** 查询系统图库使用的字段 */
-	private static final String[] STORE_IMAGES = { MediaStore.Images.Media.DISPLAY_NAME, // 显示的名�?
+	private static final String[] STORE_IMAGES = {
+			MediaStore.Images.Media.DISPLAY_NAME, // 显示的名�?
 			MediaStore.Images.Media.LATITUDE, // 维度
 			MediaStore.Images.Media.LONGITUDE, // 经度
 			MediaStore.Images.Media._ID, // id

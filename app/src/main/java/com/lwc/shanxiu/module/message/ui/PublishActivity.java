@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsoluteLayout;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -43,6 +44,7 @@ import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.QiniuUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
+import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -603,6 +605,11 @@ public class PublishActivity extends BaseActivity {
                             } else {
                                 mEditor.insertImage(url,
                                         url);
+                                //mEditor.insertLink("",System.currentTimeMillis()+".jpg");
+                                //View view = new View(PublishActivity.this);
+                                //view.setLayoutParams(new AbsoluteLayout.LayoutParams(AbsoluteLayout.LayoutParams.MATCH_PARENT,20,0,20));
+                               // mEditor.addView(view);
+                                mEditor.insertTodo();
                                 pd.dismiss();
                             }
                             LLog.i("联网  图片地址" + url);

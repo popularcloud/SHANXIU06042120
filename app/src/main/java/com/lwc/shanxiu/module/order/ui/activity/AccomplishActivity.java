@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.ImageBrowseActivity;
+import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.adapter.MyGridViewPhotoAdpter;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.FileConfig;
@@ -29,6 +31,7 @@ import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.interf.OnBtnClickCalBack;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.CodeInfoBean;
+import com.lwc.shanxiu.module.bean.LeaseDevicesHistoryBean;
 import com.lwc.shanxiu.module.bean.PhotoToken;
 import com.lwc.shanxiu.module.zxing.ui.CaptureActivity;
 import com.lwc.shanxiu.utils.FileUtil;
@@ -99,6 +102,7 @@ public class AccomplishActivity extends BaseActivity {
     private String orderId, orderType, qrcodeIndex;
     private int hasAward, statusType;
     private MyGridViewPhotoAdpter adpter;
+    private String qrcodeIndex_accomp;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -172,7 +176,7 @@ public class AccomplishActivity extends BaseActivity {
     protected void widgetListener() {
     }
 
-    @OnClick({R.id.btnAffirm, R.id.rl_repair_type, R.id.iv_scan_code})
+    @OnClick({R.id.btnAffirm, R.id.rl_repair_type, R.id.rl_device_type})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnAffirm:
@@ -204,9 +208,9 @@ public class AccomplishActivity extends BaseActivity {
                 break;
             case R.id.rl_repair_type:
                 KeyboardUtil.showInput(false, AccomplishActivity.this);
-                selectDate();
+                onYearMonthDayTimePicker();
                 break;
-            case R.id.iv_scan_code:
+            case R.id.rl_device_type:
 
                 DialogScanStyle dialogScanStyle = new DialogScanStyle(AccomplishActivity.this, new OnBtnClickCalBack() {
                     @Override
@@ -236,7 +240,11 @@ public class AccomplishActivity extends BaseActivity {
      */
     private void checkedScanStr(){
         Map<String, String> map = new HashMap<>();
-        map.put("qrcodeIndex", qrcodeIndex);
+        if(!TextUtils.isEmpty(qrcodeIndex_accomp)){
+            map.put("leaseQrcodeIndex", qrcodeIndex_accomp);
+        }else{
+            map.put("qrcodeIndex", qrcodeIndex);
+        }
         HttpRequestUtils.httpRequest(this, "/scan/codeInfo", RequestValue.SCAN_CODE_INFO, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
@@ -264,21 +272,31 @@ public class AccomplishActivity extends BaseActivity {
 
     public void submitDate(){
         Map<String, String> map = new HashMap<>();
-        map.put("qrcodeIndex", qrcodeIndex);
+        if(!TextUtils.isEmpty(qrcodeIndex_accomp)){
+            map.put("leaseQrcodeIndex", qrcodeIndex_accomp);
+        }else{
+            map.put("qrcodeIndex", qrcodeIndex);
+        }
         HttpRequestUtils.httpRequest(this, "scanCode", RequestValue.SCAN_CODE, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        if (!response.contains("data")) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("qrcodeIndex", qrcodeIndex);
-                            IntentUtil.gotoActivityForResult(AccomplishActivity.this, BindDeviceActivity.class, bundle, 1520);
-                        } else {
+                        if(TextUtils.isEmpty(qrcodeIndex_accomp)){
+                            if (!response.contains("data")) {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("qrcodeIndex", qrcodeIndex);
+                                IntentUtil.gotoActivityForResult(AccomplishActivity.this, BindDeviceActivity.class, bundle, 1520);
+                            } else {
+                                tv_device.setVisibility(View.VISIBLE);
+                                iv_scan_code.setVisibility(View.GONE);
+                            }
+                        }else{
                             tv_device.setVisibility(View.VISIBLE);
                             iv_scan_code.setVisibility(View.GONE);
                         }
+
                         break;
                     default:
                        // finish();
@@ -295,7 +313,7 @@ public class AccomplishActivity extends BaseActivity {
         });
     }
 
-    private void selectDate() {
+    /*private void selectDate() {
         Date date = new Date(new Date().getTime() + 604800000);
         calendar.setTime(date);
         nian = calendar.get(Calendar.YEAR);
@@ -325,6 +343,50 @@ public class AccomplishActivity extends BaseActivity {
         }, nian, yue, ri);
         yearPickerDialog.getDatePicker().setMinDate(date.getTime());
         yearPickerDialog.show();
+    }*/
+
+    public void onYearMonthDayTimePicker() {
+        final cn.addapp.pickers.picker.DatePicker picker = new cn.addapp.pickers.picker.DatePicker(this);
+
+        //当前年
+        int year = calendar.get(Calendar.YEAR);
+        //当前月
+        int month = (calendar.get(Calendar.MONTH))+1;
+        //当前月的第几天：即当前日
+        int day_of_month = calendar.get(Calendar.DAY_OF_MONTH);
+        picker.setCanLoop(true);
+        picker.setWheelModeEnable(true);
+        picker.setTopPadding(15);
+        picker.setRangeStart(2016, 8, 29);
+        picker.setRangeEnd(2111, 1, 11);
+        picker.setSelectedItem(year,month,day_of_month);
+        picker.setWeightEnable(true);
+        picker.setLabel("年","月","日");
+        picker.setSelectedTextColor(Color.parseColor("#1481ff"));
+        picker.setLineColor(Color.WHITE);
+        picker.setOnDatePickListener(new cn.addapp.pickers.picker.DatePicker.OnYearMonthDayPickListener() {
+            @Override
+            public void onDatePicked(String year, String month, String day) {
+                tv_type.setText(year + "-" + month + "-" + day);
+            }
+        });
+        picker.setOnWheelListener(new cn.addapp.pickers.picker.DatePicker.OnWheelListener() {
+            @Override
+            public void onYearWheeled(int index, String year) {
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onMonthWheeled(int index, String month) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+            }
+
+            @Override
+            public void onDayWheeled(int index, String day) {
+                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+            }
+        });
+        picker.show();
     }
 
     private void detection() {
@@ -337,8 +399,12 @@ public class AccomplishActivity extends BaseActivity {
         map.put("warrantyTime", typeStr);
         map.put("hasAward", "" + hasAward);
         map.put("images", imgPath1);
-        if (!TextUtils.isEmpty(qrcodeIndex))
+        if(!TextUtils.isEmpty(qrcodeIndex_accomp)){
+            map.put("leaseQrcodeIndex", qrcodeIndex_accomp);
+        }else if(!TextUtils.isEmpty(qrcodeIndex)){
             map.put("qrcodeIndex", qrcodeIndex);
+        }
+
         if (statusType != 0) {
             map.put("operate", "1");
         } else {
@@ -421,7 +487,39 @@ public class AccomplishActivity extends BaseActivity {
             qrcodeIndex = data.getStringExtra("qrcodeIndex");
             tv_device.setVisibility(View.VISIBLE);
             iv_scan_code.setVisibility(View.GONE);
-        }else if(requestCode == 1520 && resultCode == RESULT_OK){
+        }else if(requestCode == 8869 && resultCode == 1112){
+            qrcodeIndex_accomp = data.getStringExtra("qrcodeIndex_accomp");
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("qrcodeIndex", qrcodeIndex_accomp);
+            HttpRequestUtils.httpRequest(this, "扫描租赁二维码", RequestValue.SCAN_LEASECODE, params, "GET", new HttpRequestUtils.ResponseListener() {
+                @Override
+                public void getResponseData(String response) {
+                    Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                    switch (common.getStatus()) {
+                        case "1":
+                            String data = JsonUtil.getGsonValueByKey(response, "data");
+                            if (!TextUtils.isEmpty(data)) {
+                                tv_device.setVisibility(View.VISIBLE);
+                                iv_scan_code.setVisibility(View.GONE);
+                            } else {
+                                ToastUtil.showToast(AccomplishActivity.this,"租赁设备未绑定，请到首页扫一扫绑定!");
+                                qrcodeIndex_accomp = "";
+                            }
+                            break;
+                        default:
+                            ToastUtil.showToast(AccomplishActivity.this, common.getInfo());
+                            break;
+                    }
+                }
+
+                @Override
+                public void returnException(Exception e, String msg) {
+                    ToastUtil.showToast(AccomplishActivity.this, "" + msg);
+                }
+            });
+
+        } else if(requestCode == 1520 && resultCode == RESULT_OK){
             qrcodeIndex = data.getStringExtra("qrcodeIndex");
             tv_device.setVisibility(View.VISIBLE);
             iv_scan_code.setVisibility(View.GONE);

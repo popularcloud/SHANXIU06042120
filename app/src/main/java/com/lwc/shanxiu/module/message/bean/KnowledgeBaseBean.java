@@ -1,5 +1,7 @@
 package com.lwc.shanxiu.module.message.bean;
 
+import java.util.List;
+
 /**
  * @author younge
  * @date 2019/6/4 0004
@@ -13,6 +15,7 @@ public class KnowledgeBaseBean {
         private String createTime;
         private String knowledgeTitle;
         private String knowledgePaper;
+        private String labelName;
         private int browseNum;
 
         public String getKnowledgeId() {
@@ -70,4 +73,12 @@ public class KnowledgeBaseBean {
         public void setBrowseNum(int browseNum) {
             this.browseNum = browseNum;
         }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public void setLabelName(String labelName) {
+        this.labelName = labelName;
+    }
 }

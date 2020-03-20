@@ -19,8 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.setting.ShareActivity;
@@ -30,6 +30,7 @@ import com.lwc.shanxiu.utils.SDFileHelper;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -114,10 +115,13 @@ public class CodeActivity extends BaseActivity {
 				File dir1 = new File(filePath);
 				if (!dir1.exists()) {
 					final SDFileHelper helper = new SDFileHelper(this);
-					Glide.with(this).load(user.getMaintenanceHeadImage()).asBitmap().toBytes().into(new SimpleTarget<byte[]>() {
+					Glide.with(this).asBitmap().load(user.getMaintenanceHeadImage()).into(new SimpleTarget<Bitmap>() {
 						@Override
-						public void onResourceReady(byte[] bytes, GlideAnimation<? super byte[]> glideAnimation) {
+						public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> glideAnimation) {
 							try {
+								ByteArrayOutputStream baos = new ByteArrayOutputStream();
+								bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+								byte[] bytes = baos.toByteArray();
 								helper.savaFileToSD(name + ".jpg", bytes);
 								createCode();
 							} catch (Exception e) {
@@ -232,7 +236,7 @@ public class CodeActivity extends BaseActivity {
 				LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getAbsolutePath())));
 				preferencesUtils.saveString("share_photo_url"+user.getUserId(),file.getAbsolutePath());
 				ToastUtil.showToast(CodeActivity.this, "图片保存成功！");
-				tv_desc.setText("邀请好友扫描二维码 成为专属客户");
+				tv_desc.setText("邀请好友扫描二维码,成为专属客户");
 				ll_bottom.setVisibility(View.VISIBLE);
 			} else if (type == 3) {
 				preferencesUtils.saveString("share_photo_url"+user.getUserId(),file.getAbsolutePath());
@@ -241,7 +245,7 @@ public class CodeActivity extends BaseActivity {
 				bundle.putString("urlPhoto", file.getAbsolutePath());
 				bundle.putString("goneQQ", "true");
 				IntentUtil.gotoActivity(this, ShareActivity.class, bundle);
-				tv_desc.setText("邀请好友扫描二维码 成为专属客户");
+				tv_desc.setText("邀请好友扫描二维码,成为专属客户");
 				ll_bottom.setVisibility(View.VISIBLE);
 			}
 		} catch (FileNotFoundException e) {

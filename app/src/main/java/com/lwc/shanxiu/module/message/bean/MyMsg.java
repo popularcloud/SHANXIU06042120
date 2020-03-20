@@ -16,6 +16,7 @@ public class MyMsg implements Serializable {
     private String messageType;     //消息类型 1.系统消息 2.资讯消息 3.活动消息 4.个人消息
     private String messageImage;    //消息图片
     private String clickUrl;          //点击跳转的连接
+    private String isRead;          //是否已读
     private boolean hasMessage;//是否有未读消息
 
     public boolean getHasMessage() {
@@ -80,5 +81,13 @@ public class MyMsg implements Serializable {
 
     public void setClickUrl(String clickUrl) {
         this.clickUrl = clickUrl;
+    }
+
+    public String getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(String isRead) {
+        this.isRead = isRead;
     }
 }

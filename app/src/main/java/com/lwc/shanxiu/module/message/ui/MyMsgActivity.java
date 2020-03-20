@@ -3,6 +3,7 @@ package com.lwc.shanxiu.module.message.ui;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
+import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -63,7 +65,7 @@ public class MyMsgActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        hasMsg = DataSupport.findAll(HasMsg.class);
+     //   hasMsg = DataSupport.findAll(HasMsg.class);
     }
 
     @Override
@@ -72,40 +74,7 @@ public class MyMsgActivity extends BaseActivity {
 
     @Override
     protected void widgetListener() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyMsgListAdapter(this, myMsgs, R.layout.item_my_msg);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int viewType, int position) {
-                MyMsg msg = adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("myMsg", msg);
-                for (int i=0; i<hasMsg.size(); i++) {
-                    if (hasMsg.get(i).getType().equals(msg.getMessageType())) {
-                        if (hasMsg.get(i).getHasMessage()) {
-                            hasMsg.get(i).setHasMessage(false);
-                            readMsg(msg.getMessageType());
-                        }
-                        break;
-                    }
-                }
-                IntentUtil.gotoActivity(MyMsgActivity.this, MsgListActivity.class, bundle);
-            }
-        });
-        recyclerView.setAdapter(adapter);
 
-        //刷新控件监听器
-        mBGARefreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
-            @Override
-            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
-                getMsgList();
-            }
-
-            @Override
-            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
-                return false;
-            }
-        });
     }
 
     private void readMsg(String type) {
@@ -115,9 +84,11 @@ public class MyMsgActivity extends BaseActivity {
         HttpRequestUtils.httpRequest(this, "readMsg", RequestValue.READ_MESSAGE+type, null, "POST", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String result) {
+                ToastUtil.showToast(MyMsgActivity.this,result);
             }
             @Override
             public void returnException(Exception e, String msg) {
+                ToastUtil.showToast(MyMsgActivity.this,msg+e.getMessage());
             }
         });
     }
@@ -125,7 +96,32 @@ public class MyMsgActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getMsgList();
+        hasMessage();
+    }
+
+    private void hasMessage() {
+        DataSupport.deleteAll(HasMsg.class);
+        HttpRequestUtils.httpRequest(this, "hasMessage", RequestValue.HAS_MESSAGE, null, "GET", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                if (common.getStatus().equals("1")) {
+                    hasMsg = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<HasMsg>>() {
+                    });
+                    getMsgList();
+                    if (hasMsg != null && hasMsg.size() > 0) {
+                        DataSupport.saveAll(hasMsg);
+                    }
+                }else{
+                    ToastUtil.showToast(MyMsgActivity.this,common.getInfo());
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                ToastUtil.showToast(MyMsgActivity.this,msg);
+            }
+        });
     }
 
     private void getMsgList() {
@@ -145,13 +141,15 @@ public class MyMsgActivity extends BaseActivity {
                         for (int j=0; j<myMsgs.size(); j++) {
                             for (int i=0; i<hasMsg.size(); i++) {
                                 if (myMsgs.get(j).getMessageType().equals(hasMsg.get(i).getType())){
-                                    myMsgs.get(j).setHasMessage(hasMsg.get(i).getHasMessage());
+                                    myMsgs.get(j).setHasMessage(hasMsg.get(i).isHasMessage());
                                     break;
                                 }
                             }
                         }
                     }
-                    adapter.replaceAll(myMsgs);
+                    initRecycleView();
+                   /* adapter.replaceAll(myMsgs);
+                    adapter.notifyDataSetChanged();*/
                     if (myMsgs.size() > 0) {
                         tv_msg.setVisibility(View.GONE);
                     } else {
@@ -167,6 +165,43 @@ public class MyMsgActivity extends BaseActivity {
             public void returnException(Exception e, String msg) {
                 ToastUtil.showToast(MyMsgActivity.this, msg);
                 BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
+            }
+        });
+    }
+
+    private void initRecycleView(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MyMsgListAdapter(this, myMsgs,hasMsg ,R.layout.item_my_msg);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int viewType, int position) {
+                MyMsg msg = adapter.getItem(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("myMsg", msg);
+               /* for (int i=0; i<hasMsg.size(); i++) {
+                    if (hasMsg.get(i).getType().equals(msg.getMessageType())) {
+                        if (hasMsg.get(i).isHasMessage()) {
+                            hasMsg.get(i).setHasMessage(false);
+                            readMsg(msg.getMessageType());
+                        }
+                        break;
+                    }
+                }*/
+                IntentUtil.gotoActivity(MyMsgActivity.this, MsgListActivity.class, bundle);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+
+        //刷新控件监听器
+        mBGARefreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+            @Override
+            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+                getMsgList();
+            }
+
+            @Override
+            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+                return false;
             }
         });
     }

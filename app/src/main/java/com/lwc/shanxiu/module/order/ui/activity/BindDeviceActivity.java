@@ -350,10 +350,15 @@ public class BindDeviceActivity extends BaseActivity {
 
         //工程师和工程师所属公司信息
         User user = SharedPreferencesUtils.getInstance(this).loadObjectData(User.class);
-        map.put("maintenanceId", user.getMaintenanceId());
-        map.put("maintenanceName", user.getUserPhone());
-        map.put("maintenanceCompanyName", user.getParentCompanyName());
-        map.put("maintenanceCompanyId", user.getParentCompanyId());
+
+        String maintenanceId = TextUtils.isEmpty(user.getMaintenanceId())?"":user.getMaintenanceId();
+        map.put("maintenanceId", maintenanceId);
+        String maintenanceName = TextUtils.isEmpty(user.getUserPhone())?"":user.getUserPhone();
+        map.put("maintenanceName",maintenanceName);
+        String maintenanceCompanyName = TextUtils.isEmpty(user.getParentCompanyName())?"":user.getParentCompanyName();
+        map.put("maintenanceCompanyName", maintenanceCompanyName);
+        String maintenanceCompanyId = TextUtils.isEmpty(user.getParentCompanyId())?"":user.getParentCompanyId();
+        map.put("maintenanceCompanyId", maintenanceCompanyId);
 
         map.put("companyProvinceId", selectedSheng.getDmId());
         map.put("companyProvinceName", selectedSheng.getName());

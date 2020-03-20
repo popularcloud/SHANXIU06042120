@@ -67,10 +67,12 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.LogUtil;
 import com.lwc.shanxiu.utils.PictureUtils;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SystemInvokeUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.widget.DialogStyle4;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -173,6 +175,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     public void onBack(View view) {
+ /*       Intent data1 = new Intent();
+        data1.putExtra("showDialog", "1");
+        setResult(RESULT_OK, data1);*/
         onBackPressed();
     }
 
@@ -240,22 +245,39 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     public void handleDecode(Result rawResult, Bundle bundle) {
         inactivityTimer.onActivity();
         beepManager.playBeepSoundAndVibrate();
-//		String matchUrl = "\\b(([\\w-]+://?|www[.])[^\\s()<>]+(?:\\([\\w\\d]+\\)|([^[:punct:]\\s]|/)))";
-//		String data = rawResult.getText();
-//		if (data.contains("&k=wx_first")) {
-//			bundle.putString("meche_ID", data + "&app=true");
-//		} else if (data.matches(matchUrl)) {
-//			bundle.putInt("width", mCropRect.width());
-//			bundle.putInt("height", mCropRect.height());
-//			bundle.putString("result", data);
-//			IntentUtil.gotoActivity(CaptureActivity.this, ResultActivity.class, bundle);
-//		} else {
-//			bundle.putInt("width", mCropRect.width());
-//			bundle.putInt("height", mCropRect.height());
-//			bundle.putString("result", data);
-//			IntentUtil.gotoActivity(CaptureActivity.this, ResultActivity.class, bundle);
-//		}
-        bindCompany(rawResult.getText());
+        if(rawResult != null){
+            String scanStr = rawResult.getText();
+            if(scanStr.contains("knowledge")){
+                int lineIndex = scanStr.lastIndexOf("knowledge/");
+                String token = scanStr.substring(lineIndex+10);
+                Log.d("联网成功","scanStr"+scanStr + "  token"+ token);
+                Intent data1 = new Intent();
+                data1.putExtra("showDialog", "1");
+                data1.putExtra("qrcodeIndex",token);
+                setResult(1111, data1);
+                finish();
+            }else if(scanStr.contains("codeLeaseId=")){
+                int lineIndex = scanStr.lastIndexOf("codeLeaseId=");
+                String token = scanStr.substring(lineIndex+12);
+                Log.d("联网成功","scanStr"+scanStr + "  token"+ token);
+                Intent data1 = new Intent();
+                if(type == 1){  //维修措施
+                    data1.putExtra("qrcodeIndex_accomp", token);
+                }else{
+                    data1.putExtra("qrcodeIndex", token);
+                }
+                setResult(1112, data1);
+                finish();
+            }else{
+                bindCompany(scanStr);
+            }
+
+        }
+
+    }
+
+    private void showDownloadDialog(){
+        DialogStyle4 dialogStyle4 = new DialogStyle4(this);
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

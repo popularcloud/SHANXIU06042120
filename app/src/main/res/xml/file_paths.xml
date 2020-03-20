@@ -16,5 +16,6 @@
         <external-cache-path
             name="download4"
             path="" />
+        <external-path name="external_files" path="."/>
     </paths>
 </resources>

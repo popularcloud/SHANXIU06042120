@@ -35,6 +35,7 @@ public class SelectPhotoDialog extends Dialog implements View.OnClickListener{
 		// 一定要重新设置, 才能生效
 		window.setAttributes(attributes);
 		this.callBack = callBack;
+
 		init(context, one, two);
 	}
 

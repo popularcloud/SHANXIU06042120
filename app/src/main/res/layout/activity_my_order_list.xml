@@ -3,10 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/f0_gray_line"
     android:fitsSystemWindows="true">
 
     <include layout="@layout/include_title" />
-
+    <View style="@style/line_f0Style" />
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -39,6 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <View
@@ -46,8 +48,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:background="@color/btn_blue_nomal"
             android:visibility="visible" />
 
@@ -56,8 +56,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
             android:background="@color/btn_blue_nomal"
             android:visibility="invisible" />
     </LinearLayout>

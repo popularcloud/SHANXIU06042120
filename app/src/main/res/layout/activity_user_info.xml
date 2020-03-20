@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/f0_gray_line"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,11 +11,11 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@color/white"
+        android:background="@color/f0_gray_line"
         android:orientation="vertical">
 
     <include layout="@layout/include_title"/>
-    <View style="@style/line_c8Style" />
+    <View style="@style/line_f0Style"/>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="15dp"
+                        android:layout_marginRight="9dp"
                         android:layout_toLeftOf="@+id/img_sex"
                         android:ellipsize="marquee"
                         android:gravity="right"
@@ -352,9 +353,12 @@
                     android:background="@color/white">
                     <TextView
                         android:id="@+id/txtCompany"
-                        android:layout_width="140dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="60dp"
+                        android:maxLength="12"
+                        android:ellipsize="end"
                         android:layout_alignParentRight="true"
                         android:gravity="right"
                         android:singleLine="true"
@@ -394,7 +398,7 @@
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/img_sign"
                         android:layout_marginRight="15dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginLeft="60dp"
                         android:gravity="right"
                         android:textColor="@color/black_66"
                         android:textSize="15sp" />

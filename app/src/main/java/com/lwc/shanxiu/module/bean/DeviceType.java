@@ -21,6 +21,7 @@ public class DeviceType implements Serializable, IPickerViewData {
     private String deviceTypeName;
     private String deviceTypeId;
     private String deviceTypeIcon;
+    private String createTime;
 
     public String getDeviceTypeIcon() {
         return deviceTypeIcon;
@@ -44,6 +45,14 @@ public class DeviceType implements Serializable, IPickerViewData {
 
     public void setDeviceTypeId(String deviceTypeId) {
         this.deviceTypeId = deviceTypeId;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     @Override

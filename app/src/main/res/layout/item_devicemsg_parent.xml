@@ -10,5 +10,5 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="11dp"
-        android:text="历史记录"/>
+        android:text="基本信息"/>
 </LinearLayout>

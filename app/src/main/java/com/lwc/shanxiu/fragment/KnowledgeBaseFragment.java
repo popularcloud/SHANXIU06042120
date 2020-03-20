@@ -5,20 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Dimension;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,16 +20,19 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
+import com.lwc.shanxiu.activity.InformationActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.BroadcastFilters;
+import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
+import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.message.adapter.KnowledgeBaseAdapter;
 import com.lwc.shanxiu.module.message.adapter.Madapter;
 import com.lwc.shanxiu.module.message.adapter.PopSelectAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.module.message.bean.SearchConditionBean;
-import com.lwc.shanxiu.module.message.bean.SearchKeyWordBean;
 import com.lwc.shanxiu.module.message.ui.KnowledgeDetailActivity;
+import com.lwc.shanxiu.module.message.ui.KnowledgeSearchActivity;
 import com.lwc.shanxiu.module.message.ui.PublishActivity;
 import com.lwc.shanxiu.module.message.ui.PublishAndRequestListActivity;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
@@ -44,9 +40,9 @@ import com.lwc.shanxiu.utils.DisplayUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
+import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.DropDownMenu;
-import com.lwc.shanxiu.widget.TagsLayout;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -69,8 +65,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
     RecyclerView recyclerView;
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
-    @BindView(R.id.tl_tags)
-    TagsLayout tl_tags;
     @BindView(R.id.tv_search)
     TextView tv_search;
     @BindView(R.id.tv_device_type)
@@ -85,10 +79,14 @@ public class KnowledgeBaseFragment extends BaseFragment {
     TextView tv_publish;
     @BindView(R.id.tv_agreeList)
     TextView tv_agreeList;
+    @BindView(R.id.tv_k_information)
+    TextView tv_k_information;
     @BindView(R.id.iv_no_data)
     ImageView iv_no_data;
     @BindView(R.id.ll_search)
     LinearLayout ll_search;
+
+    private boolean isDetail = false;
 
     private boolean isClearCondition = true;
 
@@ -104,10 +102,11 @@ public class KnowledgeBaseFragment extends BaseFragment {
     private TextView theLastText;
     private int scrollDistance = 0;
     private int scrollStatus = 0;  //0.表示禁止不动，1，手指拖动 2.自动滚动
+    private SharedPreferencesUtils preferencesUtils;
+    private User user;
 
     private List<SearchConditionBean.OptionsBean> typeCondition = new ArrayList<>();
     private Map<String,List<SearchConditionBean.OptionsBean>> brandConditon = new HashMap<>();
-
 
     @Override
     protected View getViews() {
@@ -118,6 +117,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
+        BGARefreshLayoutUtils.initRefreshLayout(getActivity(), mBGARefreshLayout);
         return rootView;
     }
 
@@ -131,97 +131,34 @@ public class KnowledgeBaseFragment extends BaseFragment {
         layoutParams.setMargins(30,0,30,0);
         ll_search.setLayoutParams(layoutParams);
 
-        /*et_search.addTextChangedListener(new TextWatcher() {
+        et_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onClick(View v) {
+                IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
             }
+        });
 
+        et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                search_txt = et_search.getText().toString().trim();
-            *//*    if(TextUtils.isEmpty(search_txt)){
-                    ToastUtil.showToast(getActivity(),"请输入要搜索的内容");
-                    return;
-                }*//*
-
-                clearTypeSearch();
-
-                if( i1 > i2 && theLastText != null){
-                    theLastText.setTextColor(Color.parseColor("#999999"));
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
                 }
-
-                isClearCondition = false;
-                mBGARefreshLayout.beginRefreshing();
             }
+        });
 
+        ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });*/
-
-        et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                /*判断是否是“搜索”键*/
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    String key = et_search.getText().toString().trim();
-                    if(TextUtils.isEmpty(key)){
-                        ToastUtil.showToast(getActivity(),"请输入您想要搜索的关键字");
-                        return true;
-                    }
-
-                    clearTypeSearch();
-                    if(theLastText != null){
-                        theLastText.setTextColor(Color.parseColor("#999999"));
-                    }
-
-
-                    //  开始搜索
-                    isClearCondition = false;
-                    mBGARefreshLayout.beginRefreshing();
-
-                    //  这里记得一定要将键盘隐藏了
-                    InputMethodManager imm = (InputMethodManager) v.getContext()
-                            .getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    }
-                    return true;
-                }else{
-                    //ToastUtil.showToast(getActivity(),"其他"+actionId);
-                }
-                return false;
+            public void onClick(View v) {
+                IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
             }
         });
 
 
-        BGARefreshLayoutUtils.initRefreshLayout(getActivity(), mBGARefreshLayout);
         bindRecycleView();
         initSearchCondition();
 
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                scrollDistance += dy;
-                if(Math.abs(scrollDistance) >= 5 && scrollStatus != 1){
-                    if(scrollDistance >= 0){
-                        changeVisibleGone(View.GONE);
-                    }else{
-                        changeVisibleGone(View.VISIBLE);
-                    }
-                }
-            }
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                scrollStatus = newState;
-            }
-        });
 
 
         //刷新控件监听器
@@ -229,7 +166,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 page = 1;
-                changeVisibleGone(View.VISIBLE);
                 if(isClearCondition){
                     clearTextAndTagSearch();
                     clearTypeSearch();
@@ -262,7 +198,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
                                 options.add(0,new SearchConditionBean.OptionsBean("0","全部"));
                                 brandConditon.put(searchConditionBeanList.get(i).getTypeId(),options);
                             }
-
                         }
                         break;
                     default:
@@ -277,8 +212,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
                 BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
             }
         });
-        onGetKeyWord();
-
         mBGARefreshLayout.beginRefreshing();
 
         iv_no_data.setOnClickListener(new View.OnClickListener() {
@@ -291,14 +224,39 @@ public class KnowledgeBaseFragment extends BaseFragment {
             }
         });
 
+        preferencesUtils = SharedPreferencesUtils.getInstance(getActivity());
+        user = preferencesUtils.loadObjectData(User.class);
+        //查询显示权限
+        if("3".equals(user.getCompanySecrecy())){ // 显示资讯
+            tv_k_information.setVisibility(View.VISIBLE);
+        }else{ //隐藏资讯
+            tv_k_information.setVisibility(View.GONE);
+        }
+
     }
 
-    public synchronized void changeVisibleGone(int viGo){
-        if(viGo != tl_tags.getVisibility()){
-            tl_tags.setVisibility(viGo);
+
+    public void onSearched(String serachKey){
+      /*  String key = et_search.getText().toString().trim();
+        if(TextUtils.isEmpty(key)){
+            ToastUtil.showToast(getActivity(),"请输入您想要搜索的关键字");
+            return true;
+        }*/
+
+      if(et_search==null){
+          return;
+      }
+        et_search.setText(serachKey);
+        clearTypeSearch();
+        if(theLastText != null){
+            theLastText.setTextColor(Color.parseColor("#999999"));
         }
-        scrollDistance = 0;
+
+        //  开始搜索
+        isClearCondition = false;
+        mBGARefreshLayout.beginRefreshing();
     }
+
 
     private void clearTypeSearch(){
         if(!TextUtils.isEmpty(type_id) || !TextUtils.isEmpty(brand_id)){
@@ -329,7 +287,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
 
     @Override
     protected void findViews(Bundle savedInstanceState) {
-
     }
 
     private void bindRecycleView() {
@@ -342,6 +299,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString("knowledgeId", adapter.getItem(position).getKnowledgeId());
+                isDetail = true;
                 IntentUtil.gotoActivity(getActivity(), KnowledgeDetailActivity.class, bundle);
             }
         });
@@ -399,7 +357,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.tv_device_type,R.id.tv_brand,R.id.tv_search,R.id.tv_request,R.id.tv_publish,R.id.tv_agreeList})
+    @OnClick({R.id.tv_device_type,R.id.tv_brand,R.id.tv_search,R.id.tv_request,R.id.tv_publish,R.id.tv_agreeList,R.id.tv_k_information})
     public void onBtnClick(View v){
         switch (v.getId()){
             case R.id.tv_device_type:
@@ -474,6 +432,9 @@ public class KnowledgeBaseFragment extends BaseFragment {
                 break;
             case R.id.tv_agreeList:
                 IntentUtil.gotoActivity(getActivity(), PublishAndRequestListActivity.class);
+                break;
+             case R.id.tv_k_information:
+                IntentUtil.gotoActivity(getActivity(), InformationActivity.class);
                 break;
         }
     }
@@ -550,12 +511,15 @@ public class KnowledgeBaseFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(mBGARefreshLayout != null){
+        if(mBGARefreshLayout != null && !isDetail){
             isClearCondition = true;
             mBGARefreshLayout.beginRefreshing();
         }
 
-
+        //防止查看详情时刷新
+        if(isDetail){
+            isDetail =false;
+        }
     }
 
     @Override
@@ -563,7 +527,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if(isVisibleToUser  && getActivity() != null){
             ImmersionBar.with(getActivity())
-                    .statusBarColor(R.color.white)
+                    .statusBarColor(R.color.blue_35)
                     .statusBarDarkFont(true)
                     .navigationBarColor(R.color.white).init();
         }
@@ -581,69 +545,11 @@ public class KnowledgeBaseFragment extends BaseFragment {
 
     }
 
-    /**
-     * 获取搜索关键字
-     */
-    private void onGetKeyWord(){
-        HttpRequestUtils.httpRequest(getActivity(), "获取搜索关键词", RequestValue.GET_KNOWLEDGE_KNOWLEDGEKEYWORDRANK, null, "GET",  new HttpRequestUtils.ResponseListener() {
-            @Override
-            public void getResponseData(String response) {
-                Common common = JsonUtil.parserGsonToObject(response, Common.class);
-                switch (common.getStatus()) {
-                    case "1":
-                        List<SearchKeyWordBean> searchKeyWordBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"),new TypeToken<ArrayList<SearchKeyWordBean>>(){});
-                        if(searchKeyWordBeenList != null){
-                            tl_tags.setVisibility(View.VISIBLE);
-                            tl_tags.removeAllViews();
-                            for(int i = 0; i < searchKeyWordBeenList.size();i++){
-                                SearchKeyWordBean searchKeyWordBean = searchKeyWordBeenList.get(i);
-                                final TextView textView = new TextView(getActivity());
-                                textView.setText(searchKeyWordBean.getKeywordName());
-                                textView.setTextColor(Color.parseColor("#999999"));
-                                textView.setTextSize(Dimension.SP,12);
-                                textView.setGravity(Gravity.CENTER);
-                                textView.setPadding(20,15,20,15);
-                                textView.setBackgroundResource(R.drawable.round_square_white);
-                              /*  int index = searchKeyWordBean.getKeyword_name().indexOf("：");
-                                String tagStr = searchKeyWordBean.getKeyword_name().substring(index+1);*/
-                                //textView.setText(searchKeyWordBean.getKeyword_name());
-                                textView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        et_search.setText(((TextView)view).getText());
-                                        clearTypeSearch();
-                                        isClearCondition = false;
-                                        mBGARefreshLayout.beginRefreshing();
-                                        if(theLastText != null){
-                                            theLastText.setTextColor(Color.parseColor("#999999"));
-                                        }
-                                        theLastText =  ((TextView)view);
-                                        theLastText.setTextColor(Color.parseColor("#1481ff"));
-                                    }
-                                });
-                                tl_tags.addView(textView);
-                            }
-
-                        }else{
-                            tl_tags.setVisibility(View.GONE);
-                        }
-                        break;
-                    default:
-                        ToastUtil.showToast(getActivity(), common.getInfo());
-                        break;
-                }
-            }
-
-            @Override
-            public void returnException(Exception e, String msg) {
-            }
-        });
-    }
-
     @Override
     protected void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (BroadcastFilters.NOTIFI_GET_ORDER_COUNT.equals(intent.getAction())) {
+
         }
     }
 }

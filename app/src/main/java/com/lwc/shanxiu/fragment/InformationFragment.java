@@ -137,7 +137,7 @@ public class InformationFragment extends BaseFragment {
     }
 
     @JavascriptInterface
-    private void addJSInterface() {
+    public void addJSInterface() {
         AndroidJSInterface ajsi = new AndroidJSInterface(getActivity());
         webview.addJavascriptInterface(ajsi, ajsi.getInterface());
     }

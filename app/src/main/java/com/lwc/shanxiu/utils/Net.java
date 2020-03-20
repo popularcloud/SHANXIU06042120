@@ -262,7 +262,7 @@ public class Net {
 			if (code == 200) {
 				readResponseHeaders(); // 读取响应头信息.
 				input = conn.getInputStream();
-				bitmips = BitmapFactory.decodeStream(input);
+				bitmips = getFitSampleBitmap(input);
 			}
 		} catch (MalformedURLException e) {
 			throw e;
@@ -271,9 +271,36 @@ public class Net {
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return bitmips;
 
+	}
+
+	public Bitmap getFitSampleBitmap(InputStream  inputStream) throws Exception{
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		byte[] bytes = readStream(inputStream);
+		BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+		//options.inSampleSize =4;
+		options.inJustDecodeBounds = false;
+		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+	}
+
+	/**
+	 * 从inputStream中获取字节流 数组大小
+	 **/
+	public static byte[] readStream(InputStream inStream) throws Exception{
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = 0;
+		while ((len = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, len);
+		}
+		outStream.close();
+		inStream.close();
+		return outStream.toByteArray();
 	}
 
 	// /**

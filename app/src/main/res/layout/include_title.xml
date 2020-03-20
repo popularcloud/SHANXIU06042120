@@ -21,6 +21,19 @@
         android:padding="15dp"
         android:visibility="gone"
         android:src="@drawable/ic_black_back" />
+
+    <TextView android:onClick="onBack"
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="15dp"
+        android:visibility="gone"
+        android:textColor="@color/gray_99"
+        android:textSize="15sp"
+        android:text="取消"/>
+
     <TextView
         android:id="@+id/txtRight"
         android:layout_width="wrap_content"

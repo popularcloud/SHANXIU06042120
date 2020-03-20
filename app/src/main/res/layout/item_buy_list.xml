@@ -3,13 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:lee="http://schemas.android.com/apk/res-auto"
-    android:padding="5dp"
+    android:layout_marginTop="1px"
     android:orientation="horizontal">
     <LinearLayout
         android:id="@+id/show_content_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_item_bg"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         android:orientation="horizontal">
         <CheckBox
             android:id="@+id/cb_isAdd"
@@ -21,20 +25,20 @@
             android:layout_gravity="center_vertical"/>
         <ImageView
             android:id="@+id/iv_display"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
             android:src="@drawable/red_envelope_ubg"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="77dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:gravity="bottom"
+                android:layout_height="wrap_content"
+                android:gravity="top"
                 android:paddingLeft="10dp"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:textColor="@color/black"
@@ -43,36 +47,41 @@
                 android:id="@+id/tl_tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="10dp"
                 lee:tagHorizontalSpace="5dp"
                 lee:tagVerticalSpace="5dp" />
+            <View android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
                     android:id="@+id/tv_prices"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="25dp"
-                    android:gravity="top"
-                    android:textSize="14sp"
-                    android:textColor="@color/red_money"
+                    android:gravity="bottom"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/red_3a"
+                    android:layout_gravity="bottom"
                     android:paddingLeft="10dp"
                     android:text="￥30.00"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginRight="25dp"
                     android:focusableInTouchMode="true"
                     android:focusable="true">
                     <LinearLayout
                         android:id="@+id/ll_reduce"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:background="@drawable/add_reduce_shape"
+                        android:background="@drawable/add_reduce_shape_left"
                         android:padding="5dp">
                         <ImageView
                             android:id="@+id/tv_reduce"
@@ -82,22 +91,28 @@
                             android:padding="2dp"
                             android:src="@drawable/ic_reduce"/>
                         </LinearLayout>
-
-                    <EditText
-                        android:id="@+id/et_sum"
-                        android:layout_width="35dp"
-                        android:layout_height="25dp"
-                        android:textSize="13dp"
-                        android:gravity="center"
-                        android:background="@drawable/add_reduce_shape"
-                        android:enabled="false"
-                        android:textColor="@color/black"
-                        android:text="1"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:orientation="vertical">
+                            <View android:background="@color/line_cc" android:layout_width="match_parent" android:layout_height="0.5dp" />
+                            <EditText
+                                android:id="@+id/et_sum"
+                                android:layout_width="35dp"
+                                android:layout_height="24dp"
+                                android:textSize="13dp"
+                                android:gravity="center"
+                                android:background="@color/white"
+                                android:enabled="false"
+                                android:textColor="@color/black"
+                                android:text="1"/>
+                            <View android:background="@color/line_cc" android:layout_width="match_parent" android:layout_height="0.5dp" />
+                        </LinearLayout>
                     <LinearLayout
                         android:id="@+id/ll_add"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:background="@drawable/add_reduce_shape"
+                        android:background="@drawable/add_reduce_shape_right"
                         android:padding="5dp">
                         <ImageView
                             android:id="@+id/tv_add"

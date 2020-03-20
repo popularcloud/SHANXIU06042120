@@ -1,5 +1,7 @@
 package com.lwc.shanxiu.module.message.bean;
 
+import java.util.List;
+
 /**
  * @author younge
  * @date 2019/6/5 0005
@@ -42,6 +44,7 @@ public class KnowledgeDetailBean {
     private String knowledgeDetails;
     private int browseNum;
     private String maintenanceName;//工程师名称
+    private List<LikeArticleBean> like;
 
     public String getBrandName() {
         return brandName;
@@ -169,5 +172,13 @@ public class KnowledgeDetailBean {
 
     public void setMaintenanceName(String maintenanceName) {
         this.maintenanceName = maintenanceName;
+    }
+
+    public List<LikeArticleBean> getLike() {
+        return like;
+    }
+
+    public void setLike(List<LikeArticleBean> like) {
+        this.like = like;
     }
 }

@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:background="#fff"
+	android:background="@color/f0_gray_line"
 	android:layout_width="match_parent"
 	android:orientation="vertical"
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
-
 	<include layout="@layout/include_title"/>
+	<View style="@style/line_f0Style" />
 	<ListView
 	    android:id="@+id/lv_skills"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"></ListView>
+		android:layout_height="match_parent"
+		android:layout_marginTop="8px"
+		android:dividerHeight="1px"
+		android:divider="@color/f0_gray_line"></ListView>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 /**
@@ -50,7 +52,7 @@ public class RepairsListActivity extends BaseActivity {
 
 	RecyclerView recyclerView;
 	BGARefreshLayout mBGARefreshLayout;
-	TextView textTip;
+	//TextView textTip;
 	private SharedPreferencesUtils preferencesUtils;
 	private ArrayList<Repairman> repairerBeenList;
 	private RepairListAdapter nearbyOrderAdapter;
@@ -58,6 +60,8 @@ public class RepairsListActivity extends BaseActivity {
 	private int pageNow = 1;
 	private Order myOrder;
 	private LinearLayout ll_cz;
+	private ImageView iv_nodate;
+
 
 	@Override
 	protected int getContentViewId(Bundle savedInstanceState) {
@@ -67,10 +71,11 @@ public class RepairsListActivity extends BaseActivity {
 	@Override
 	protected void findViews() {
 		showBack();
-		setTitle("工程师列表");
+		setTitle("转单处理");
 		recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+		iv_nodate = (ImageView)findViewById(R.id.iv_nodate);
 		mBGARefreshLayout = (BGARefreshLayout)findViewById(R.id.mBGARefreshLayout);
-		textTip = (TextView) findViewById(R.id.textTip);
+	//	textTip = (TextView) findViewById(R.id.textTip);
 		ll_cz = (LinearLayout) findViewById(R.id.ll_cz);
 		BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout, true);
 		ll_cz.setVisibility(View.GONE);
@@ -182,19 +187,24 @@ public class RepairsListActivity extends BaseActivity {
 								repairerBeenList = new ArrayList<>();
 							}
 							if (repairmans != null && repairmans.size() > 0) {
+								iv_nodate.setVisibility(View.GONE);
+								mBGARefreshLayout.setVisibility(View.VISIBLE);
 								repairerBeenList.addAll(repairmans);
 								nearbyOrderAdapter.replaceAll(repairerBeenList);
 							} else {
 								if (pageNow > 1) {
 									ToastUtil.showLongToast(RepairsListActivity.this, "暂无更多工程师");
 									pageNow--;
+								}else{
+									iv_nodate.setVisibility(View.VISIBLE);
+									mBGARefreshLayout.setVisibility(View.GONE);
 								}
 							}
-							if(repairerBeenList!= null && repairerBeenList.size() > 0) {
+					/*		if(repairerBeenList!= null && repairerBeenList.size() > 0) {
 								textTip.setVisibility(View.GONE);
 							} else {
 								textTip.setVisibility(View.VISIBLE);
-							}
+							}*/
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

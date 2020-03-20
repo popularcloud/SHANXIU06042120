@@ -72,7 +72,7 @@ public class PartsGridViewAdpter extends BaseAdapter{
         //假设mPagerSize=8，假如点击的是第二页（即mIndex=1）上的第二个位置item(position=1),那么这个item的实际位置就是pos=9
         holder.tv_name.setText(lists.get(pos).getTypeName() + "");
 //        holder.iv_nul.setImageResource();
-        ImageLoaderUtil.getInstance().displayFromNet(context, lists.get(pos).getTypeIcon(), holder.iv_nul);
+        ImageLoaderUtil.getInstance().displayFromNet(context, lists.get(pos).getTypeIcon(), holder.iv_nul,R.drawable.image_default_picture);
         //添加item监听
 //        convertView.setOnClickListener(new View.OnClickListener() {
 //            

@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.adapter.TradingRecordAdapter;
 import com.lwc.shanxiu.bean.Common;
@@ -54,31 +56,50 @@ public class WalletActivity extends Activity {
 	RecyclerView recyclerView;
 	@BindView(R.id.mBGARefreshLayout)
 	BGARefreshLayout mBGARefreshLayout;
+	@BindView(R.id.rBtnIncome)
+	RadioButton rBtnIncome;
+	@BindView(R.id.rBtnWithdrawal)
+	RadioButton rBtnWithdrawal;
 	ArrayList<TradingRecordBean> list = new ArrayList<>();
 	private User user;
 	private TradingRecordAdapter adapter;
+	private HashMap rButtonHashMap;
 	private SharedPreferencesUtils preferencesUtils;
 	private int curPage=1;
+	@BindView(R.id.viewLine1)
+	View viewLine1;
+	@BindView(R.id.viewLine3)
+	View viewLine3;
+	private int payment_type = 0; // 0转入 1转出
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			//透明状态栏
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-			//透明导航栏
-			getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-		}
 		setContentView(R.layout.activity_wallet);
 		ButterKnife.bind(this);
 		BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout);
 		init();
+		ImmersionBar.with(this)
+				.statusBarColor(R.color.btn_blue_nomal)
+				.statusBarDarkFont(true)
+				.navigationBarColor(R.color.white).init();
 	}
 
 	public void onBack(View view) {
 		onBackPressed();
 	}
 
-	@OnClick({R.id.txtPay, R.id.txtWithdraw, R.id.txtManage})
+	/**
+	 * 往rButtonHashMap中添加 RadioButton Id
+	 */
+	private void addRadioButtonIdInList() {
+
+		rButtonHashMap = new HashMap<>();
+		rButtonHashMap.put(0, rBtnIncome);
+		rButtonHashMap.put(1, rBtnWithdrawal);
+	}
+
+	@OnClick({R.id.txtPay, R.id.txtWithdraw, R.id.txtManage,R.id.rBtnIncome,R.id.rBtnWithdrawal})
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.txtWithdraw:
@@ -92,8 +113,37 @@ public class WalletActivity extends Activity {
 		case R.id.txtManage:
 			IntentUtil.gotoActivity(WalletActivity.this, PaySettingActivity.class);
 			break;
+		case R.id.rBtnIncome:
+				showLineView(1);
+				break;
+		case R.id.rBtnWithdrawal:
+				showLineView(2);
+				break;
 		default:
 			break;
+		}
+	}
+
+
+	/**
+	 * 显示RadioButton线条
+	 *
+	 * @param num 1 ： 显示已发布下的线条  2 ： 显示未完成下的线条  3： 显示已完成下的线条  。未选中的线条将会被隐藏
+	 */
+	private void showLineView(int num) {
+		switch (num) {
+			case 1:
+				viewLine1.setVisibility(View.VISIBLE);
+				viewLine3.setVisibility(View.INVISIBLE);
+				payment_type = 0;
+				mBGARefreshLayout.beginRefreshing();
+				break;
+			case 2:
+				viewLine3.setVisibility(View.VISIBLE);
+				viewLine1.setVisibility(View.INVISIBLE);
+				payment_type = 1;
+				mBGARefreshLayout.beginRefreshing();
+				break;
 		}
 	}
 
@@ -108,7 +158,8 @@ public class WalletActivity extends Activity {
 	private void getHistory() {
 		Map<String, String> map = new HashMap<>();
 		map.put("curPage", curPage+"");
-		HttpRequestUtils.httpRequest(WalletActivity.this, "getHistory", RequestValue.GET_WALLET_HISTORY, map, "GET", new HttpRequestUtils.ResponseListener() {
+		map.put("payment_type", payment_type+"");
+		HttpRequestUtils.httpRequest(WalletActivity.this, "收支记录", RequestValue.GET_WALLET_HISTORY, map, "GET", new HttpRequestUtils.ResponseListener() {
 			@Override
 			public void getResponseData(String response) {
 				mBGARefreshLayout.endRefreshing();
@@ -135,6 +186,7 @@ public class WalletActivity extends Activity {
 										ToastUtil.showToast(WalletActivity.this, "我是有底线的，已无更多记录！");
 									} else if (curPage == 1) {
 										tv_msg.setVisibility(View.VISIBLE);
+										adapter.clear();
 									}
 								}
 							}
@@ -179,7 +231,7 @@ public class WalletActivity extends Activity {
 								user.setMaintenanceId(user.getUserId());
 							}
 							preferencesUtils.saveObjectData(user);
-							FMoneyTV.setText(user.getBanlance());
+							FMoneyTV.setText(Utils.getMoney(user.getBanlance()));
 						}
 						break;
 					default:

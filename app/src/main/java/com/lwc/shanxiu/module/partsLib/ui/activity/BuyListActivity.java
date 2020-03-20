@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Dimension;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -66,7 +69,7 @@ public class BuyListActivity extends BaseActivity {
     /**
      * 所有选中的价格
      */
-    private Double allMoney;
+    private Double allMoney = 0d;
     private int checkedSum;
 
     @Override
@@ -123,9 +126,10 @@ public class BuyListActivity extends BaseActivity {
                // final CheckBox cb_add = itemView.getView(R.id.cb_isAdd);
 
                 final TagsLayout tl_tags = itemView.getView(R.id.tl_tags);
+                final TextView tv_prices = itemView.getView(R.id.tv_prices);
 
                 ImageView iv_display = itemView.getView(R.id.iv_display);
-                ImageLoaderUtil.getInstance().displayFromNet(BuyListActivity.this,data.getAccessoriesImg(),iv_display);
+                ImageLoaderUtil.getInstance().displayFromNetDCircular(BuyListActivity.this,data.getAccessoriesImg(),iv_display,R.drawable.image_default_picture);
                 if(!TextUtils.isEmpty(data.getAttributeName())){
                     String[] tags =data.getAttributeName().split(",");
                     tl_tags.removeAllViews();
@@ -135,11 +139,11 @@ public class BuyListActivity extends BaseActivity {
                         }
                         TextView textView = new TextView(BuyListActivity.this);
                         textView.setText(tags[i]);
-                        textView.setTextColor(Color.WHITE);
+                        textView.setTextColor(Color.parseColor("#666666"));
                         textView.setTextSize(Dimension.SP,12);
                         textView.setGravity(Gravity.CENTER);
                         textView.setPadding(5,0,5,0);
-                        textView.setBackgroundResource(R.drawable.round_square_blue);
+                        textView.setBackgroundResource(R.drawable.round_square_gray);
                         int index = tags[i].indexOf("：");
                         String tagStr = tags[i].substring(index+1);
                         textView.setText(tagStr);
@@ -157,8 +161,26 @@ public class BuyListActivity extends BaseActivity {
                 calculatedTotalPrice();
 
                 et_sum.setText(String.valueOf(data.getSumSize()));
+
+               /* String moneyStr = "￥"+ Utils.getMoney(String.valueOf(data.getAccessoriesPrice()/100));
+                SpannableStringBuilder stringBuilder=new SpannableStringBuilder(moneyStr);
+                AbsoluteSizeSpan ab=new AbsoluteSizeSpan(12,true);
+                //文本字体绝对的大小
+                stringBuilder.setSpan(ab,0,1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);*/
+
+                if(data.getAccessoriesPrice() == null){
+                    tv_prices.setText("￥ 0.00");
+                }else{
+                    String moneyStr = "￥"+ Utils.getMoney(String.valueOf(data.getAccessoriesPrice()/100));
+                    SpannableStringBuilder stringBuilder=new SpannableStringBuilder(moneyStr);
+                    AbsoluteSizeSpan ab=new AbsoluteSizeSpan(12,true);
+                    //文本字体绝对的大小
+                    stringBuilder.setSpan(ab,0,1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    tv_prices.setText(stringBuilder);
+                }
+
+
                 itemView.setText(R.id.tv_title, data.getAccessoriesName())
-                        .setText(R.id.tv_prices,"￥"+ Utils.getMoney(String.valueOf(data.getAccessoriesPrice()/100)))
                         .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -243,9 +265,9 @@ public class BuyListActivity extends BaseActivity {
         };
 
         slideAdapter = SlideAdapter.load(addListBeans)           //加载数据
-                .item(R.layout.item_buy_list,0,0,R.layout.hide_drag_item,0.25f)//指定布局
+                .item(R.layout.item_buy_list,0,0,R.layout.hide_drag_item,0.20f)//指定布局
                 .bind(itemBind)
-                .padding(8)
+                .padding(0)
                 .into(recyclerView);  //填充到recyclerView中
 
         //全选
@@ -293,7 +315,7 @@ public class BuyListActivity extends BaseActivity {
                 checkedSum += partsBean.getSumSize();
         }
         tv_SumMoney.setText("￥"+Utils.getMoney(String.valueOf(allMoney/100)));
-        tv_submit.setText("返回报价("+checkedSum+")");
+        tv_submit.setText("提交("+checkedSum+")");
     }
 
     @Override

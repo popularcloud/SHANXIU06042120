@@ -16,6 +16,7 @@ import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.module.message.adapter.MsgListAdapter;
 import com.lwc.shanxiu.module.message.bean.MyMsg;
 import com.lwc.shanxiu.module.order.ui.activity.OrderDetailActivity;
+import com.lwc.shanxiu.module.setting.VesionActivity;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -93,8 +94,14 @@ public class MsgListActivity extends BaseActivity {
             public void onItemClick(View itemView, int viewType, int position) {
                 MyMsg msg = adapter.getItem(position);
                 String type = msg.getMessageType();
+
+                readMsg(msg.getObjectId());
+
                 if (!TextUtils.isEmpty(type) && type.equals("1")) {
-//                    IntentUtil.gotoActivity(MsgListActivity.this, VesionActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", msg.getClickUrl());
+                    bundle.putString("title", "系统消息");
+                    IntentUtil.gotoActivity(MsgListActivity.this, InformationDetailsActivity.class, bundle);
                 } else if (!TextUtils.isEmpty(type) && (type.equals("2") || type.equals("3"))) {
                     Bundle bundle = new Bundle();
                     bundle.putString("url", msg.getClickUrl());
@@ -179,6 +186,17 @@ public class MsgListActivity extends BaseActivity {
                 ToastUtil.showToast(MsgListActivity.this, msg);
                 BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
                 BGARefreshLayoutUtils.endLoadingMore(mBGARefreshLayout);
+            }
+        });
+    }
+
+    private void readMsg(String msgId) {
+        HttpRequestUtils.httpRequest(this, "readMsg", RequestValue.READ_MESSAGE+msgId, null, "POST", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String result) {
+            }
+            @Override
+            public void returnException(Exception e, String msg) {
             }
         });
     }

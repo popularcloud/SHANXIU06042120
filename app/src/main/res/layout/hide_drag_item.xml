@@ -2,7 +2,7 @@
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/hide_view"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="match_parent"
         android:background="@color/btn_red"
         android:gravity="center_vertical"
@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/hide_delete"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:gravity="center"

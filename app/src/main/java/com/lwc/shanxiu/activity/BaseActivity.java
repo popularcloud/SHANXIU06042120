@@ -37,7 +37,8 @@ import butterknife.ButterKnife;
  * @Copyright: Copyright (c) 2014 Shenzhen Tentinet Technology Co., Ltd. Inc. All rights reserved.
  * 
  */
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class
+BaseActivity extends FragmentActivity {
 
 	/** 广播接收器 */
 	public BroadcastReceiver receiver;
@@ -46,7 +47,7 @@ public abstract class BaseActivity extends FragmentActivity {
 	public Bundle savedInstanceState;
 	/** 头部组件对象 */
 	protected TextView txtActionbarTitle, txtRight;
-	private ImageView imgBack, imgRight;
+	protected ImageView imgBack, imgRight;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -9,8 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.InformationDetailsActivity;
@@ -53,7 +55,10 @@ public class PartsMainActivity extends BaseActivity implements PartsMainView {
     @BindView(R.id.btnReturn)
     Button btnReturn;
     @BindView(R.id.btnLook)
-    Button btnLook;
+    TextView btnLook;
+
+    @BindView(R.id.rl_grid)
+    RelativeLayout rl_grid;
 
 
     private ArrayList<ADInfo> infos = new ArrayList<>();//广告轮播图
@@ -77,7 +82,12 @@ public class PartsMainActivity extends BaseActivity implements PartsMainView {
     }
 
     @Override
-    protected void init() {}
+    protected void init() {
+        ImmersionBar.with(this)
+                .transparentStatusBar()
+                .statusBarDarkFont(false)
+                .navigationBarColor(R.color.white).init();
+    }
 
 
     @Override
@@ -108,7 +118,7 @@ public class PartsMainActivity extends BaseActivity implements PartsMainView {
 
         @Override
         public void displayImage(final String imageURL, final ImageView imageView) {
-            ImageLoaderUtil.getInstance().displayFromNetD(PartsMainActivity.this, imageURL, imageView);// 使用ImageLoader对图片进行加装！
+            ImageLoaderUtil.getInstance().displayFromNetD(PartsMainActivity.this, imageURL, imageView,R.drawable.image_default_picture);// 使用ImageLoader对图片进行加装！
         }
     };
 

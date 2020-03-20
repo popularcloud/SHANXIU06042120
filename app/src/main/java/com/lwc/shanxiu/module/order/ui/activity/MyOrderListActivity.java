@@ -66,7 +66,7 @@ public class MyOrderListActivity extends BaseFragmentActivity {
 		bindViewPage(fragmentHashMap);
 		cViewPager.setCurrentItem(0, false);
 
-		imgRight.setImageResource(R.drawable.search_right);
+		imgRight.setImageResource(R.drawable.map_search_gray);
 		imgRight.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

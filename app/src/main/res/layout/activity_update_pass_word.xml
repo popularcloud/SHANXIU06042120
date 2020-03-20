@@ -7,6 +7,7 @@
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
 	<include layout="@layout/include_title"/>
+	<View style="@style/line_f0Style" android:layout_height="8px" />
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="0dp"

@@ -156,7 +156,7 @@ public class QuoteAffirmActivity extends BaseActivity {
         pd.setCancelable(false);
         showBack();
         setTitle("故障检测结果");
-        setRightText("收费标准", new View.OnClickListener() {
+        setRightText("收费标准","#666666",new View.OnClickListener() {
             @Override
             public void onClick(View v) {
           /*      if("0".equals(deviceTypeModel)){
@@ -586,12 +586,17 @@ public class QuoteAffirmActivity extends BaseActivity {
 //            }
 //        }
         hardwareCost = txtHardwareReplacement.getText().toString().trim();
+        moneyDesc = et_money_desc.getText().toString().trim();
         if (!TextUtils.isEmpty(other_cost) && Double.parseDouble(other_cost) > 0) {
-            moneyDesc = et_money_desc.getText().toString().trim();
             if (TextUtils.isEmpty(moneyDesc)) {
                 ToastUtil.showToast(this, "请填写其它费用说明");
                 return false;
             }
+        }
+
+        if(tv_errorMsg.getVisibility() == View.VISIBLE && !TextUtils.isEmpty(tv_errorMsg.getText())){
+            ToastUtil.showToast(this, tv_errorMsg.getText()+"");
+            return false;
         }
       /*  if (!TextUtils.isEmpty(hardwareCost) && Double.parseDouble(hardwareCost) > 0) {
             moneyDesc = et_money_desc.getText().toString().trim();
@@ -688,7 +693,10 @@ public class QuoteAffirmActivity extends BaseActivity {
             }
 
             if (!TextUtils.isEmpty(rjf) && Integer.parseInt(rjf) >= 0) {
-                if (!isFixation) {
+                tv_rjf.setText(Utils.chu(rjf,"100"));
+                tv_rjf.setEnabled(false);
+                tv_rjf.setClickable(false);
+               /* if (!isFixation) {
                     tv_rjf.setText(Utils.chu(rjf,"100"));
                     tv_rjf.setEnabled(false);
                     tv_rjf.setClickable(false);
@@ -696,7 +704,7 @@ public class QuoteAffirmActivity extends BaseActivity {
                     tv_rjf.setClickable(true);
                     tv_rjf.setEnabled(true);
                     tv_rjf.setText(Utils.chu(rjf,"100"));
-                }
+                }*/
                 rl_rjf.setVisibility(View.VISIBLE);
             } else {
                 tv_rjf.setText("0");
@@ -775,7 +783,7 @@ public class QuoteAffirmActivity extends BaseActivity {
         }
 
         String s = "总计 ( "+count+" ) : "+Utils.getMoney(money)+" 元";
-        tv_total.setText(Utils.getSpannableStringBuilder(s.indexOf(":")+1, s.length()-1, getResources().getColor(R.color.red_money), s, 15));
+        tv_total.setText(Utils.getSpannableStringBuilder(s.indexOf(":")+1, s.length()-1, getResources().getColor(R.color.red_3a), s, 15));
     }
 
     private void showTakePopupWindow1(int count) {

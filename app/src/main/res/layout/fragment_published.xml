@@ -2,15 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_f7">
+    android:background="@color/f0_gray_line">
     <TextView style="@style/text_tip"
         android:id="@+id/textTip"/>
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
         android:id="@+id/mBGARefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="7dp">
-
+        android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

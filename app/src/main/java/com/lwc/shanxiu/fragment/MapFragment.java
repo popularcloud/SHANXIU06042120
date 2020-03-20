@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -50,16 +51,19 @@ import com.amap.api.services.route.WalkRouteResult;
 import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
+import com.lwc.shanxiu.activity.InformationDetailsActivity;
 import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.activity.NavigationActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
+import com.lwc.shanxiu.module.bean.ADInfo;
 import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.message.ui.MyMsgActivity;
 import com.lwc.shanxiu.module.order.ui.activity.OrderDetailActivity;
+import com.lwc.shanxiu.module.partsLib.ui.activity.PartsMainActivity;
 import com.lwc.shanxiu.module.zxing.ui.CaptureActivity;
 import com.lwc.shanxiu.utils.DialogUtil;
 import com.lwc.shanxiu.utils.DisplayUtil;
@@ -72,6 +76,8 @@ import com.lwc.shanxiu.utils.MyMapUtil;
 import com.lwc.shanxiu.utils.RouteTool;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SystemUtil;
+import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.view.ImageCycleView;
 import com.lwc.shanxiu.view.TileButton;
 import com.lwc.shanxiu.widget.CircleImageView;
 
@@ -100,8 +106,12 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     TextView txtDaohang;
     @BindView(R.id.imgRightTwo)
     ImageView imgRightTwo;
+    @BindView(R.id.iv_red_dian)
+    TextView iv_red_dian;
+    @BindView(R.id.ad_view)
+    ImageCycleView mAdView;//轮播图
 
-    CardView llGetOrderMention;
+    RelativeLayout llGetOrderMention;
     /**
      * 地图对象
      */
@@ -123,6 +133,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     public AMapLocationClient mLocationClient = null;
     //声明AMapLocationClientOption对象
     public AMapLocationClientOption mLocationOption = null;
+    private ArrayList<ADInfo> infos = new ArrayList<>();//广告轮播图
     /**
      * 用户位移超过100米的距离就进行位置更新提交
      */
@@ -146,7 +157,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     protected void findViews(Bundle savedInstanceState) {
         setTitle("地图");
         img_location = (TileButton) view_Parent.findViewById(R.id.img_location);
-        llGetOrderMention = (CardView) view_Parent.findViewById(R.id.ll_get_order_mention);
+        llGetOrderMention = (RelativeLayout) view_Parent.findViewById(R.id.ll_get_order_mention);
 
         // 地图=====================================
         mapView = (TextureMapView) view_Parent.findViewById(R.id.map);
@@ -269,8 +280,83 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         mapView.onResume();
         registerSensorListener();
         getNewestOrder();
+        getBannerData();
+
+    }
 
 
+    /**
+     * 获取配件库首页轮播
+     */
+    public void getBannerData(){
+        HttpRequestUtils.httpRequest(getActivity(), "getBannerData", RequestValue.GET_ADVERTISING+"?local=1&role=2",null, "GET", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        ArrayList<ADInfo> adInfoArrayList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<ADInfo>>() {});
+                        infos.clear();
+                        infos.addAll(adInfoArrayList);
+                        if ( infos != null && infos.size() > 0) {
+                            mAdView.setImageResources(infos, mAdCycleViewListener);
+                            if(infos.size() > 1){
+                                mAdView.startImageCycle();
+                            }else{
+                                mAdView.pushImageCycle();
+                            }
+
+                        }
+                        break;
+                    default:
+                        ToastUtil.showToast(getActivity(),common.getInfo());
+                        break;
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                ToastUtil.showToast(getActivity(),msg);
+            }
+        });
+    }
+
+    /**
+     * 定义轮播图监听
+     */
+    private ImageCycleView.ImageCycleViewListener mAdCycleViewListener = new ImageCycleView.ImageCycleViewListener() {
+        @Override
+        public void onImageClick(ADInfo info, int position, View imageView) {
+            // 点击图片后,有内链和外链的区别
+            Bundle bundle = new Bundle();
+            if (!TextUtils.isEmpty(info.getAdvertisingUrl()))
+                bundle.putString("url", info.getAdvertisingUrl());
+            if (!TextUtils.isEmpty(info.getAdvertisingTitle()))
+                bundle.putString("title", info.getAdvertisingTitle());
+            IntentUtil.gotoActivity(getActivity(), InformationDetailsActivity.class, bundle);
+        }
+
+        @Override
+        public void displayImage(final String imageURL, final ImageView imageView) {
+            ImageLoaderUtil.getInstance().displayFromNetDCircular(getActivity(), imageURL, imageView,R.drawable.image_default_picture);// 使用ImageLoader对图片进行加装！
+        }
+    };
+
+
+    public void showMsg(int msgCount){
+        if(iv_red_dian != null){
+            if(msgCount > 0){
+                iv_red_dian.setVisibility(View.VISIBLE);
+                if(msgCount < 99){
+                    iv_red_dian.setText(String.valueOf(msgCount));
+                }else{
+                    iv_red_dian.setText("...");
+                }
+
+            }else{
+                iv_red_dian.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -295,6 +381,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         }
         mapView.onPause();
         deactivate();
+
+        if(mAdView != null){
+            mAdView.pushImageCycle();
+        }
     }
 
     /**
@@ -314,6 +404,10 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
 //        aMap.setCameraPosition(aMap.getCameraPosition());//保存地图状态
         super.onDestroy();
         mapView.onDestroy();
+
+        if(mAdView != null){
+            mAdView.pushImageCycle();
+        }
     }
 
     /**
@@ -798,7 +892,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                                 setJuli();
                                 String picture = newestOrder.getUserHeadImage();
                                 if (!TextUtils.isEmpty(picture)) {
-                                    imageLoaderUtil.displayFromNet(getContext(), newestOrder.getUserHeadImage(), imgIcon);
+                                    imageLoaderUtil.displayFromNet(getContext(), newestOrder.getUserHeadImage(), imgIcon,R.drawable.ic_default_user);
                                 } else {
                                     imageLoaderUtil.displayFromLocal(getContext(), imgIcon, R.drawable.ic_default_user);
                                 }

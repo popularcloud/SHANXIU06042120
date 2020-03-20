@@ -36,7 +36,7 @@ public class DialogScanStyle extends Dialog {
     private Context context;
 
     public DialogScanStyle(Context context, OnBtnClickCalBack onBtnClickCalBack) {
-        super(context);
+        super(context,R.style.dialog2);
 
         this.onBtnClickCalBack = onBtnClickCalBack;
         //去掉标题栏

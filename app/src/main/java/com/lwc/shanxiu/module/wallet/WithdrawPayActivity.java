@@ -1,6 +1,7 @@
 package com.lwc.shanxiu.module.wallet;
 
 import android.os.Bundle;
+import android.support.annotation.Dimension;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -8,14 +9,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
+import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.bean.Common;
+import com.lwc.shanxiu.bean.TradingRecordBean;
 import com.lwc.shanxiu.bean.WxBean;
 import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
+import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.utils.AliPayCallBack;
+import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.PayServant;
@@ -27,7 +32,9 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,16 +119,13 @@ public class WithdrawPayActivity extends BaseActivity {
 				params.put("user_role","4");
 				params.put("user_id",user.getMaintenanceId());
 				params.put("user_real_name",user.getMaintenanceName().trim());
-				params.put("transaction_amount",money);
+				params.put("transaction_amount", Utils.cheng(money,"100"));
 				params.put("transaction_means", payType);
 				params.put("appType", "maintenance");
-				OkHttpUtils.post().url(ServerConfig.DOMAIN + RequestValue.GET_WEBAPPPAY_APPPAY).params(params).build().execute(new StringCallback() {
+
+				HttpRequestUtils.httpRequest(WithdrawPayActivity.this, "收支记录", RequestValue.GET_PAY_RECHARGE, params, "POST", new HttpRequestUtils.ResponseListener() {
 					@Override
-					public void onError(Call call, Exception e, int id) {
-						LLog.eNetError(e.toString());
-					}
-					@Override
-					public void onResponse(String response, int id) {
+					public void getResponseData(String response) {
 						Common common = JsonUtil.parserGsonToObject(response, Common.class);
 						if (common != null && common.getStatus().equals("1")) {
 							if (tBtnSecretAlipay.isChecked()) {
@@ -132,6 +136,7 @@ public class WithdrawPayActivity extends BaseActivity {
 										public void OnAliPayResult(boolean success, boolean isWaiting, String msg) {
 											ToastUtil.showLongToast(WithdrawPayActivity.this, msg);
 											if (success) {
+												finish();
 												onBackPressed();
 											} else {
 												tradeid = obj.optString("tradeid");
@@ -149,12 +154,19 @@ public class WithdrawPayActivity extends BaseActivity {
 										WithdrawPayActivity.this, wx.getAppid(),
 										wx.getPartnerId(), wx.getPrepayId(), wx.getNonceStr(),
 										wx.getTimeStamp(), wx.getPackageStr(), wx.getSign());
+								finish();
+								onBackPressed();
 							}
 						} else if (common != null){
 							ToastUtil.showLongToast(WithdrawPayActivity.this, common.getInfo());
 						}else {
 							ToastUtil.showLongToast(WithdrawPayActivity.this, "服务器返回数据结构有误");
 						}
+					}
+					@Override
+					public void returnException(Exception e, String msg) {
+						LLog.eNetError(e.toString());
+						ToastUtil.showLongToast(WithdrawPayActivity.this, msg);
 					}
 				});
 				break;
@@ -216,6 +228,16 @@ public class WithdrawPayActivity extends BaseActivity {
 			}
 			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
+		});
+
+		et_money.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if(hasFocus){
+					et_money.setTextSize(Dimension.SP,30);
+					et_money.setHint("");
+				}
+			}
 		});
 	}
 }

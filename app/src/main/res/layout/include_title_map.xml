@@ -56,13 +56,27 @@
         android:paddingLeft="20dp"
         android:visibility="visible"
         android:src="@drawable/me_news_icon" />
-    <ImageView
+<!--    <ImageView
         android:id="@+id/imgNewMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="12dp"
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:src="@drawable/red_mention" />
+        android:visibility="visible"
+        android:src="@drawable/red_mention" />-->
+
+    <TextView
+        android:id="@+id/iv_red_dian"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="8dp"
+        android:text=""
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:background="@drawable/circle_red_all_shape"
+        android:visibility="gone" />
 </RelativeLayout>

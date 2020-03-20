@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent">
+    <RelativeLayout
+        android:layout_width="286dp"
+        android:layout_height="276dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent">
+    <!--    <ImageView
+            android:id="@+id/ic_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_dialog_big_close"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"/>-->
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="238dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/item_white_circle"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="77dp"
+                android:layout_height="65dp"
+                android:layout_marginTop="42dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_download"/>
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal"
+                android:text="资料下载确认"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="33dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btnLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="19dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:background="@drawable/button_red_selector"
+                    android:text="取消下载"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnRight"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="19dp"
+                    android:layout_weight="1"
+                    android:textSize="15sp"
+                    android:background="@drawable/button_login_selector"
+                    android:text="确定下载"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

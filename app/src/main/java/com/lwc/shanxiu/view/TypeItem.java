@@ -23,7 +23,8 @@ public class TypeItem extends LinearLayout {
 	private Context mContext;
 	private TextView txt_name,txt_money_unit;
 	private EditText et_money;
-	private ImageView iv_delete, iv_line;
+	private ImageView iv_delete;
+	private View iv_line;
 
 	public TypeItem(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -37,7 +38,7 @@ public class TypeItem extends LinearLayout {
 		txt_money_unit = (TextView) view.findViewById(R.id.txt_money_unit);
 		et_money = (EditText) view.findViewById(R.id.et_money);
 		iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
-		iv_line = (ImageView) view.findViewById(R.id.iv_line);
+		iv_line =  view.findViewById(R.id.iv_line);
 	}
 
 	public void initData(final Solution repair, final QuoteAffirmActivity quoteAffirmActivity){

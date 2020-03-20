@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:lee="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <include android:id="@+id/in_title" layout="@layout/include_search_title_white"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:textColor="@color/black"
+        android:text="关键词"
+        android:textSize="12dp"/>
+    <com.lwc.shanxiu.widget.TagsLayout
+        android:id="@+id/tl_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_below="@+id/in_title"
+        android:background="@color/white"
+        android:layout_margin="15dp"
+        lee:tagHorizontalSpace="5dp"
+        lee:tagVerticalSpace="5dp" />
+</LinearLayout>

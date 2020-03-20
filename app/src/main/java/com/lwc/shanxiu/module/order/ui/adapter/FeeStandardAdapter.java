@@ -89,7 +89,12 @@ public class FeeStandardAdapter extends BaseExpandableListAdapter{
             holder=(ViewHolder) convertView.getTag();
         }
         holder.title.setText(list.get(groupPosition).getData().get(childPosition).getExampleName());
-        holder.price.setText(String.valueOf(list.get(groupPosition).getData().get(childPosition).getMaintainCost()/100)+"元");
+
+        if(list.get(groupPosition).getData().get(childPosition).getIsFixation() == 1){  //价格固定
+            holder.price.setText(String.valueOf(list.get(groupPosition).getData().get(childPosition).getMaintainCost()/100)+"元");
+        }else{ //价格可变
+            holder.price.setText(String.valueOf(list.get(groupPosition).getData().get(childPosition).getMaintainCost()/100)+"元起");
+        }
         return convertView;
     }
 

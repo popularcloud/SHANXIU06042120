@@ -13,19 +13,21 @@
 		android:layout_height="match_parent">
 		<RelativeLayout
 			android:id="@+id/rl_code"
-			android:layout_width="match_parent"
+			android:layout_width="310dp"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="35dp"
 			android:orientation="vertical"
 			android:layout_marginLeft="35dp"
-			android:padding="17dp"
-			android:background="@color/white"
+			android:layout_centerHorizontal="true"
+			android:paddingTop="17dp"
+			android:background="@drawable/item_white_circle"
 			android:layout_marginRight="35dp">
 			<com.lwc.shanxiu.widget.CircleImageView
 				android:id="@+id/imgHeadIcon"
 				android:layout_width="46dp"
 				android:layout_height="46dp"
 				android:contentDescription="@null"
+				android:layout_marginLeft="27dp"
 				android:src="@drawable/default_portrait_100" />
 			<TextView
 				android:layout_width="match_parent"
@@ -47,19 +49,23 @@
 				android:textSize="12sp"
 				android:layout_marginTop="8dp"
 				android:textColor="@color/gray_99"
-				android:text="邀请好友扫描二维码 成为专属客户"
+				android:text="邀请好友扫描二维码,成为专属客户"
 				android:gravity="left"/>
-			<View
+			<ImageView
 				android:id="@+id/v_dotted"
 				android:layout_width="match_parent"
-				android:layout_height="10dp"
+				android:layout_height="wrap_content"
 				android:layout_below="@+id/imgHeadIcon"
+				android:layout_marginLeft="27dp"
+				android:layout_marginRight="27dp"
 				android:layout_marginTop="17dp"
-				android:background="@drawable/dotted_line_gray" />
+				android:background="@drawable/ic_point_line" />
 			<ImageView
 				android:layout_width="230dp"
 				android:layout_height="230dp"
 				android:scaleType="fitXY"
+				android:layout_marginTop="35dp"
+				android:layout_marginBottom="35dp"
 				android:id="@+id/iv_code"
 				android:layout_below="@+id/v_dotted"
 				android:layout_centerHorizontal="true" />

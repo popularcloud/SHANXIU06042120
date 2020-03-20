@@ -248,8 +248,8 @@ public class ScrapFragment extends BaseFragment{
             ll_scrap_record.setVisibility(View.GONE);
             tv_destruction_record.setVisibility(View.GONE);
             ll_destruction_record.setVisibility(View.GONE);
-            btnScrap.setEnabled(true);
-            btnScrap.setBackgroundResource(R.drawable.button_login_selector);
+     /*       btnScrap.setEnabled(true);
+            btnScrap.setBackgroundResource(R.drawable.button_login_selector);*/
             btnDestruction.setEnabled(false);
             btnDestruction.setBackgroundResource(R.drawable.button_login_disenable);
         }

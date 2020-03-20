@@ -29,6 +29,7 @@ import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.LogUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 
@@ -72,13 +73,18 @@ public class PayPwdActivity extends BaseActivity {
 	@BindView(R.id.btnCode)
 	Button btnCode;
 	@BindView(R.id.btnUpdPwd)
-	Button btnUpdPwd;
+	TextView btnUpdPwd;
 
 	private User user;
 	private SharedPreferencesUtils preferencesUtils;
 	private String strPwd = "";
 	private String phone="";
 
+	/***
+	 * 设置支付密码
+	 * @param savedInstanceState
+	 * @return
+	 */
 	@Override
 	protected int getContentViewId(Bundle savedInstanceState) {
 		return R.layout.activity_pay_pwd;
@@ -106,7 +112,7 @@ public class PayPwdActivity extends BaseActivity {
 			et_6.setText(strPwd.substring(5,6));
 			tv_tip.setText("设置支付密码");
 			btnSubmit.setText("下一步");
-			tv_msg.setText("支付密码不能与登录密码一样");
+			tv_msg.setText("温馨提示:请不要将登录密码或者连续数字设为支付密码");
 			btnSubmit.setEnabled(true);
 			strPwd = "";
 			setFocusable(et_6);
@@ -323,11 +329,11 @@ public class PayPwdActivity extends BaseActivity {
 	public void updateView() {
 		showBack();
 		if (TextUtils.isEmpty(user.getPayPassword())) {
-			setTitle("设置密码");
+			setTitle("设置支付密码");
 			ll_setting_pay_pwd.setVisibility(View.VISIBLE);
 			ll_upd_pay_pwd.setVisibility(View.GONE);
 		} else {
-			setTitle("重设密码");
+			setTitle("重设支付密码");
 			ll_setting_pay_pwd.setVisibility(View.GONE);
 			ll_upd_pay_pwd.setVisibility(View.VISIBLE);
 			phone = user.getMaintenancePhone();
@@ -341,296 +347,155 @@ public class PayPwdActivity extends BaseActivity {
 	@Override
 	protected void initGetData() {
 	}
-	private boolean isDel = false;
-	public void setFocus() {
-		if (isDel) {
-			return;
-		}
-		String et1 = et_1.getText().toString().trim();
-		String et2 = et_2.getText().toString().trim();
-		String et3 = et_3.getText().toString().trim();
-		String et4 = et_4.getText().toString().trim();
-		String et5 = et_5.getText().toString().trim();
-		String et6 = et_6.getText().toString().trim();
-		if (et1.length() == 1) {
-			if (et2.length() == 1) {
-				if (et3.length() == 1) {
-					if (et4.length() == 1) {
-						if (et5.length() == 1) {
-							if (et6.length() == 1) {
-								setFocusable(et_6);
-							}
-							setFocusable(et_6);
-						} else {
-							setFocusable(et_5);
-						}
-					} else {
-						setFocusable(et_4);
-					}
-				} else {
-					setFocusable(et_3);
-				}
-			} else {
-				setFocusable(et_2);
-			}
-		} else {
-			setFocusable(et_1);
-		}
-	}
 
 	@Override
 	protected void widgetListener() {
-		customSelection(et_1);
-		customSelection(et_2);
-		customSelection(et_3);
-		customSelection(et_4);
-		customSelection(et_5);
-		customSelection(et_6);
-		/*et_1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});
-		et_2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});
-		et_3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});
-		et_4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});
-		et_5.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});
-		et_6.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				if(hasFocus) {
-					setFocus();
-				}
-			}
-		});*/
+		et_1.setFocusable(true);
+		et_1.setFocusableInTouchMode(true);
+		et_1.requestFocus();
+
 		et_1.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_1.getText().toString().trim().length()  == 1) {
-					setFocusable(et_2);
+				if(!TextUtils.isEmpty(s.toString())){
+					et_2.setFocusable(true);
+					et_2.setFocusableInTouchMode(true);
+					et_2.requestFocus();
 				}
+
 			}
 		});
 		et_2.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_2.getText().toString().trim().length()  == 1) {
-					setFocusable(et_3);
+				if(!TextUtils.isEmpty(s.toString())){
+					et_3.setFocusable(true);
+					et_3.setFocusableInTouchMode(true);
+					et_3.requestFocus();
+				}else{
+					et_1.setFocusable(true);
+					et_1.setFocusableInTouchMode(true);
+					et_1.requestFocus();
 				}
 			}
 		});
+
+
 		et_3.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_3.getText().toString().trim().length()  == 1) {
-					setFocusable(et_4);
+				if(!TextUtils.isEmpty(s.toString())){
+					et_4.setFocusable(true);
+					et_4.setFocusableInTouchMode(true);
+					et_4.requestFocus();
+				}else{
+					et_2.setFocusable(true);
+					et_2.setFocusableInTouchMode(true);
+					et_2.requestFocus();
 				}
 			}
 		});
+
+
 		et_4.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_4.getText().toString().trim().length()  == 1) {
-					setFocusable(et_5);
+				if(!TextUtils.isEmpty(s.toString())){
+					et_5.setFocusable(true);
+					et_5.setFocusableInTouchMode(true);
+					et_5.requestFocus();
+				}else{
+					et_3.setFocusable(true);
+					et_3.setFocusableInTouchMode(true);
+					et_3.requestFocus();
 				}
 			}
 		});
+
+
 		et_5.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_5.getText().toString().trim().length()  == 1) {
-					setFocusable(et_6);
+				if(!TextUtils.isEmpty(s.toString())){
+					et_6.setFocusable(true);
+					et_6.setFocusableInTouchMode(true);
+					et_6.requestFocus();
+				}else{
+					et_4.setFocusable(true);
+					et_4.setFocusableInTouchMode(true);
+					et_4.requestFocus();
 				}
+
 			}
 		});
+
 		et_6.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
 			}
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 			}
+
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (et_6.getText().toString().trim().length()  == 1) {
-					setFocusable(et_5);
+				if(!TextUtils.isEmpty(s.toString())){
 					btnSubmit.setEnabled(true);
-					setFocusable(et_6);
+				}else{
+					et_5.setFocusable(true);
+					et_5.setFocusableInTouchMode(true);
+					et_5.requestFocus();
 				}
+
 			}
 		});
-
-		et_6.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-					int len = et_6.getText().toString().length();
-					btnSubmit.setEnabled(false);
-					if (len == 0) {
-						isDel = true;
-						et_5.setText("");
-						et_6.clearFocus();
-						setFocusable(et_5);
-					} else {
-						et_6.setText("");
-					}
-				}
-				return true;
-			}
-		});
-		et_5.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-					int len = et_5.getText().toString().length();
-					if (len == 0) {
-						isDel = true;
-						et_4.setText("");
-						et_5.clearFocus();
-						setFocusable(et_4);
-					} else {
-						et_5.setText("");
-					}
-				}
-				return true;
-			}
-		});
-		et_4.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-					int len = et_4.getText().toString().length();
-					if (len == 0) {
-						isDel = true;
-						et_3.setText("");
-						et_4.clearFocus();
-						setFocusable(et_3);
-					} else {
-						et_4.setText("");
-					}
-				}
-				return true;
-			}
-		});
-		et_3.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-					int len = et_3.getText().toString().length();
-					if (len == 0) {
-						isDel = true;
-						et_2.setText("");
-						et_3.clearFocus();
-						setFocusable(et_2);
-					} else {
-						et_3.setText("");
-					}
-				}
-				return true;
-			}
-		});
-		et_2.setOnKeyListener(new View.OnKeyListener() {
-
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_DEL) {
-					int len = et_2.getText().toString().length();
-					if (len == 0) {
-						isDel = true;
-						et_1.setText("");
-						et_2.clearFocus();
-						setFocusable(et_1);
-					} else {
-						et_2.setText("");
-					}
-				}
-				return true;
-			}
-		});
-	}
-
-	public void customSelection(EditText mInputEditTxt){
-		mInputEditTxt.setCustomSelectionActionModeCallback(new ActionMode.Callback(){
-
-			public boolean onCreateActionMode(ActionMode actionMode, Menu menu){
-				return false;
-			}
-			public boolean onPrepareActionMode(ActionMode actionMode,Menu menu){
-				return false;
-			}
-			public boolean onActionItemClicked(ActionMode actionMode,MenuItem menuItem){
-				return false;
-			}
-			@Override
-			public void onDestroyActionMode(ActionMode mode){
-			}
-		});
-		mInputEditTxt.setLongClickable(false);
 	}
 
 	public void setFocusable(EditText mEditText) {
@@ -638,15 +503,9 @@ public class PayPwdActivity extends BaseActivity {
 		mEditText.setFocusableInTouchMode(true);
 		mEditText.requestFocus();
 		mEditText.requestFocusFromTouch();
-		//String str = mEditText.getText().toString().trim();
-	/*	if (str.length() > 0){
-			mEditText.setSelection(str.length());
-		}*/
-/*		if(getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
+		if(getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE) {
 			InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			inputMethodManager.showSoftInput(mEditText, 0);
-		}*/
-		isDel = false;
+		}
 	}
-
 }

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:id="@+id/lLayoutParent"
     android:layout_height="match_parent"
-    android:background="@color/bg_f7"
+    android:background="@color/f0_gray_line"
     android:orientation="vertical">
 
     <cn.bingoogolapple.refreshlayout.BGARefreshLayout
@@ -11,56 +11,62 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/bg_f7">
+        android:background="@color/f0_gray_line"
+        android:layout_marginBottom="15dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:paddingTop="10dp"></android.support.v7.widget.RecyclerView>
+            android:background="@color/f0_gray_line"></android.support.v7.widget.RecyclerView>
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-    <Button
+    <TextView
         android:id="@+id/btn"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="44dp"
         android:background="@drawable/button_login_selector"
         android:gravity="center"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:visibility="gone"
-        android:textColor="@color/white"></Button>
+        android:textColor="@color/white"
+        android:textSize="16sp"></TextView>
 
     <LinearLayout
         android:id="@+id/lLayoutDoubleButton"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="15dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <Button
+        <TextView
             android:id="@+id/btnRepulse"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="15dp"
+            android:gravity="center"
             android:layout_weight="1"
-            android:background="@drawable/button_login_selector"
+            android:background="@drawable/button_red_selector"
             android:text="拒绝并返修"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnAccept"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center"
             android:layout_weight="1"
             android:background="@drawable/button_login_selector"
             android:text="接受"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
     </LinearLayout>
 </LinearLayout>

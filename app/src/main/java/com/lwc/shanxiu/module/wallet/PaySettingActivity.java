@@ -39,6 +39,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 
+
+/**
+ * 支付管理
+ */
 public class PaySettingActivity extends BaseActivity {
 
 	@BindView(R.id.tv_nichen)

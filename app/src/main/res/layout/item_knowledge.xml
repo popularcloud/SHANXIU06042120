@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:lee="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="1px"
     android:background="@color/white"
     android:orientation="horizontal"
@@ -17,7 +18,8 @@
             android:layout_height="wrap_content"
             android:textColor="@color/black_0a"
             android:maxLines="3"
-            android:textSize="15sp"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:text="密修平台服务商维修技能培训"/>
         <TextView
             android:id="@+id/tv_desc"
@@ -25,15 +27,23 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray_99"
             android:layout_marginTop="10dp"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:maxLines="2"
             android:ellipsize="end"
             android:text="密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台"/>
+
+        <com.lwc.shanxiu.widget.TagsLayout
+            android:id="@+id/tl_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center_vertical" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="12dp">
         <TextView
             android:id="@+id/tv_view_count"
             android:layout_width="wrap_content"

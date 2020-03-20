@@ -29,6 +29,7 @@ public class TradingRecordBean implements Serializable {
 	private int transactionScene;
 	private String userRole;  //用户类型（3：政府用户 4：维修师 5：个人用户 6:公司）
 	private String objectId;  //订单号
+	private String spendType;  //收入类型
 
 	public int getTransactionScene() {
 		return transactionScene;
@@ -115,5 +116,13 @@ public class TradingRecordBean implements Serializable {
 
 	public void setObjectId(String objectId) {
 		this.objectId = objectId;
+	}
+
+	public String getSpendType() {
+		return spendType;
+	}
+
+	public void setSpendType(String spendType) {
+		this.spendType = spendType;
 	}
 }

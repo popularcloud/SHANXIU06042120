@@ -38,6 +38,7 @@
                 android:layout_height="33dp"
                 android:layout_marginLeft="5dp"
                 android:hint="@string/search_keyword"
+                android:gravity="left|center_vertical"
                 android:textColor="@color/black_0a"
                 android:textColorHint="@color/gray_99"
                 android:id="@+id/et_search"

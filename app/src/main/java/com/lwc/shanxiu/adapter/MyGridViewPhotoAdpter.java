@@ -75,7 +75,7 @@ public class MyGridViewPhotoAdpter extends BaseAdapter{
         }
        if (!TextUtils.isEmpty(lists.get(position))) {
            if (lists.get(position).startsWith("http")) {
-               ImageLoaderUtil.getInstance().displayFromNet(context, lists.get(position), holder.iv_nul);
+               ImageLoaderUtil.getInstance().displayFromNetDCircular(context, lists.get(position), holder.iv_nul,R.drawable.image_default_picture);
            } else {
                ImageLoaderUtil.getInstance().displayFromLocal(context, holder.iv_nul, lists.get(position));
            }
@@ -84,7 +84,6 @@ public class MyGridViewPhotoAdpter extends BaseAdapter{
                //添加item监听
                holder.delete_img.setTag(position);
                holder.delete_img.setOnClickListener(new View.OnClickListener() {
-
                    @Override
                    public void onClick(View arg0) {
                        int pion = (Integer) arg0.getTag();
@@ -97,7 +96,7 @@ public class MyGridViewPhotoAdpter extends BaseAdapter{
                });
            }
        } else {
-           ImageLoaderUtil.getInstance().displayFromLocal(context, holder.iv_nul, R.drawable.add_pic);
+           ImageLoaderUtil.getInstance().displayFromLocal(context, holder.iv_nul, R.drawable.add_img);
            holder.delete_img.setVisibility(View.GONE);
        }
         return convertView;

@@ -6,10 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.hedgehog.ratingbar.RatingBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.bean.Common;
@@ -155,26 +155,26 @@ public class RepairmanInfoActivity extends BaseActivity {
                 imageLoaderUtil.displayFromLocal(this, imgHead, R.drawable.default_portrait_100);
             }
 
-            txtOrderCount.setText("完成单数："+repairman.getOrderCount() + "单");   //完成订单总数
+            txtOrderCount.setText(repairman.getOrderCount());   //完成订单总数
 
             String name = repairman.getMaintenanceName();
             if (name != null && !TextUtils.isEmpty(name)) {
-                txtName.setText("工  程  师："+name);
+                txtName.setText(""+name);
             } else {
-                txtName.setText("工  程  师：暂无");
+                txtName.setText("暂无");
             }
 //            txtSkills.setText(repairman.getSkills());
             if (!TextUtils.isEmpty(repairman.getMaintenanceStar())) {
-                double avgservice = Double.parseDouble(repairman.getMaintenanceStar());
-                ratingBar.setMax(500);
-                ratingBar.setProgress((int) (avgservice * 100));
+                Float avgservice = Float.parseFloat(repairman.getMaintenanceStar());
+                ratingBar.setStarCount(5);
+                ratingBar.setStar(avgservice);
             } else {
-                ratingBar.setProgress(0);
+                ratingBar.setStar(0);
             }
             if (!TextUtils.isEmpty(repairman.getMaintenanceLabelNames())) {
                 mTagListView.setVisibility(View.VISIBLE);
                 mTagListView.setDeleteMode(false);
-                mTagListView.setTagViewTextColorRes(R.color.black_66);
+                mTagListView.setTagViewTextColorRes(R.color.black);
                 mTagListView.setTagViewBackgroundRes(R.drawable.tag_bg3);
                 String[] labels = repairman.getMaintenanceLabelNames().split(",");
                 if (labels != null && labels.length > 0) {
@@ -185,6 +185,8 @@ public class RepairmanInfoActivity extends BaseActivity {
                         mTags.add(tag);
                     }
                     mTagListView.setTags(mTags);
+                }else{
+                    mTagListView.setVisibility(View.GONE);
                 }
             } else {
                 mTagListView.setVisibility(View.GONE);

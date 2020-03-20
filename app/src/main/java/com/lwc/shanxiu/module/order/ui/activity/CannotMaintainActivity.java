@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
@@ -59,6 +60,8 @@ public class CannotMaintainActivity extends BaseActivity {
     EditText et_desc;
     @BindView(R.id.gridview_my)
     MyGridView myGridview;
+    @BindView(R.id.btn_back)
+    TextView btn_back;
     private List<String> urlStrs = new ArrayList();
     private int countPhoto = 8;
     private String imgPath1;
@@ -81,7 +84,8 @@ public class CannotMaintainActivity extends BaseActivity {
         pd = new ProgressDialog(this);
         pd.setMessage("正在上传图片...");
         pd.setCancelable(false);
-        showBack();
+        //showBack();
+        btn_back.setVisibility(View.VISIBLE);
         setTitle("无法维修");
         urlStrs.add("");
         adpter = new MyGridViewPhotoAdpter(this, urlStrs);

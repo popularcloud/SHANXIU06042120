@@ -9,21 +9,20 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 		<TextView
-			android:paddingLeft="20dp"
+			android:padding="15dp"
 			android:layout_width="wrap_content"
-			android:layout_height="40dp"
+			android:layout_height="wrap_content"
 			android:textSize="14sp"
 			android:id="@+id/txt_name"
-			android:paddingRight="15dp"
 			android:singleLine="true"
 			android:layout_marginRight="100dp"
-			android:textColor="@color/black_0a"
+			android:textColor="@color/black_66"
 			android:gravity="center_vertical" />
 
 		<ImageView
 			android:id="@+id/iv_delete"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="15dp"
+			android:layout_height="15dp"
 			android:layout_marginRight="15dp"
 			android:layout_alignParentRight="true"
 			android:layout_centerVertical="true"
@@ -31,36 +30,30 @@
 
 		<EditText
 			android:layout_width="50dp"
-			android:layout_height="40dp"
+			android:layout_height="wrap_content"
 			android:textSize="14sp"
 			android:id="@+id/et_money"
-			android:paddingRight="10dp"
+			android:paddingRight="5dp"
 			android:layout_toLeftOf="@+id/txt_money_unit"
-			android:textColor="@color/red_money"
+			android:textColor="@color/black_66"
 			android:enabled="false"
 			android:background="@color/white"
 			android:inputType="number"
 			android:digits="0123456789"
 			android:maxLength="4"
+			android:layout_centerVertical="true"
 			android:gravity="right|center_vertical" />
 		<TextView
 			android:layout_width="wrap_content"
-			android:layout_height="40dp"
+			android:layout_height="wrap_content"
 			android:textSize="14sp"
 			android:id="@+id/txt_money_unit"
-			android:paddingRight="15dp"
+			android:paddingRight="5dp"
+			android:layout_centerVertical="true"
 			android:text="元"
 			android:layout_toLeftOf="@+id/iv_delete"
-			android:textColor="@color/red_money"
+			android:textColor="@color/black_66"
 			android:gravity="center_vertical" />
 	</RelativeLayout>
-	<ImageView
-		android:id="@+id/iv_line"
-		android:layout_width="match_parent"
-		android:layout_height="1px"
-		android:layout_marginLeft="15dp"
-		android:layout_marginRight="15dp"
-		android:scaleType="fitXY"
-		android:src="@drawable/xuxian" />
-
+	<View android:id="@+id/iv_line" style="@style/line_f0Style" />
 </LinearLayout>

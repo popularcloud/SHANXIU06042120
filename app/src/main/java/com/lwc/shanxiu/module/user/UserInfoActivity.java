@@ -5,14 +5,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -30,6 +33,7 @@ import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.PhotoToken;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.utils.FileUtil;
+import com.lwc.shanxiu.utils.GetImagePath;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -107,7 +111,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private final int REQUEST_CODE_UPDATE = 101;
     private SharedPreferencesUtils preferencesUtils;
     private User user;
-    private File iconFile;
+   private File iconFile;
     private ImageLoaderUtil imageLoaderUtil;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -204,33 +208,49 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         if (resultCode == RESULT_OK) {
-
             switch (requestCode) {
-
                 case GlobalValue.PHOTO_REQUESTCODE:
-                    iconFile = PictureUtils.getFile(UserInfoActivity.this, data);
+                  /*  iconFile = PictureUtils.getFile(UserInfoActivity.this, data);
+                    Uri myUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".fileProvider", iconFile);
+                    SystemInvokeUtils.startImageZoom(this,myUri, uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);*/
 
-                    SystemInvokeUtils.startImageZoom(this, Uri.fromFile(iconFile), uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
+                        File path_pre = new File(GetImagePath.getPath(UserInfoActivity.this, data.getData()));
+                     //   File newFile = new File(ToastUtil.path, ToastUtil.date);
+                       // Toast.makeText(UserInfoActivity.this, getString(R.string.msg_loading), Toast.LENGTH_SHORT).show();
+                        try {
+                           // Defined.copyFile(path_pre, newFile);
+                            Uri dataUri = FileProvider.getUriForFile(UserInfoActivity.this, getApplicationContext().getPackageName() +".fileProvider", path_pre);
+                            SystemInvokeUtils.startImageZoom(this,dataUri, uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        File path_pre = new File(GetImagePath.getPath(UserInfoActivity.this, data.getData()));
+                      //  File newFile = new File(ToastUtil.path, ToastUtil.date);
+                     //   Toast.makeText(PersonalSetting.this, getString(R.string.msg_loading), Toast.LENGTH_SHORT).show();
+                        try {
+                          //  Defined.copyFile(new File(path_pre), newFile);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        SystemInvokeUtils.startImageZoom(this,Uri.fromFile(path_pre), uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
+                    }
+
+
                     break;
                 case GlobalValue.CAMERA_REQUESTCODE:
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    if (bitmap == null) {
-                        return;
+                    File file = new File(ToastUtil.path,ToastUtil.date);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Uri inputUri = FileProvider.getUriForFile(UserInfoActivity.this, getApplicationContext().getPackageName() +".fileProvider", file);//通过FileProvider创建一个content类型的Uri
+                        SystemInvokeUtils.startImageZoom(this, inputUri, uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
+                    } else {
+                        SystemInvokeUtils.startImageZoom(this, Uri.fromFile(file), uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
                     }
-                    try {
-                        File f = FileUtil.saveMyBitmap(bitmap);
-                        SystemInvokeUtils.startImageZoom(this, Uri.fromFile(f), uritempFile, GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
                     break;
                 case GlobalValue.ACTIVITY_MODIFY_PHOTO_REQUESTCODE:
-//                    if (data == null) {
-//                        return;
-//                    } else {
-//                        Bundle extras = data.getExtras();
-//                        if (extras != null) {
-                            //获取到裁剪后的图像
+                    //获取到裁剪后的图像
                     Bitmap bm = null;//extras.getParcelable("data");
                     try {
                         bm = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
@@ -240,8 +260,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                     iconFile = PictureUtils.saveFile(bm, FileConfig.PATH_IMAGES, Utils.getImgName());
                             LLog.i("压缩前" + iconFile);
                             upIcon(iconFile.getAbsolutePath());
-//                        }
-//                    }
                     break;
                 case REQUEST_CODE_UPDATE:
                     getUserInfor();
@@ -298,7 +316,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        User user = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"), User.class);
+                        user = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"), User.class);
                         if ((user.getUserId() == null || user.getUserId().equals("")) && user.getMaintenanceId() != null) {
                             user.setUserId(user.getMaintenanceId());
                         }
@@ -422,18 +440,30 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
             txtPhone.setText("暂无");
         }
 
+        String comanyName = "";
         if (!TextUtils.isEmpty(user.getCompanyName())) {
-            txtCompany.setText(user.getCompanyName());
+            comanyName = user.getCompanyName();
         } else if (!TextUtils.isEmpty(user.getParentCompanyName())) {
-            txtCompany.setText(user.getParentCompanyName());
+            comanyName = user.getParentCompanyName();
         } else {
-            txtCompany.setText("暂无");
+            comanyName = "暂无";
         }
+        if(comanyName.length() > 12){
+            comanyName = comanyName.substring(0,11) + "...";
+        }
+        txtCompany.setText(comanyName);
+
+        String maintenanceSignature = "";
         if (user.getMaintenanceSignature() != null && !TextUtils.isEmpty(user.getMaintenanceSignature())) {
-            txtSign.setText(user.getMaintenanceSignature());
+            maintenanceSignature = user.getMaintenanceSignature();
         } else {
-            txtSign.setText("暂无");
+            maintenanceSignature  = "暂无";
         }
+        if(maintenanceSignature.length() > 14){
+            maintenanceSignature = maintenanceSignature.substring(0,13) + "...";
+        }
+        txtSign.setText(maintenanceSignature);
+
         if (!TextUtils.isEmpty(user.getMaintenanceHeadImage())) {
             imageLoaderUtil.displayFromNet(UserInfoActivity.this, user.getMaintenanceHeadImage(), imgHeadIcon);
         } else {

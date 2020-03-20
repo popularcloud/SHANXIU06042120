@@ -1,67 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
-    <include layout="@layout/include_title"/>
-    <View style="@style/line_c8Style"/>
-    <TextView
-        android:id="@+id/tv_title"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/il_header"
+        layout="@layout/include_title" />
+
+    <View
+        android:id="@+id/line_header"
+        style="@style/line_c8Style" />
+
+    <ScrollView
+        android:id="@+id/sv_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:text=""/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/tv_view_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:drawableLeft="@drawable/ic_view_count"
-            android:drawablePadding="5dp"
-            android:textColor="@color/gray_99"
-            android:text=""/>
-        <TextView
-            android:id="@+id/tv_create_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/ic_create_time"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/gray_99"
-            android:text=""/>
-        <TextView
-            android:id="@+id/tv_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@drawable/ic_author"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/gray_99"
-            android:text=""/>
-    </LinearLayout>
-    <View style="@style/line_f0Style" android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"></View>
-    <WebView
-        android:id="@+id/wv_detail"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:textStyle="bold"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_article_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_view_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_view_count"
+                    android:drawablePadding="5dp"
+                    android:text=""
+                    android:textColor="@color/gray_99"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_create_time"
+                    android:drawablePadding="5dp"
+                    android:maxLength="10"
+                    android:text=""
+                    android:textColor="@color/gray_99"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/tv_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_author"
+                    android:drawablePadding="5dp"
+                    android:text=""
+                    android:textColor="@color/gray_99"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/line_webView"
+                style="@style/line_f0Style"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="15dp"></View>
+
+            <com.lwc.shanxiu.widget.MyWebView
+                android:id="@+id/wv_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@color/white"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/ll_article"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/f0_gray_line"
+                    android:padding="12dp"
+                    android:text="相似文章"
+                    android:textColor="@color/btn_blue_nomal"
+                    android:textSize="14sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

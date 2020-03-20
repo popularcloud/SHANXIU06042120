@@ -1,12 +1,14 @@
 package com.lwc.shanxiu.utils;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Environment;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -24,10 +26,13 @@ public class SDFileHelper {
 
 
     public void savePicture(final String fileName, String url) {
-        Glide.with(context).load(url).asBitmap().toBytes().into(new SimpleTarget<byte[]>() {
+        Glide.with(context).asBitmap().load(url).into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(byte[] bytes, GlideAnimation<? super byte[]> glideAnimation) {
+            public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> glideAnimation) {
                 try {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] bytes = baos.toByteArray();
                     savaFileToSD(fileName, bytes);
                 } catch (Exception e) {
                     e.printStackTrace();

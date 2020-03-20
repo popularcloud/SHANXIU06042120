@@ -30,7 +30,6 @@ import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.HashMap;
 import java.util.Map;

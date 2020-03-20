@@ -98,7 +98,7 @@ public class InformationDetailsActivity extends BaseActivity {
 			setTitle("资讯详情");
 		}
 		if ((TextUtils.isEmpty(title) || (!title.equals("导航")) && !title.equals("扫描结果"))) {
-			setRightImg(R.drawable.news_share, new View.OnClickListener() {
+			setRightImg(R.drawable.ic_share, new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					String shareTitle = preferencesUtils.loadString("shareTitle");
@@ -501,9 +501,9 @@ public class InformationDetailsActivity extends BaseActivity {
 	@Override
 	public void finish() {
 		preferencesUtils.saveString("checkShare", "");
-		if (MainActivity.activity == null) {
+/*		if (MainActivity.activity == null) {
 			IntentUtil.gotoActivityAndFinish(this, MainActivity.class);
-		}
+		}*/
 		super.finish();
 	}
 }

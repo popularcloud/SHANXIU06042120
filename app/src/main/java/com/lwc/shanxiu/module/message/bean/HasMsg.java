@@ -13,10 +13,11 @@ public class HasMsg extends DataSupport implements Serializable {
 
     private String type;     //消息类型 1.系统消息 2.资讯消息 3.活动消息 4.个人消息
     private boolean hasMessage;//是否有未读消息
+    private int count;//是否有未读消息
 
-    public boolean getHasMessage() {
+  /*  public boolean getHasMessage() {
         return hasMessage;
-    }
+    }*/
 
     public void setHasMessage(boolean hasMessage) {
         this.hasMessage = hasMessage;
@@ -30,4 +31,15 @@ public class HasMsg extends DataSupport implements Serializable {
         this.type = type;
     }
 
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public boolean isHasMessage() {
+        return hasMessage;
+    }
 }

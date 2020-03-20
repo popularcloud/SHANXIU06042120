@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="8px"
     android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -9,19 +10,30 @@
         android:background="@drawable/selector_item_bg">
         <ImageView
             android:id="@+id/iv_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentLeft="true"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@drawable/newstyle_gift"/>
-        <ImageView
+ <!--       <ImageView
             android:id="@+id/iv_new_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_toRightOf="@+id/iv_icon"
-            android:src="@drawable/red_mention"/>
+            android:src="@drawable/red_point_shape"/>-->
+        <TextView
+            android:id="@+id/iv_new_msg"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="12dp"
+            android:visibility="visible"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="6sp"
+            android:layout_marginLeft="32dp"
+            android:background="@drawable/circle_red_all_shape"/>
         <LinearLayout
             android:layout_toRightOf="@+id/iv_new_msg"
             android:layout_width="match_parent"
@@ -37,19 +49,19 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:layout_alignParentLeft="true"
-                    android:textColor="@color/color_33"
+                    android:textColor="@color/black"
                     android:text="系统消息"/>
 
                 <TextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:textColor="@color/black_66"
+                    android:textColor="@color/gray_99"
                     android:text="2017-12-04 12:59"/>
             </RelativeLayout>
             <ImageView
@@ -64,15 +76,14 @@
                 android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:maxLines="2"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/black_66"
+                android:textColor="@color/gray_99"
                 android:layout_marginBottom="10dp"
                 android:text="有新版本发布哦！更新了很多新功能，快快去下载体验吧！"/>
 
         </LinearLayout>
 
     </RelativeLayout>
-    <View style="@style/line_ccStyle"/>
 </LinearLayout>

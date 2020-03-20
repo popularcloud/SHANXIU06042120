@@ -152,7 +152,7 @@ public class TApplication extends MultiDexApplication {//MultiDexApplication
 	private void initJPush(){
 		LLog.i("初始化推送");
 		//极光推送
-		JPushInterface.setDebugMode(false);
+		JPushInterface.setDebugMode(true);
 		JPushInterface.init(getApplicationContext());
 
 	}

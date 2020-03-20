@@ -8,6 +8,7 @@
 	android:fitsSystemWindows="true">
 
 	<include layout="@layout/include_title"/>
+	<View style="@style/line_f0Style"/>
 	<ProgressBar
 		android:id="@+id/progressBar1"
 		style="?android:attr/progressBarStyleHorizontal"

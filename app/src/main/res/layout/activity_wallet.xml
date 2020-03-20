@@ -2,80 +2,148 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/account_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="47dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/ic_account_bg">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp">
 
-        <ImageView
-            android:onClick="onBack"
-            android:id="@+id/img_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:padding="15dp"
-            android:src="@drawable/back" />
+            <ImageView
+                android:onClick="onBack"
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="15dp"
+                android:src="@drawable/back" />
 
-        <TextView
-            android:id="@+id/txtManage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:padding="15sp"
-            android:textColor="@color/white"
-            android:text="支付管理"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txtManage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:padding="15sp"
+                android:textColor="@color/white"
+                android:text="支付管理"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txtActionbarTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="账户"
-            android:layout_centerInParent="true"
-            android:textSize="16sp" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/txtActionbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="我的钱包"
+                android:layout_centerInParent="true"
+                android:textSize="16sp" />
+        </RelativeLayout>
 
-    <RelativeLayout
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:text="账户余额(元)" />
+            <TextView
+                android:id="@+id/FMoneyTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="13dp"
+                android:layout_below="@id/name"
+                android:textColor="@color/white"
+                android:text="0.00"
+                android:textStyle="bold"
+                android:textSize="36sp"/>
+
+            <LinearLayout
+                android:id="@+id/txtPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_round_blue_bg"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:layout_centerVertical="true">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="充值"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_package_white"
+                    android:drawableRight="@drawable/ic_right_arrow_white"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/FMoneyTV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/white"
-            android:text="100000"
-            android:textStyle="bold"
-            android:textSize="35sp"/>
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/FMoneyTV"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:text="钱包余额(元)" />
-    </RelativeLayout>
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:gravity="center_vertical"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="60dp"
-        android:text="交易记录"
-        android:textColor="@color/gray_btm"
-        android:textSize="12sp" />
-    <View android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/bg_f7"/>
+        <RadioButton
+            android:id="@+id/rBtnIncome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="收入明细"
+            android:checked="true"
+            android:textColor="@drawable/blue_or_black_selector" />
+
+        <RadioButton
+            android:id="@+id/rBtnWithdrawal"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="提现明细"
+            android:textColor="@drawable/blue_or_black_selector" />
+
+    </RadioGroup>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/viewLine1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@color/btn_blue_nomal"
+            android:visibility="visible" />
+
+        <View
+            android:id="@+id/viewLine3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:background="@color/btn_blue_nomal"
+            android:visibility="invisible" />
+    </LinearLayout>
+    <View style="@style/line_f0Style"
+        android:layout_height="4dp"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -87,6 +155,7 @@
             android:layout_marginTop="120dp"
             android:text="暂无交易记录"
             android:textColor="@color/gray_btm"
+            android:visibility="gone"
             android:textSize="12sp"/>
         <cn.bingoogolapple.refreshlayout.BGARefreshLayout
             android:id="@+id/mBGARefreshLayout"
@@ -103,9 +172,10 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="44dp"
+        android:layout_margin="15dp"
         android:orientation="horizontal">
-        <android.support.v7.widget.CardView
+        <!--<android.support.v7.widget.CardView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cardBackgroundColor="@color/btn_blue_nomal"
             android:layout_width="0dp"
@@ -125,19 +195,15 @@
                 android:background="@drawable/button_white_qq_selector"
                 android:text="充 值"
                 android:textColor="@color/btn_blue_nomal"/>
-        </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>-->
         <android.support.v7.widget.CardView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:cardBackgroundColor="@color/btn_blue_nomal"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
             app:cardCornerRadius="5dp"
-            app:cardElevation="3dp">
+            app:cardElevation="0dp">
             <Button
                 android:id="@+id/txtWithdraw"
                 android:layout_width="match_parent"

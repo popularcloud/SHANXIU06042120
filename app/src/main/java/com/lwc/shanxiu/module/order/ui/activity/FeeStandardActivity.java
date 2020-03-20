@@ -45,9 +45,9 @@ public class FeeStandardActivity extends BaseActivity {
         boolean isRegister = getIntent().getBooleanExtra("isRegister",false);
         showBack();
         if("1".equals(deviceTypeMold)){  //办公设备
-            setTitle("收费标准(办公设备)");
+            setTitle("收费标准");
         }else{
-            setTitle("收费标准(家用电器)");
+            setTitle("收费标准");
         }
 
         if(isRegister){

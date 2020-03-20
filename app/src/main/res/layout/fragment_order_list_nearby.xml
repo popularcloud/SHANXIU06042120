@@ -81,11 +81,7 @@
 				android:textSize="14sp" />
 		</LinearLayout>
 	</LinearLayout>
-
-	<View
-		style="@style/line_ccStyle"
-		android:layout_below="@+id/ll_cz" />
-
+	<View style="@style/line_ccStyle"/>
 	<FrameLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">

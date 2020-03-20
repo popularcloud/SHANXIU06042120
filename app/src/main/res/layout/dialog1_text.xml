@@ -56,7 +56,7 @@
                     android:layout_height="40dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_login_selector"
+                    android:background="@drawable/button_red_selector"
                     android:text="取消"
                     android:textColor="@color/white" />
 

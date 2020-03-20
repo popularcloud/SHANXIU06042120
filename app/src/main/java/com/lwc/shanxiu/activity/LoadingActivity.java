@@ -1,6 +1,7 @@
 package com.lwc.shanxiu.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -15,10 +16,12 @@ import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.bean.ActivityBean;
 import com.lwc.shanxiu.bean.Common;
+import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.module.bean.ADInfo;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
+import com.lwc.shanxiu.utils.DialogUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -27,6 +30,11 @@ import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.CountDownProgressView;
 import com.lwc.shanxiu.view.ImageCycleView;
+import com.lwc.shanxiu.widget.CustomDialog;
+import com.tencent.wstt.gt.client.AbsGTParaLoader;
+import com.tencent.wstt.gt.client.GT;
+import com.tencent.wstt.gt.client.InParaManager;
+import com.tencent.wstt.gt.client.OutParaManager;
 import com.wkp.runtimepermissions.callback.PermissionCallBack;
 import com.wkp.runtimepermissions.util.RuntimePermissionUtil;
 
@@ -57,6 +65,7 @@ public class LoadingActivity extends Activity {
     int hasPermissionCount = 0;
     int noPermissionCount = 0;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +81,47 @@ public class LoadingActivity extends Activity {
         ad_view = (ImageCycleView) findViewById(R.id.ad_view);
         iv_gz = (ImageView) findViewById(R.id.iv_gz);
         countdownProgressView = (CountDownProgressView) findViewById(R.id.countdownProgressView);
+
+
+
+
+        /*
+         *  GT usage
+         * 与GT控制台连接，同时注册输入输出参数
+         */
+       /* GT.connect(getApplicationContext(), new AbsGTParaLoader() {
+
+            @Override
+            public void loadInParas(InParaManager inPara) {
+                *//*
+                 * 注册输入参数，将在GT控制台上按顺序显示
+                 *//*
+                inPara.register("并发线程数", "TN", "1", "2", "3");
+                inPara.register("KeepAlive", "KA", "false", "true");
+                inPara.register("读超时", "超时", "5000", "10000","1000");
+                inPara.register("连接超时", "连超时", "5000", "10000","1000");
+
+                // 定义默认显示在GT悬浮窗的3个输入参数
+                inPara.defaultInParasInAC("并发线程数", "KeepAlive", "读超时");
+
+                // 设置默认无效的一个入参（GT1.1支持）
+                inPara.defaultInParasInDisableArea("连接超时");
+            }
+
+            @Override
+            public void loadOutParas(OutParaManager outPara) {
+                *//*
+                 * 注册输出参数，将在GT控制台上按顺序显示
+                 *//*
+                outPara.register("下载耗时", "耗时");
+                outPara.register("实际带宽", "带宽");
+                outPara.register("singlePicSpeed", "SSPD");
+                outPara.register("NumberOfDownloadedPics", "NDP");
+
+                // 定义默认显示在GT悬浮窗的3个输出参数
+                outPara.defaultOutParasInAC("下载耗时", "实际带宽", "singlePicSpeed");
+            }
+        });*/
 
         initEngines();
 
@@ -106,6 +156,21 @@ public class LoadingActivity extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void applyPermission() {
+        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.PHONE, new PermissionCallBack() {
+            @Override
+            public void onCheckPermissionResult(boolean hasPermission) {
+                if (hasPermission) {
+                    hasPermissionCount = hasPermissionCount + 1;
+                    Log.d("联网成功","通过权限"+hasPermissionCount);
+                }else {
+                    //显示权限不具备的界面
+                    toSettingPage();
+                    noPermissionCount = noPermissionCount + 1;
+                    Log.d("联网成功","拒绝权限"+noPermissionCount);
+                }
+                onPermissionFinish();
+            }
+        });
         //权限检查，回调是权限申请结果
         RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.CAMERA, new PermissionCallBack() {
             @Override
@@ -139,21 +204,6 @@ public class LoadingActivity extends Activity {
             }
         });
         RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.CONTACTS, new PermissionCallBack() {
-            @Override
-            public void onCheckPermissionResult(boolean hasPermission) {
-                if (hasPermission) {
-                    hasPermissionCount = hasPermissionCount + 1;
-                    Log.d("联网成功","通过权限"+hasPermissionCount);
-                }else {
-                    //显示权限不具备的界面
-                    toSettingPage();
-                    noPermissionCount = noPermissionCount + 1;
-                    Log.d("联网成功","拒绝权限"+noPermissionCount);
-                }
-                onPermissionFinish();
-            }
-        });
-        RuntimePermissionUtil.checkPermissions(this, RuntimePermissionUtil.PHONE, new PermissionCallBack() {
             @Override
             public void onCheckPermissionResult(boolean hasPermission) {
                 if (hasPermission) {
@@ -215,12 +265,28 @@ public class LoadingActivity extends Activity {
     }
 
     public void init() {
- //       boolean isFirstTime = preferencesUtils.loadBooleanData("isfirsttime");
-//        if (!isFirstTime) {
-//            preferencesUtils.saveBooleanData("isfirsttime", true);
-//            IntentUtil.gotoActivityAndFinish(LoadingActivity.this, UserGuideActivity.class);
-//            return;
-//        }
+        boolean isFirstTime = preferencesUtils.loadBooleanData("isfirsttime1");
+        if (!isFirstTime) {
+           DialogUtil.showMessageDg(LoadingActivity.this, "用户协议和隐私政策", "同意", "查看协议详情", "请你务必谨慎阅读，充分理解'用户协议'和'隐私政策'各条款;您可以点击查看协议详情了解更多信息，或者点击同意开始接受我们的服务？", new CustomDialog.OnClickListener() {
+                @Override
+                public void onClick(CustomDialog dialog, int id, Object object) {
+                    preferencesUtils.saveBooleanData("isfirsttime1", true);//表示已首次启动过
+                    Bundle bundle = new Bundle();
+                    bundle.putString("type", "9");
+                    IntentUtil.gotoActivity(LoadingActivity.this, UserGuideActivity.class, bundle);
+                    dialog.dismiss();
+                }
+            }, new CustomDialog.OnClickListener() {
+                @Override
+                public void onClick(CustomDialog dialog, int id, Object object) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("url", ServerConfig.DOMAIN.replace("https", "http") + "/main/h5/agreement.html?isEngineer=1");
+                    bundle.putString("title", "用户注册协议");
+                    IntentUtil.gotoActivity(LoadingActivity.this, InformationDetailsActivity.class, bundle);
+                }
+            });
+            return;
+        }
         getBoot();
         String token = preferencesUtils.loadString("token");
         if (token != null && !token.equals("")) {

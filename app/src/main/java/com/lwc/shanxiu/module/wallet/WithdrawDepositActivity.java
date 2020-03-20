@@ -1,11 +1,14 @@
 package com.lwc.shanxiu.module.wallet;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Dimension;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +48,8 @@ public class WithdrawDepositActivity extends BaseActivity {
 
 	@BindView(R.id.et_money)
 	EditText et_money;
+	@BindView(R.id.tv_money_hint)
+	TextView tv_money_hint;
 	@BindView(R.id.et_alipay)
 	EditText et_alipay;
 	@BindView(R.id.tv_money)
@@ -68,17 +73,22 @@ public class WithdrawDepositActivity extends BaseActivity {
 	@Override
 	protected void findViews() {
 		ButterKnife.bind(this);
-		setTitle("余额提现");
+		setTitle("提现");
 		showBack();
 		uMShareAPI = UMShareAPI.get(this);
 	}
 
-	@OnClick({R.id.tBtnSecretWechat, R.id.tBtnSecretAlipay, R.id.txtWithdraw, R.id.tv_all_money, R.id.rl_wechat_pay, R.id.rl_ali_pay})
+	@OnClick({R.id.tBtnSecretWechat, R.id.tBtnSecretAlipay, R.id.txtWithdraw, R.id.tv_all_money, R.id.rl_wechat_pay, R.id.rl_ali_pay,R.id.tv_money_hint})
 	public void onClickView(View view) {
 		switch (view.getId()) {
 			case R.id.tv_all_money:
 				if (!TextUtils.isEmpty(user.getBanlance()) && Double.parseDouble(user.getBanlance()) >= 1 ) {
 					et_money.setText(user.getBanlance());
+					tv_money_hint.setVisibility(View.GONE);
+					et_money.setVisibility(View.VISIBLE);
+					et_money.setFocusable(true);
+					et_money.setFocusableInTouchMode(true);
+					et_money.requestFocus();
 				} else {
 					ToastUtil.showLongToast(WithdrawDepositActivity.this, "钱包余额不足，提现金额必须>=1元！");
 				}
@@ -164,6 +174,17 @@ public class WithdrawDepositActivity extends BaseActivity {
 					bundle.putString("money", money);
 					IntentUtil.gotoActivityForResult(WithdrawDepositActivity.this, InputPayPwdActivity.class, bundle, 12302);
 				}
+				break;
+			case R.id.tv_money_hint:
+				view.setVisibility(View.GONE);
+				et_money.setVisibility(View.VISIBLE);
+				et_money.setFocusable(true);
+				et_money.setFocusableInTouchMode(true);
+				et_money.requestFocus();
+
+				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+				break;
 			default:
 				break;
 		}
@@ -234,7 +255,7 @@ public class WithdrawDepositActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		user = SharedPreferencesUtils.getInstance(this).loadObjectData(User.class);
-		tv_money.setText("账户余额"+user.getBanlance()+"元");
+		tv_money.setText("可用余额"+user.getBanlance()+"元");
 	}
 
 	@Override
@@ -272,5 +293,6 @@ public class WithdrawDepositActivity extends BaseActivity {
 			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {}
 		});
+
 	}
 }

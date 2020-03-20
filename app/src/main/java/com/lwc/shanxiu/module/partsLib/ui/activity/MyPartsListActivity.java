@@ -60,9 +60,9 @@ public class MyPartsListActivity extends BaseActivity implements PartsListView {
     @BindView(R.id.tv_price)
     TextView tv_price;
     @BindView(R.id.btnReturn)
-    Button btnReturn;
+    TextView btnReturn;
     @BindView(R.id.btnLook)
-    Button btnLook;
+    TextView btnLook;
 
     private DrawerLayout mDrawerLayout;
     private FrameLayout mDrawerContent;
@@ -156,7 +156,7 @@ public class MyPartsListActivity extends BaseActivity implements PartsListView {
 
     }
 
-    @OnClick({R.id.tv_filter,R.id.tv_search,R.id.tv_price,R.id.btnReturn,R.id.btnLook})
+    @OnClick({R.id.tv_filter,R.id.tv_search,R.id.tv_price,R.id.btnReturn,R.id.btnLook,R.id.tctTip})
     public void onBtnClick(View view){
         switch (view.getId()){
             case R.id.tv_filter:
@@ -192,6 +192,13 @@ public class MyPartsListActivity extends BaseActivity implements PartsListView {
             case R.id.btnLook:
                 IntentUtil.gotoActivity(MyPartsListActivity.this,BuyListActivity.class);
                 break;
+            case R.id.tctTip:
+                tctTip.setVisibility(View.GONE);
+                mBGARefreshLayout.setVisibility(View.VISIBLE);
+                searchText = "";
+                et_search.setText("");
+                mBGARefreshLayout.beginRefreshing();
+                break;
         }
     }
 
@@ -211,8 +218,6 @@ public class MyPartsListActivity extends BaseActivity implements PartsListView {
 
     @Override
     protected void initGetData() {
-
-
 
          Intent myIntent = getIntent();
          searchText = myIntent.getStringExtra("searchText");
@@ -257,12 +262,21 @@ public class MyPartsListActivity extends BaseActivity implements PartsListView {
             partsBeenList.clear();
             partsBeenList.addAll(returnPartsBeenList);
             tctTip.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+            mBGARefreshLayout.setVisibility(View.VISIBLE);
         }else{
-            partsBeenList.clear();
-            tctTip.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            tctTip.setText("暂无数据!");
+            if(currentPage == 1){
+                partsBeenList.clear();
+                tctTip.setVisibility(View.VISIBLE);
+                mBGARefreshLayout.setVisibility(View.GONE);
+                tctTip.setText("暂无搜索数据!");
+            }else{
+                /*partsBeenList.clear();
+                tctTip.setVisibility(View.VISIBLE);
+                mBGARefreshLayout.setVisibility(View.GONE);*/
+                //tctTip.setText("没有更多数据了!");
+                ToastUtil.showToast(MyPartsListActivity.this,"没有更多数据了");
+            }
+
         }
         myPartsListAdapter.notifyDataSetChanged();
         mBGARefreshLayout.endRefreshing();

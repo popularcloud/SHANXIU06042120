@@ -234,7 +234,13 @@ public class RequestValue {
     /**
      * 新消息阅读回调
      */
-    public static final String READ_MESSAGE = "/message/read/";
+  //  public static final String READ_MESSAGE = "/message/read/";
+
+
+    /**
+     * 新消息阅读回调
+     */
+    public static final String READ_MESSAGE = "/message/readOne/";
 
     /**
      * 机关单位订单无条件挂起
@@ -309,6 +315,8 @@ public class RequestValue {
      * 充值
      */
     public static final String GET_WEBAPPPAY_APPPAY = "/main/webAppPay/appPay";
+
+    public static final String GET_PAY_RECHARGE = "/pay/recharge";
 
     /**
      * 获取品牌数据
@@ -386,4 +394,86 @@ public class RequestValue {
      * 工程师注册
      */
     public static final String COMPANY_ADDBUSSINESS = "/company/addBussiness";
+
+    /**
+     * 知识库下载
+     */
+    public static final String KNOWLEDGE_LOGIN = "/knowledge/login";
+
+    /**
+     * 扫描租赁二维码
+     */
+    public static final String SCAN_LEASECODE = "/scan/leaseCode";
+
+    /**
+     * 获取绑定租赁二维码设备类型
+     */
+    public static final String SCAN_GETLEASEDEVICETYPES = "/scan/getLeaseDeviceTypes";
+
+    /**
+     *  获取租赁设备品牌
+     */
+    public static final String SCAN_GETLEASEBRANDS = "/scan/getLeaseBrands";
+
+    /**
+     *  获取租赁设备品牌型号
+     */
+    public static final String SCAN_GETLEASEMODELS = "/scan/getLeaseModels";
+
+    /**
+     *  租赁二维码添加设备信息
+     */
+    public static final String SCAN_ADDDEVICEINFO = "/scan/addLeaseDeviceInfo";
+
+    /**
+     *  获得租赁二维码设备信息
+     */
+    public static final String SCAN_CODELEASEINFO = "/scan/codeLeaseInfo";
+
+
+    /**
+     *  问答模块---重新编辑问题
+     */
+   // public static final String QUESION_UPDATEPUBLISH = "/quesion/updatePublish";
+
+    /**
+     *  问答模块---工程师提问
+     */
+    public static final String QUESION_KNOWLEDGEPUBLISH = "/quesion/knowledgePublish";
+
+    /**
+     *  问答模块---问题详情
+     */
+    public static final String QUESION_DETAILS = "/quesion/details";
+
+
+    /**
+     *  问答模块---问答首页
+     */
+    public static final String QUESION_INDEX = "/quesion/index";
+
+    /**
+     *  问答模块---我的提问
+     */
+    public static final String QUESION_MAINTENANCEQUESION = "/quesion/maintenanceQuesion";
+
+    /**
+     *  问答模块---我的回答
+     */
+    public static final String QUESION_MAINTENANCEANSWER = "/quesion/maintenanceAnswer";
+
+    /**
+     *  问答模块---回答问题
+     */
+    public static final String QUESION_QUESIONANSWER = "/quesion/quesionAnswer";
+
+ /**
+     *  问答模块--采纳答案
+     */
+    public static final String QUESION_SELECTANSWER = "/quesion/selectAnswer";
+
+    /**
+     * 问题搜索历史
+     */
+    public static final String GET_QUESION_KNOWLEDGEKEYWORDRANK = "/quesion/knowledgeKeywordRank";
 }

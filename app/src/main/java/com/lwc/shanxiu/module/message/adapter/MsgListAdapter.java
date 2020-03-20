@@ -80,5 +80,11 @@ public class MsgListAdapter extends SuperAdapter<MyMsg> {
             layout.setMargins(Utils.dip2px(context, 10f), Utils.dip2px(context, 10f), Utils.dip2px(context, 10f),0);
             llContent.setLayoutParams(layout);
         }
+
+        if("0".equals(item.getIsRead())){
+            holder.setVisibility(R.id.tv_isMsgRed,View.VISIBLE);
+        }else{
+            holder.setVisibility(R.id.tv_isMsgRed,View.GONE);
+        }
     }
 }

@@ -44,7 +44,7 @@ public class DeviceDetailFragment extends BaseFragment implements IDeviceDetailF
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
     @BindView(R.id.btn)
-    Button btn;
+    TextView btn;
     @BindView(R.id.tv_msg)
     TextView tv_msg;
     private Order myOrder = null;

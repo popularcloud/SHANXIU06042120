@@ -58,8 +58,6 @@ public class MineFragment extends BaseFragment {
     ImageView iv_red;
     @BindView(R.id.imgNewMsg)
     ImageView imgNewMsg;
-    @BindView(R.id.txt_kf)
-    TextView txt_kf;
     @BindView(R.id.imgRight)
     ImageView imgRight;
     @BindView(R.id.txtOrderCount)
@@ -98,7 +96,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.txtEvaluate, R.id.txtUserGuide, R.id.txtFeedback, R.id.txtMyOrder, R.id.img_head, R.id.txt_share,
-            R.id.txt_jineng, R.id.txtUserInfor, R.id.txtWallet, R.id.txt_kf})
+            R.id.txt_jineng, R.id.txtUserInfor, R.id.txtWallet, R.id.ll_kf,R.id.ll_OrderCountTitle,R.id.ll_myMoneyTitle})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.txtUserGuide:
@@ -122,7 +120,7 @@ public class MineFragment extends BaseFragment {
                 IntentUtil.gotoActivity(getActivity(), ShareActivity.class);
                 getActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
-            case R.id.txt_kf:
+            case R.id.ll_kf:
                 DialogUtil.showMessageDg(getActivity(), "拨打电话", "400-881-0769", new CustomDialog.OnClickListener() {
 
                     @Override
@@ -135,7 +133,8 @@ public class MineFragment extends BaseFragment {
                     }
                 });
                 break;
-            case R.id.txtWallet: //钱包
+            case R.id.txtWallet://钱包
+            case R.id.ll_myMoneyTitle:
                 IntentUtil.gotoActivity(getActivity(), WalletActivity.class);
                 break;
             case R.id.txt_jineng:
@@ -145,6 +144,7 @@ public class MineFragment extends BaseFragment {
                 IntentUtil.gotoActivity(getActivity(), UserInfoActivity.class);
                 break;
             case R.id.txtMyOrder:
+            case R.id.ll_OrderCountTitle:
                 IntentUtil.gotoActivity(getActivity(), MyOrderListActivity.class);
                 break;
             default:

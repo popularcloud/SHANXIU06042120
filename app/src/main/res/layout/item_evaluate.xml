@@ -2,13 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_item_bg"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:layout_marginTop="1px"
     android:orientation="vertical">
-    <View style="@style/line_c8Style"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_height="1dp"
-        android:background="@drawable/xuxian"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,14 +14,13 @@
 
         <com.lwc.shanxiu.widget.CircleImageView
             android:id="@+id/imgHead"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/xiaoxiu"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"/>
+            android:layout_marginTop="15dp"
+            android:src="@drawable/default_portrait_114"
+            android:layout_marginRight="13dp"
+            android:layout_marginLeft="15dp"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,9 +32,9 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="密修用户&#160;&#160;&#8201;***"
-                android:textColor="@color/black_66"
+                android:textColor="@color/black"
                 android:layout_alignParentTop="true"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
             <TextView
                 android:id="@+id/txtSign"
                 android:layout_width="wrap_content"
@@ -46,10 +42,10 @@
                 android:gravity="center"
                 android:paddingTop="5dp"
                 android:text="评价星级："
-                android:textColor="@color/black_66"
+                android:textColor="@color/gray_99"
                 android:layout_below="@+id/txtName"
-                android:textSize="14sp" />
-            <RatingBar
+                android:textSize="12sp" />
+            <!--<RatingBar
                 android:id="@+id/ratingBar"
                 style="@style/roomRatingBar"
                 android:layout_width="wrap_content"
@@ -58,7 +54,24 @@
                 android:isIndicator="true"
                 android:layout_below="@+id/txtName"
                 android:layout_toRightOf="@+id/txtSign"
-                android:numStars="5" />
+                android:numStars="5" />-->
+
+            <com.hedgehog.ratingbar.RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtName"
+                android:layout_toRightOf="@+id/txtSign"
+                android:paddingTop="7dp"
+                hedgehog:clickable="false"
+                hedgehog:halfstart="true"
+                hedgehog:starCount="5"
+                hedgehog:starEmpty="@drawable/start1"
+                hedgehog:starFill="@drawable/start2"
+                hedgehog:starHalf="@drawable/start3"
+                hedgehog:starImageHeight="12dp"
+                hedgehog:starImageWidth="12dp"
+                hedgehog:starImagePadding="3dp"/>
 
             <TextView
                 android:id="@+id/txtDate"
@@ -68,20 +81,22 @@
                 android:layout_marginRight="20dp"
                 android:text="2018-07"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/black_66"
-                android:textSize="14sp" />
+                android:textColor="@color/gray_99"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txtContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingTop="5dp"
+                android:layout_below="@+id/txtSign"
+                android:text="评价内容"
+                android:textColor="@color/gray_99"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="15dp"
+                android:textSize="12sp" />
         </RelativeLayout>
-        <TextView
-            android:id="@+id/txtContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_below="@+id/imgHead"
-            android:text="评价内容"
-            android:textColor="@color/black_66"
-            android:textSize="14sp" />
     </RelativeLayout>
 
 

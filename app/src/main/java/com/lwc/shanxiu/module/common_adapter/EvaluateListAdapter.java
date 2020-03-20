@@ -2,9 +2,9 @@ package com.lwc.shanxiu.module.common_adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.widget.RatingBar;
 
 
+import com.hedgehog.ratingbar.RatingBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.bean.Evaluate;
 
@@ -30,10 +30,13 @@ public class EvaluateListAdapter extends SuperAdapter<Evaluate> {
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, Evaluate item) {
         RatingBar ratingBar = holder.findViewById(R.id.ratingBar);
-        ratingBar.setMax(500);
-        ratingBar.setProgress(item.getSynthesizeGrade() * 100);
+
+        Float avgservice = Float.valueOf(item.getSynthesizeGrade());
+        ratingBar.setStarCount(5);
+        ratingBar.setStar(avgservice);
+
         holder.setText(R.id.txtDate, item.getCreateTime());  //订单号
-        holder.setText(R.id.txtContent, "评价内容："+item.getCommentContent());
+        holder.setText(R.id.txtContent, ""+item.getCommentContent());
         if (!TextUtils.isEmpty(item.getOrderContactName())) {
             holder.setText(R.id.txtName, item.getOrderContactName().substring(0, 1)+"**");
         }

@@ -109,7 +109,7 @@ public class TagListView extends FlowLayout implements OnClickListener {
 				localTagView.setBackgroundResource(mTagViewBackgroundResId);
 			}
 		} else {
-			int c = getResources().getColor(R.color.gray_99);
+			int c = getResources().getColor(R.color.black);
 			localTagView.setTextColor(c);
 		}
 //		if (mTagViewTextColorResId > 0) {

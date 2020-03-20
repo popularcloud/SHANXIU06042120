@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_f7"
+    android:background="@color/f0_gray_line"
     android:orientation="vertical">
     <TextView
         android:id="@+id/tv_msg"
@@ -18,25 +18,25 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@color/bg_f7">
+        android:background="@color/f0_gray_line">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="match_parent" />
 
     </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
 
-    <Button
+    <TextView
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_margin="10dp"
+        android:layout_margin="15dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/button_login_selector"
         android:textSize="15sp"
         android:gravity="center"
         android:visibility="gone"
-        android:textColor="@color/white"></Button>
+        android:textColor="@color/white"></TextView>
 
 </LinearLayout>

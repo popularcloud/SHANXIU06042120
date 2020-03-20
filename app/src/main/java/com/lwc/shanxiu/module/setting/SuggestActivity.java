@@ -1,11 +1,14 @@
 package com.lwc.shanxiu.module.setting;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
@@ -36,6 +39,8 @@ public class SuggestActivity extends BaseActivity {
 	/** 提交评价 */
 	private Button btn_comment_submit;
 
+	private TextView tv_word_number;
+
 	@Override
 	protected int getContentViewId(Bundle savedInstanceState) {
 		return R.layout.activity_suggest;
@@ -47,6 +52,24 @@ public class SuggestActivity extends BaseActivity {
 		showBack();
 		et_comment_content = (EditText) findViewById(R.id.et_comment_content);
 		btn_comment_submit = (Button) findViewById(R.id.btn_comment_submit);
+		tv_word_number = (TextView) findViewById(R.id.tv_word_number);
+
+		et_comment_content.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				tv_word_number.setText(String.valueOf(s.length())+"/200");
+			}
+		});
 	}
 
 	@Override

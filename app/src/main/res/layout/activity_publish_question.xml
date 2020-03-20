@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <include layout="@layout/include_title" />
+    <View style="@style/line_f0Style" />
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/sl_scroll"
+    android:fillViewport="true" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:hint="请输入文章标题（1-15个字）"
+        android:paddingBottom="20dp"
+        android:maxEms="15"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="20dp"
+        android:maxLength="49"
+        android:text=""
+        android:textSize="18sp"
+        android:textColorHint="@color/line_cc" />
+    <LinearLayout
+        android:id="@+id/ll_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/btn_round_tips_bg"
+        android:padding="15dp"
+        android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_tips_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/gray_99"
+                android:gravity="center_vertical"
+                android:lineSpacingExtra="5dp"
+                android:text="· 保持文字简练，表述清晰问题的关键点\n· 可添加图片方便解答" />
+    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_error_tip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/btn_round_tips_bg"
+            android:padding="15dp"
+            android:textColor="@color/red_3a"
+            android:lineSpacingExtra="5dp"
+            android:visibility="gone"
+            android:text="" />
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textSize="15sp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:lineSpacingMultiplier="1.2"
+        android:hint="请详细描述问题"
+        android:textColorHint="@color/line_cc"
+        android:textColor="@color/black"/>
+    <com.lwc.shanxiu.view.MyGridView
+        android:id="@+id/gridview_my"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginLeft="15dp"
+       android:layout_marginTop="7dp"
+        android:columnWidth="72dp"
+        android:verticalSpacing="7dp"
+        android:horizontalSpacing="7dp"
+        android:numColumns="3"
+        android:scrollbars="none"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <CheckBox
+            android:id="@+id/cb_isAnonymous"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:layout_margin="12dp"
+            android:layout_gravity="left|center_vertical"
+            style="@style/CustomCheckBoxTheme"
+            android:checked="false"
+            android:textColor="@color/line_cc"
+            android:text="匿名发表"/>
+    </LinearLayout>
+</LinearLayout>
+</ScrollView>
+</LinearLayout>

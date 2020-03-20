@@ -154,18 +154,18 @@ public class UpdatePassWordActivity extends BaseActivity {
         String str = et_mention_2.getText().toString().trim();
 
         if (TextUtils.isEmpty(str)) {
-            ToastUtil.showToast(UpdatePassWordActivity.this, "新密码未输入");
+            ToastUtil.showToast(UpdatePassWordActivity.this, "新密码未输入！");
             return false;
         }
 
         String newPassWordAgain = et_mention_3.getText().toString().trim();
 
         if (TextUtils.isEmpty(newPassWordAgain)) {
-            ToastUtil.showToast(UpdatePassWordActivity.this, "请再次输入新密码");
+            ToastUtil.showToast(UpdatePassWordActivity.this, "请再次输入新密码！");
             return false;
         }else{
             if(!newPassWordAgain.equals(str)){
-                ToastUtil.showToast(UpdatePassWordActivity.this, "两次输入的新密码不一致");
+                ToastUtil.showToast(UpdatePassWordActivity.this, "两次输入的新密码不一致！");
                 return false;
             }
         }
@@ -174,19 +174,19 @@ public class UpdatePassWordActivity extends BaseActivity {
         user = preferencesUtils.loadObjectData(User.class);
 
         if (!TextUtils.isEmpty(pwd) && !pwd.equals(trim)) {
-            ToastUtil.showToast(UpdatePassWordActivity.this, "原始密码错误");
+            ToastUtil.showToast(UpdatePassWordActivity.this, "原始密码错误！");
             return false;
         }
         if (pwd.equals(str)) {
-            ToastUtil.showLongToast(UpdatePassWordActivity.this, "你输入的新密码和原密码相同！");
+            ToastUtil.showLongToast(UpdatePassWordActivity.this, "新密码不能与原密码相同！");
             return false;
         }
         if (user.getPayPassword() != null && user.getPayPassword().equals(str)) {
-            ToastUtil.showLongToast(UpdatePassWordActivity.this, "登录密码不能与支付密码相同");
+            ToastUtil.showLongToast(UpdatePassWordActivity.this, "登录密码不能与支付密码相同！");
             return false;
         }
         if (str.length() < 6) {
-            ToastUtil.showLongToast(UpdatePassWordActivity.this, "请输入6-16位长度新密码!");
+            ToastUtil.showLongToast(UpdatePassWordActivity.this, "请输入6-16位长度新密码！");
             return false;
         }
         return true;

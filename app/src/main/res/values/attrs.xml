@@ -176,4 +176,11 @@
             <attr name="roundHeight" format="dimension" />  
     </declare-styleable>
 
+            <declare-styleable name="EditableSpinner">
+                <attr name="editableSpinnerdownBtnImage" format="reference"/>
+                <attr name="editableSpinnerdownBtnBackground" format="color"/>
+                <attr name="editableSpinnerdownBtnWidth" format="dimension"/>
+                <attr name="editableSpinnertextSize" format="dimension"/>
+                <attr name="editableSpinnertextColor" format="color"/>
+            </declare-styleable>
 </resources>

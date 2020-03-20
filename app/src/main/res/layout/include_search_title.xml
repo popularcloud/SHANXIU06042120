@@ -3,9 +3,9 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="25dp"
         android:orientation="horizontal"
-        android:id="@+id/rl_title"
-        android:background="@drawable/title_bg_new">
+        android:id="@+id/rl_title">
         <ImageView
             android:onClick="onBack"
             android:id="@+id/img_back"
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/rounded_editt"
+                android:background="@drawable/rounded_edit_transparent"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:focusable="true"
@@ -34,17 +34,17 @@
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:minHeight="36dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="15dp"
                     android:hint="@string/search_repair_type"
                     android:textColor="@color/white"
-                    android:textColorHint="@color/white_55"
+                    android:textColorHint="@color/white"
                     android:id="@+id/et_search"
                     android:imeOptions="actionSearch"
                     android:maxLines="1"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:background="@null"
                     android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/map_search_gray"/>
+                    android:drawableLeft="@drawable/map_search_white"/>
                 <ImageView android:id="@+id/iv_delete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

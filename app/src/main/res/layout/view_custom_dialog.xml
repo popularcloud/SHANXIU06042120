@@ -89,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="44dp"
                     android:layout_weight="1"
-                    android:textColor="@color/text_blue"
+                    android:textColor="@color/btn_blue_nomal"
                     android:background="@drawable/selector_item_bg"
                     android:text="@string/enter" />
 

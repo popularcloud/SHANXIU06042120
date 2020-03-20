@@ -32,6 +32,7 @@ public class PartsBean {
     private String typeName;
     private String accessoriesParam;
     private Double accessoriesPrice;
+    private String accessoriesDetail;
     private String accessoriesImg;
     private String typeId;
     private int isValid;
@@ -142,7 +143,15 @@ public class PartsBean {
         this.sumSize = sumSize;
     }
 
-  /*  public boolean isItemIsChecked() {
+    public String getAccessoriesDetail() {
+        return accessoriesDetail;
+    }
+
+    public void setAccessoriesDetail(String accessoriesDetail) {
+        this.accessoriesDetail = accessoriesDetail;
+    }
+
+    /*  public boolean isItemIsChecked() {
         return itemIsChecked;
     }
 

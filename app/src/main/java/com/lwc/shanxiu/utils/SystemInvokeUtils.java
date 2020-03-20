@@ -7,7 +7,9 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -27,8 +29,23 @@ public class SystemInvokeUtils {
      */
     public static void invokeMapDepot(Activity activity, int flag) {
 
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+       /* Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
+        activity.startActivityForResult(intent, flag);*/
+
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        intent.putExtra("crop", true);
+        intent.putExtra("scale", true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果大于等于7.0使用FileProvider
+            Uri uriForFile = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName() + ".fileProvider", new File(ToastUtil.path,ToastUtil.date));
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+        }
         activity.startActivityForResult(intent, flag);
 
     }
@@ -38,10 +55,20 @@ public class SystemInvokeUtils {
      * @param uri
      */
     public static void startImageZoom(Activity activity, Uri uri, Uri uritempFile, int flag){
-        Intent intent = new Intent("com.android.camera.action.CROP");
+      /*  Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
+
+
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
         // crop为true是设置在开启的intent中设置显示的view可以剪裁
         intent.putExtra("crop", "true");
+
+        intent.putExtra("output", uritempFile);// 输出到文件
+      //  intent.putExtra("outputFormat", "PNG");// 返回格式
+        intent.putExtra("noFaceDetection", true); // 去除面部检测
+        intent.putExtra("return-data", false); // 不要通过Intent传递截获的图片
 
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", 1);
@@ -51,16 +78,37 @@ public class SystemInvokeUtils {
         intent.putExtra("outputX", 300);
         intent.putExtra("outputY", 300);
 
-        /**
+        *//**
          * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）
          * 故将图片保存在Uri中，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
-         */
+         *//*
         //intent.putExtra("return-data", true);
 
         //uritempFile为Uri类变量，实例化uritempFile
 //        uritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().getPath() + "/" + "small.jpg");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+        activity.startActivityForResult(intent, flag);*/
+
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            File file = new File(ToastUtil.path,ToastUtil.date);
+          //  Uri outPutUri = FileProvider.getUriForFile(activity, activity.getApplicationContext().getPackageName()+".fileProvider", file);
+            intent.setDataAndType(uri, "image/*");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+            intent.putExtra("noFaceDetection", false);//去除默认的人脸识别，否则和剪裁匡重叠
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        } else {
+            intent.setDataAndType(uri, "image/*");
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        }
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX,outputY 是剪裁图片的宽高
+        intent.putExtra("outputX", 300);
+        intent.putExtra("outputY", 300);
         activity.startActivityForResult(intent, flag);
     }
 

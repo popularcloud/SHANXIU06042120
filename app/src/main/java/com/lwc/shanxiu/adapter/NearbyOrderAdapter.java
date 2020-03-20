@@ -38,7 +38,7 @@ public class NearbyOrderAdapter extends SuperAdapter<Order> {
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, Order item) {
         TextView textView = holder.findViewById(R.id.txt_id);
-        textView.setText("订单号:" + item.getOrderId());// 订单号
+        textView.setText("订单号：" + item.getOrderId());// 订单号
         holder.setText(R.id.txt_time, item.getCreateTime());// 下单时间
         if (!TextUtils.isEmpty(item.getOrderType()) && item.getOrderType().equals("3")) {
             holder.setVisibility(R.id.rl_repair_company, View.GONE);

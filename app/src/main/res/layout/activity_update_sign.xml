@@ -7,8 +7,11 @@
 	android:layout_height="match_parent"
 	android:fitsSystemWindows="true">
 	<include layout="@layout/include_title"/>
+	<View style="@style/line_f0Style" />
 				<RelativeLayout
-					android:layout_width="345dp"
+					android:layout_width="match_parent"
+					android:layout_marginLeft="15dp"
+					android:layout_marginRight="15dp"
 					android:layout_height="118dp"
 					android:layout_gravity="center_horizontal"
 					android:background="@drawable/sign_update_shape"
@@ -21,7 +24,7 @@
 						android:padding="15dp"
 						android:layout_alignParentLeft="true"
 						android:gravity="top|left"
-						android:background="@color/f0_gray_line"
+						android:background="@null"
 						android:layout_alignParentTop="true"
 						android:textSize="14sp"
 						android:maxLength="30"

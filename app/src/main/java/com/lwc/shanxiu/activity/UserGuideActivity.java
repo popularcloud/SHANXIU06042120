@@ -58,7 +58,9 @@ public class UserGuideActivity extends BaseActivity {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				// 返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
-				finish();
+				if (MainActivity.activity == null) {
+					IntentUtil.gotoActivityAndFinish(UserGuideActivity.this, LoginOrRegistActivity.class);
+				}
 //				view.loadUrl(url);
 				return true;
 			}
@@ -169,11 +171,4 @@ public class UserGuideActivity extends BaseActivity {
 //		}
 //	}
 
-	@Override
-	public void finish() {
-		if (MainActivity.activity == null) {
-			IntentUtil.gotoActivityAndFinish(this, LoginOrRegistActivity.class);
-		}
-		super.finish();
-	}
 }

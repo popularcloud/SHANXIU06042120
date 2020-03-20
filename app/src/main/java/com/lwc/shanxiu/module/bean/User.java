@@ -50,6 +50,7 @@ public class User extends DataSupport implements Serializable {
     private String pwd;
     private String lat;
     private String lon;
+    private String companySecrecy; //“companySecrecy”:”公司级别”,// 是否是认证单位（0：否 1：一级私密公司(可接政府订单，但不可接涉密订单） 2：申请中 3:二级私密公司(可接涉密订单)）
 
     private String payPassword;//": "支付密码",          //支付密码（为null是没有设置）
     private String banlance;//": "0",                    //余额
@@ -79,6 +80,14 @@ public class User extends DataSupport implements Serializable {
 
     public void setPayPassword(String payPassword) {
         this.payPassword = payPassword;
+    }
+
+    public String getCompanySecrecy() {
+        return companySecrecy;
+    }
+
+    public void setCompanySecrecy(String companySecrecy) {
+        this.companySecrecy = companySecrecy;
     }
 
     public String getBanlance() {

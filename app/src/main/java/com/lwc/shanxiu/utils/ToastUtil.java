@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.widget.Toast;
 
 import com.lwc.shanxiu.R;
@@ -13,6 +17,8 @@ import com.lwc.shanxiu.view.SelectPhotoDialog;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+
+import java.io.File;
 
 /**
  * Toast操作工具类
@@ -24,6 +30,8 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 public class ToastUtil {
 
     private static Toast toast;
+    public static String path = Environment.getExternalStorageDirectory().getPath();
+    public static String date = "mypic.png";
 
     /**
      * 显示选择图片
@@ -33,9 +41,20 @@ public class ToastUtil {
         SelectPhotoDialog picturePopupWindow = new SelectPhotoDialog(context, new SelectPhotoDialog.CallBack() {
             @Override
             public void oneClick() {
-                Intent openCameraIntent = new Intent(
+      /*          Intent openCameraIntent = new Intent(
                         MediaStore.ACTION_IMAGE_CAPTURE);
-                context.startActivityForResult(openCameraIntent, GlobalValue.CAMERA_REQUESTCODE);
+                context.startActivityForResult(openCameraIntent, GlobalValue.CAMERA_REQUESTCODE);*/
+                File file = new File(path, date);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上
+                    Uri uriForFile = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".fileProvider", file);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, uriForFile);
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                } else {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+                }
+                context.startActivityForResult(intent,  GlobalValue.CAMERA_REQUESTCODE);
             }
 
             @Override
@@ -83,6 +102,7 @@ public class ToastUtil {
             public void cancelCallback() {
             }
         }, "拍照", "手机相册");// 拍照弹出框
+        picturePopupWindow.setCanceledOnTouchOutside(true);
         picturePopupWindow.show();
     }
 

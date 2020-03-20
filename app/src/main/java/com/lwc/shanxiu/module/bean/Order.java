@@ -83,6 +83,8 @@ public class Order implements Serializable{
     private String hardwareCost;
     private String packageType;
 
+    private String maintenanceName;// ": "维修师名称",          //维修师名称
+
     public String getHardwareCost() {
         return hardwareCost;
     }
@@ -499,5 +501,13 @@ public class Order implements Serializable{
 
     public void setAccessories(List<PartsDetailBean> accessories) {
         this.accessories = accessories;
+    }
+
+    public String getMaintenanceName() {
+        return maintenanceName;
+    }
+
+    public void setMaintenanceName(String maintenanceName) {
+        this.maintenanceName = maintenanceName;
     }
 }

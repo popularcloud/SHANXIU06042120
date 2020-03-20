@@ -7,6 +7,7 @@
 	android:fitsSystemWindows="true"
 	android:background="@color/white">
 	<include layout="@layout/include_title" />
+	<View style="@style/line_f0Style" />
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -14,7 +15,7 @@
 		<ImageView
 			android:id="@+id/img_icon"
 			android:layout_width="80dp"
-			android:layout_height="115dp"
+			android:layout_height="80dp"
 			android:layout_marginTop="60dp"
 			android:layout_gravity="center_horizontal"
 			android:background="@drawable/logo_new"
@@ -79,7 +80,7 @@
 					android:drawablePadding="3dp"
 					android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%*_="
 					android:textSize="15sp"
-					android:hint="输入登录密码" />
+					android:hint="请输入登录密码" />
 
 				<ImageView
 					android:id="@+id/show_pwd"
@@ -146,8 +147,8 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_horizontal"
 			android:text="MX2.0.0"
-			android:textSize="13sp"
-			android:textColor="@color/color_txt_edit"
+			android:textSize="12sp"
+			android:textColor="@color/gray_99"
 			android:layout_marginBottom="15dp"/>
 	</LinearLayout>
 </LinearLayout>

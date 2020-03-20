@@ -9,6 +9,7 @@ public class SearchKeyWordBean {
 
   private int count;
   private String keywordName;
+  private String selectDetail;
 
     public int getCount() {
         return count;
@@ -24,5 +25,13 @@ public class SearchKeyWordBean {
 
     public void setKeywordName(String keywordName) {
         this.keywordName = keywordName;
+    }
+
+    public String getSelectDetail() {
+        return selectDetail;
+    }
+
+    public void setSelectDetail(String selectDetail) {
+        this.selectDetail = selectDetail;
     }
 }

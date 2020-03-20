@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -29,17 +30,23 @@ import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.bean.Update;
 import com.lwc.shanxiu.configs.BroadcastFilters;
+import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.fragment.InformationFragment;
 import com.lwc.shanxiu.fragment.KnowledgeBaseFragment;
 import com.lwc.shanxiu.fragment.MapFragment;
 import com.lwc.shanxiu.fragment.MineFragment;
+import com.lwc.shanxiu.fragment.MyRequestQuestionFragment;
 import com.lwc.shanxiu.fragment.NearOrderFragment;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.BaseFragmentActivity;
+import com.lwc.shanxiu.module.bean.LeaseDevicesHistoryBean;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.common_adapter.FragmentsPagerAdapter;
 import com.lwc.shanxiu.module.message.bean.HasMsg;
+import com.lwc.shanxiu.module.message.ui.KnowledgeSearchActivity;
+import com.lwc.shanxiu.module.order.ui.activity.LeaseDevicesActivity;
+import com.lwc.shanxiu.module.order.ui.activity.LeaseDevicesHistoryActivity;
 import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
 import com.lwc.shanxiu.utils.ApkUtil;
 import com.lwc.shanxiu.utils.DialogUtil;
@@ -56,6 +63,7 @@ import com.lwc.shanxiu.utils.VersionUpdataUtil;
 import com.lwc.shanxiu.widget.CustomDialog;
 import com.lwc.shanxiu.widget.CustomViewPager;
 import com.lwc.shanxiu.widget.DialogStyle3;
+import com.lwc.shanxiu.widget.DialogStyle4;
 
 import org.litepal.crud.DataSupport;
 
@@ -91,6 +99,8 @@ public class MainActivity extends BaseFragmentActivity {
     TextView txtTogo;
     @BindView(R.id.iv_red_dian)
     ImageView iv_red_dian;
+    @BindView(R.id.iv_red_dian_map)
+    ImageView iv_red_dian_map;
     private DialogStyle3 dialogStyle3 = null;
 
 
@@ -212,13 +222,11 @@ public class MainActivity extends BaseFragmentActivity {
             ToastUtil.showLongToast(MainActivity.this, "登录失效，请重新登录!");
             return;
         }
-       /* if (user.getAutoAcceptOrder() == 1) {
-            txtTogo.setText("自动接单中...");
-        } else {
-            txtTogo.setText("开启自动接单");
-        }*/
-        hasMessage();
 
+        //查询消息
+        hasMessage();
+        //ToastUtil.showToast(MainActivity.this,"进入onResume");
+        //检查app更新
         startUptateAPP();
     }
 
@@ -301,7 +309,26 @@ public class MainActivity extends BaseFragmentActivity {
         fragmentHashMap.put(0, mapFragment);
         fragmentHashMap.put(1, nearOrderFragment);
         fragmentHashMap.put(2, new KnowledgeBaseFragment());
-        fragmentHashMap.put(3, new InformationFragment());
+
+        //查询显示权限
+        if("3".equals(user.getCompanySecrecy())){ //资讯改为问答
+            // 使用代码设置drawableTop
+            Drawable drawable = getResources().getDrawable(R.drawable.tab_question_selector);
+            // 这一步必须要做,否则不会显示.
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            radioFriend.setCompoundDrawables(null, drawable, null, null);
+            radioFriend.setText("问答");
+            fragmentHashMap.put(3, new MyRequestQuestionFragment());
+        }else{ //问答变成资讯
+            // 使用代码设置drawableTop
+            Drawable drawable = getResources().getDrawable(R.drawable.tab_friend_selector);
+            // 这一步必须要做,否则不会显示.
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(),drawable.getMinimumHeight());
+            radioFriend.setCompoundDrawables(null, drawable, null, null);
+            radioFriend.setText("资讯");
+            fragmentHashMap.put(3, new InformationFragment());
+        }
+
         fragmentHashMap.put(4, mineFragment);
     }
 
@@ -466,78 +493,7 @@ public class MainActivity extends BaseFragmentActivity {
         return appVersionCode;
     }
 
-   // private int lastProgress;
-    /*private void downloadAPK(final String path) {
-        pd = new ProgressDialog(this, AlertDialog.THEME_HOLO_LIGHT);
-        pd.setCancelable(false);
-        pd.setMessage("正在下载最新版APP，请稍后...");
-        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        pd.show();
-        pd.setProgress(0);
 
-        new Thread() {
-            @SuppressWarnings("resource")
-            public void run() {
-                try {
-                    InputStream input = null;
-                    HttpURLConnection urlConn = null;
-                    URL url = new URL(path);
-                    urlConn = (HttpURLConnection) url.openConnection();
-                    urlConn.setRequestProperty("Accept-Encoding", "identity");
-                    urlConn.setReadTimeout(10000);
-                    urlConn.setConnectTimeout(10000);
-                    input = urlConn.getInputStream();
-                    int total = urlConn.getContentLength();
-                    File sd = Environment.getExternalStorageDirectory();
-                    boolean can_write = sd.canWrite();
-                    if (!can_write) {
-                        ToastUtil.showLongToast(MainActivity.this, "SD卡不可读写");
-                    } else {
-                        File file = null;
-                        OutputStream output = null;
-                        String savedFilePath = sd.getAbsolutePath()+"/shanxiu.apk";
-                        file = new File(savedFilePath);
-                        output = new FileOutputStream(file);
-                        byte[] buffer = new byte[1024];
-                        int temp = 0;
-                        int read = 0;
-                        while ((temp = input.read(buffer)) != -1) {
-                            output.write(buffer, 0, temp);
-                            read += temp;
-                            float progress = ((float) read) / total;
-                            int progress_int = (int) (progress * 100);
-                            if (lastProgress != progress_int) {
-                                lastProgress = progress_int;
-                                final int pro = progress_int;
-                                runOnUiThread(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        pd.setProgress(pro);
-                                    }
-                                });
-                            }
-                        }
-                        output.flush();
-                        output.close();
-                        input.close();
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if (pd != null && pd.isShowing()) {
-                                    pd.setProgress(100);
-                                    pd.dismiss();
-                                }
-                            }
-                        });
-                        ApkUtil.installApk(file);
-                    }
-                } catch (Exception e) {
-                }
-            }
-        }.start();
-    }*/
 
     /**
      * 显示接单对话框
@@ -656,7 +612,116 @@ public class MainActivity extends BaseFragmentActivity {
             preferencesUtils.saveString("token", "");
             IntentUtil.gotoActivityAndFinish(this, LoginOrRegistActivity.class);
             onBackPressed();
+        }else if(requestCode == ServerConfig.REQUESTCODE_KNOWLEDGESEARCH){
+            if(fragmentHashMap != null && fragmentHashMap.size() == 5){
+                KnowledgeBaseFragment knowledgeBaseFragment = (KnowledgeBaseFragment) fragmentHashMap.get(2);
+                if(data != null){
+                    String searchData = data.getStringExtra("searchData");
+                    if(!TextUtils.isEmpty(searchData)){
+                        knowledgeBaseFragment.onSearched(searchData);
+                    }
+                }
+
+            }
+        }else if(requestCode == ServerConfig.REQUESTCODE_QUESTION){
+            if(fragmentHashMap != null && fragmentHashMap.size() == 5){
+                MyRequestQuestionFragment myRequestQuestionFragment = (MyRequestQuestionFragment) fragmentHashMap.get(3);
+                if(data != null){
+                    String searchData = data.getStringExtra("searchData");
+                    if(!TextUtils.isEmpty(searchData)){
+                        myRequestQuestionFragment.onSearched(searchData);
+                    }
+                }
+
+            }
+        }else if(requestCode == 8869 && resultCode == 1111){ //扫描二维码
+            if(data != null){
+                String showDialog = data.getStringExtra("showDialog");
+                final String token = data.getStringExtra("qrcodeIndex");
+                if("1".equals(showDialog)){
+                    final DialogStyle4 dialogStyle4 = new DialogStyle4(MainActivity.this);
+                    dialogStyle4.setDialogClickListener(new DialogStyle4.DialogClickListener() {
+                        @Override
+                        public void leftClick(Context context, DialogStyle4 dialog) {
+                            dialogStyle4.dismissDialog();
+                        }
+
+                        @Override
+                        public void rightClick(Context context, DialogStyle4 dialog) {
+                            dialogStyle4.dismissDialog();
+                            startDownlaodFile(token);
+                        }
+                    });
+                    dialogStyle4.showDialog();
+                }
+            }
+        }else if(requestCode == 8869 && resultCode == 1112){ //扫描二维码
+            if(data != null){
+                final String qrcodeIndex = data.getStringExtra("qrcodeIndex");
+                if(user == null){
+                    ToastUtil.showToast(MainActivity.this,"登录已失效，请先登录");
+                    IntentUtil.gotoActivityAndFinish(MainActivity.this, LoginOrRegistActivity.class);
+                    return;
+                }
+                if (!TextUtils.isEmpty(qrcodeIndex)) {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("qrcodeIndex", qrcodeIndex);
+                    HttpRequestUtils.httpRequest(this, "扫描租赁二维码", RequestValue.SCAN_LEASECODE, params, "GET", new HttpRequestUtils.ResponseListener() {
+                        @Override
+                        public void getResponseData(String response) {
+                            Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                            switch (common.getStatus()) {
+                                case "1":
+                                    String data = JsonUtil.getGsonValueByKey(response, "data");
+                                    if (!TextUtils.isEmpty(data)) {
+                                        LeaseDevicesHistoryBean leaseDevicesHistoryBean = JsonUtil.parserGsonToObject(data,LeaseDevicesHistoryBean.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable("leaseDevicesHistoryBean",leaseDevicesHistoryBean);
+                                        IntentUtil.gotoActivity(MainActivity.this, LeaseDevicesHistoryActivity.class,bundle);
+                                        return;
+                                    } else {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("qrcodeIndex",qrcodeIndex);
+                                        IntentUtil.gotoActivity(MainActivity.this, LeaseDevicesActivity.class,bundle);
+                                    }
+                                    break;
+                                default:
+                                    ToastUtil.showToast(MainActivity.this, common.getInfo());
+                                    break;
+                            }
+
+
+                        }
+
+                        @Override
+                        public void returnException(Exception e, String msg) {
+                            ToastUtil.showToast(MainActivity.this, "" + msg);
+                        }
+                    });
+                }
+            }
         }
+    }
+
+    private void startDownlaodFile(String token){
+        Map<String,String> params = new HashMap<>();
+        params.put("token",token);
+        HttpRequestUtils.httpRequest(this, "知识库文件下载", RequestValue.KNOWLEDGE_LOGIN, params, "POST", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                if (common.getStatus().equals("1")) {
+                    ToastUtil.showToast(MainActivity.this,"正在开始开始下载，请稍后");
+                }else{
+                    ToastUtil.showToast(MainActivity.this,common.getInfo());
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                ToastUtil.showToast(MainActivity.this,"下载出错"+msg);
+            }
+        });
     }
 
     public void exit() {
@@ -682,24 +747,26 @@ public class MainActivity extends BaseFragmentActivity {
                     });
                     if (current != null && current.size() > 0) {
                         DataSupport.saveAll(current);
-                        boolean isShow = false;
+                    //    boolean isShow = false;
+                        iv_red_dian_map.setVisibility(View.GONE);
+                        mapFragment.showMsg(0);
                         for (int i=0; i<current.size();i++) {
-                            if (current.get(i).getHasMessage()) {
-                                isShow = true;
+                            if ("0".equals(current.get(i).getType()) && current.get(i).isHasMessage()) {
+                                iv_red_dian_map.setVisibility(View.VISIBLE);
+                                if(mapFragment != null){
+                                    mapFragment.showMsg(current.get(i).getCount());
+                                }
                                 break;
                             }
                         }
-                        if (isShow) {
+
+                        String versionCode = preferencesUtils.loadString("versionCode");
+                        if (!TextUtils.isEmpty(versionCode) && Integer.parseInt(versionCode) > SystemUtil.getCurrentVersionCode()) {
                             iv_red_dian.setVisibility(View.VISIBLE);
                         } else {
-                            String versionCode = preferencesUtils.loadString("versionCode");
-                            if (!TextUtils.isEmpty(versionCode) && Integer.parseInt(versionCode) > SystemUtil.getCurrentVersionCode()) {
-                                iv_red_dian.setVisibility(View.VISIBLE);
-                            } else {
-                                iv_red_dian.setVisibility(View.GONE);
-                            }
+                            iv_red_dian.setVisibility(View.GONE);
                         }
-                        mineFragment.updateNewMsg(isShow);
+                      //  mineFragment.updateNewMsg(isShow);
                     }
                 }
             }

@@ -1,18 +1,27 @@
 package com.lwc.shanxiu.module.setting;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
+import com.lwc.shanxiu.activity.InformationDetailsActivity;
 import com.lwc.shanxiu.activity.UserGuideActivity;
+import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.User;
+import com.lwc.shanxiu.module.user.RegistTwoActivity;
+import com.lwc.shanxiu.module.user.UserAgreementActivity;
 import com.lwc.shanxiu.utils.DialogUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
+import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.SpUtil;
 import com.lwc.shanxiu.utils.SystemUtil;
@@ -42,12 +51,24 @@ public class SettingActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        img_notifi.setBackgroundResource(
-                sp.getSPValue(SettingActivity.this.getString(R.string.spkey_file_is_system_mention) + user.getUserId(), true)
-                        ? R.drawable.shezhi_anniu2 : R.drawable.shezhi_anniu1);
         img_voice.setBackgroundResource(
                 sp.getSPValue(SettingActivity.this.getString(R.string.spkey_file_is_ring) + user.getUserId(), true)
                         ? R.drawable.shezhi_anniu2 : R.drawable.shezhi_anniu1);
+        setNotifiImgBack();
+    }
+
+
+    private void setNotifiImgBack(){
+        boolean isOpened = false;
+        try {
+            isOpened = NotificationManagerCompat.from(this).areNotificationsEnabled();
+
+            //Log.d("联网成功","进入setNotifiImgBack,状态为"+isOpened);
+        } catch (Exception e) {
+            e.printStackTrace();
+            isOpened = false;
+        }
+        img_notifi.setBackgroundResource(isOpened ? R.drawable.shezhi_anniu2 : R.drawable.shezhi_anniu1);
     }
 
     @Override
@@ -57,20 +78,27 @@ public class SettingActivity extends BaseActivity {
         showBack();
     }
 
-    @OnClick({R.id.img_notifi, R.id.txtUserGuide, R.id.txtIssue, R.id.img_voice, R.id.txt_vision, R.id.btnOutLogin, R.id.txtFeedback})
+    @OnClick({R.id.img_notifi, R.id.txtUserGuide, R.id.txtIssue, R.id.img_voice, R.id.txt_vision, R.id.btnOutLogin, R.id.txtFeedback,R.id.txtUserAgreement})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.img_notifi:
-                boolean spValue = sp.getSPValue(SettingActivity.this.getString(R.string.spkey_file_is_system_mention) + user.getUserId(), true);
-                SpUtil.putSPValue(SettingActivity.this, SettingActivity.this.getString(R.string.spkey_file_userinfo), Context.MODE_PRIVATE,
-                        SettingActivity.this.getString(R.string.spkey_file_is_system_mention) + user.getUserId(),
-                        !spValue);
-                ToastUtil.showToast(SettingActivity.this,
-                        "系统通知提示" + (spValue
-                                ? "已关闭" : "已开启"));
-                img_notifi.setBackgroundResource(
-                        spValue
-                                ? R.drawable.shezhi_anniu1 : R.drawable.shezhi_anniu2);
+                Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    // android 8.0引导
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+                } else if (Build.VERSION.SDK_INT >= 21) {
+                    // android 5.0-7.0
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("app_package", getPackageName());
+                    intent.putExtra("app_uid", getApplicationInfo().uid);
+                } else {
+                    // 其他
+                    intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                    intent.setData(Uri.fromParts("package", getPackageName(), null));
+                }
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
                 break;
             case R.id.img_voice:
                 SpUtil.putSPValue(SettingActivity.this, SettingActivity.this.getString(R.string.spkey_file_userinfo), Context.MODE_PRIVATE,
@@ -88,6 +116,12 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.txt_vision:
                 IntentUtil.gotoActivity(SettingActivity.this, VesionActivity.class);
+                break;
+            case R.id.txtUserAgreement:
+                Bundle bundle = new Bundle();
+                bundle.putString("url", ServerConfig.DOMAIN.replace("https", "http")+"/main/h5/agreement.html?isEngineer=1");
+                bundle.putString("title", "用户注册协议");
+                IntentUtil.gotoActivity(SettingActivity.this, InformationDetailsActivity.class,bundle);
                 break;
             case R.id.btnOutLogin:
                 DialogUtil.showMessageDg(SettingActivity.this, "温馨提示", "确定退出吗？", new CustomDialog.OnClickListener() {

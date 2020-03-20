@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -74,11 +75,11 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
     @BindView(R.id.btn)
-    Button btn;
+    TextView btn;
     @BindView(R.id.btnRepulse)
-    Button btnRepulse;
+    TextView btnRepulse;
     @BindView(R.id.btnAccept)
-    Button btnAccept;
+    TextView btnAccept;
     @BindView(R.id.lLayoutDoubleButton)
     LinearLayout lLayoutDoubleButton;
     @BindView(R.id.lLayoutParent)
@@ -230,7 +231,7 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
                                     @Override
                                     public void onClick(CustomDialog dialog, int id, Object object) {
                                         preferencesUtils.saveBooleanData("isFindSf", true);
-                                        String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
+                                      //  String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
                                 /*        int typeId = 4;
                                         // 后台对应的收费标准  3 是办公设备  4是家用电器
                                         if("3".equals(deviceTypeModel)){
@@ -245,12 +246,10 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
                                         bundle.putString("title", "收费标准");
                                         IntentUtil.gotoActivity(getActivity(), InformationDetailsActivity.class, bundle);*/
 
-
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("deviceTypeMold",deviceTypeModel);
+                                        bundle.putString("deviceTypeMold",myOrder.getDeviceTypeMold());
                                         bundle.putString("title", "收费标准");
                                         IntentUtil.gotoActivity(getActivity(), FeeStandardActivity.class, bundle);
-
                                         dialog.dismiss();
                                     }
                                 });
@@ -298,10 +297,10 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
                         accomplish();
                         break;
                     case "填写检测报告":
-                        String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
+                      //  String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
                         Bundle bundle2 = new Bundle();
                         bundle2.putSerializable("data", myOrder);
-                        bundle2.putString("deviceTypeModel", deviceTypeModel);
+                        bundle2.putString("deviceTypeModel", myOrder.getDeviceTypeMold());
                         IntentUtil.gotoActivity(getActivity(), QuoteAffirmActivity.class, bundle2);
                         break;
                 }
@@ -345,10 +344,15 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
                         upDataOrder(Order.STATUS_CHULI);
                         break;
                     case "填写检测报告":
-                        String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
+                      /*  String deviceTypeModel = ((OrderDetailActivity)getActivity()).getDeviceModel();
+
+                        if(TextUtils.isEmpty(deviceTypeModel)){
+                            ToastUtil.showToast(getContext(),"数据处理中，请稍后重试");
+                            return;
+                        }*/
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("data", myOrder);
-                        bundle.putString("deviceTypeModel", deviceTypeModel);
+                        bundle.putString("deviceTypeModel", myOrder.getDeviceTypeMold());
                         IntentUtil.gotoActivity(getActivity(), QuoteAffirmActivity.class, bundle);
                         break;
                 }
