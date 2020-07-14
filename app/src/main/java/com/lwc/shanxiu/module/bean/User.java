@@ -57,6 +57,7 @@ public class User extends DataSupport implements Serializable {
     private String openid;//": "微信标示",               //微信标示
     private String aliToken;
     private String qrCode;//: "二维码字符串",                  //二维码字符串
+    private String companyCityName;
 
     public String getQrCode() {
         return qrCode;
@@ -365,5 +366,13 @@ public class User extends DataSupport implements Serializable {
 
     public void setDeviceTypeMold(String deviceTypeMold) {
         this.deviceTypeMold = deviceTypeMold;
+    }
+
+    public String getCompanyCityName() {
+        return companyCityName;
+    }
+
+    public void setCompanyCityName(String companyCityName) {
+        this.companyCityName = companyCityName;
     }
 }

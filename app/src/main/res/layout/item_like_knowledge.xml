@@ -9,7 +9,6 @@
     android:paddingBottom="8dp"
     android:paddingLeft="15dp"
     android:paddingRight="15dp">
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -17,5 +16,6 @@
         android:maxLines="3"
         android:text="密修平台服务商维修技能培训"
         android:textColor="@color/btn_blue_nomal"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:drawableBottom="@drawable/blue_line"/>
 </LinearLayout>

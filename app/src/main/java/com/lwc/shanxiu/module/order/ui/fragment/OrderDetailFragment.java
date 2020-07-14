@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.ImageBrowseActivity;
 import com.lwc.shanxiu.adapter.MyGridViewPhotoAdpter;
@@ -27,7 +26,6 @@ import com.lwc.shanxiu.module.BaseFragment;
 import com.lwc.shanxiu.module.bean.Malfunction;
 import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.order.ui.IOrderDetailFragmentView;
-import com.lwc.shanxiu.module.order.ui.activity.RepairHistoryActivity;
 import com.lwc.shanxiu.module.order.ui.adapter.HardwareDetailAdapter;
 import com.lwc.shanxiu.module.user.RepairmanInfoActivity;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
@@ -37,7 +35,6 @@ import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.MyGridView;
-import com.yanzhenjie.sofia.Sofia;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,6 +98,10 @@ public class OrderDetailFragment extends BaseFragment implements IOrderDetailFra
     RelativeLayout rl_qtf;
     @BindView(R.id.tv_qtf)
     TextView tv_qtf;
+    @BindView(R.id.rl_package_price)
+    RelativeLayout rl_package_price;
+    @BindView(R.id.tv_package_price)
+    TextView tv_package_price;
     @BindView(R.id.tv_smf)
     TextView tv_smf;
     @BindView(R.id.tv_title)
@@ -234,6 +235,14 @@ public class OrderDetailFragment extends BaseFragment implements IOrderDetailFra
     @Override
     public void setDeviceDetailInfor(Order myOrder) {
         LLog.i(myOrder.toString());
+
+        if(!TextUtils.isEmpty(myOrder.getPackagePrice())){
+            tv_package_price.setText(Utils.getMoney(Utils.chu(myOrder.getPackagePrice(),"100"))+"元");
+        }else{
+            rl_package_price.setVisibility(View.GONE);
+        }
+
+
         if (!TextUtils.isEmpty(myOrder.getMaintenanceName())) {
             tv_jdr.setText(myOrder.getMaintenanceName());
             ll_jdr.setVisibility(View.VISIBLE);

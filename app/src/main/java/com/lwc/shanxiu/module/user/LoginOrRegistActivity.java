@@ -189,13 +189,9 @@ public class LoginOrRegistActivity extends BaseActivity {
                     case "1":
                         user = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"), User.class);
                         user.setPwd(pwd);
-                        if (TextUtils.isEmpty(user.getUserId())) {
-                            if (!TextUtils.isEmpty(user.getMaintenanceId())){
-                                user.setUserId(user.getMaintenanceId());
-                            }
-                        } else if (TextUtils.isEmpty(user.getMaintenanceId())) {
-                            user.setMaintenanceId(user.getUserId());
-                        }
+
+                        user.setMaintenanceId(user.getUserId());
+
                         // 构建该用户的专用文件目录
                         FileUtil.createAllFile();
                         ArrayList<User> userList = new ArrayList<>();

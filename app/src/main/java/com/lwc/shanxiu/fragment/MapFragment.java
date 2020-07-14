@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.TextureMapView;
@@ -305,7 +306,6 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                             }else{
                                 mAdView.pushImageCycle();
                             }
-
                         }
                         break;
                     default:
@@ -365,8 +365,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         if(isVisibleToUser && getActivity() != null){
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.white)
-                    .statusBarDarkFont(true)
-                    .navigationBarColor(R.color.white).init();
+                    .statusBarDarkFont(true).init();
         }
     }
 
@@ -599,6 +598,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
         if (Utils.isFastClick(1000)) {
             return;
         }
+
+        SharedPreferencesUtils.setParam(getContext(),"address_city",aLocation.getCity().replace("市",""));
         HashMap<String, String> params = new HashMap<String, String>();
         if (aLocation != null && aLocation.getLatitude() > 0) {
             params.put("lat", aLocation.getLatitude() + "");
@@ -622,6 +623,7 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 LLog.eNetError("updateUserInfo  " + e.toString());
             }
         });
+
     }
 
     /**

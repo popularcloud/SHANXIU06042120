@@ -207,8 +207,7 @@ public class MineFragment extends BaseFragment {
         if(isVisibleToUser  && getActivity() != null){
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.blue_37)
-                    .statusBarDarkFont(true)
-                    .navigationBarColor(R.color.white).init();
+                    .statusBarDarkFont(true).init();
         }
     }
 

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.alibaba.idst.nls.internal.utils.L;
 
 public class FullyLinearLayoutManager extends LinearLayoutManager {
 
@@ -31,11 +30,11 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
         final int widthSize = View.MeasureSpec.getSize(widthSpec);
         final int heightSize = View.MeasureSpec.getSize(heightSpec);
 
-        L.i(TAG, "onMeasure called. \nwidthMode " + widthMode
+    /*    L.i(TAG, "onMeasure called. \nwidthMode " + widthMode
                 + " \nheightMode " + heightSpec
                 + " \nwidthSize " + widthSize
                 + " \nheightSize " + heightSize
-                + " \ngetItemCount() " + getItemCount());
+                + " \ngetItemCount() " + getItemCount());*/
 
         int width = 0;
         int height = 0;

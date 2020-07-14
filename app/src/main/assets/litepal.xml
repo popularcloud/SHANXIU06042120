@@ -3,7 +3,7 @@
     <!-- 数据库名称 -->
     <dbname value="shanxiu"></dbname>
     <!-- 数据库版本 -->
-    <version value="7"></version>
+    <version value="8"></version>
 
     <list>
         <!-- 定义数据库表 -->

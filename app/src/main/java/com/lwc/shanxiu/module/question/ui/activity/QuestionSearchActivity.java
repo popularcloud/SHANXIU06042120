@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Dimension;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,6 +47,8 @@ public class QuestionSearchActivity extends BaseActivity {
     TagsLayout tl_tags;
     @BindView(R.id.ll_search)
     LinearLayout ll_search;
+    @BindView(R.id.iv_delete)
+    ImageView iv_delete;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -90,6 +94,33 @@ public class QuestionSearchActivity extends BaseActivity {
                     //ToastUtil.showToast(getActivity(),"其他"+actionId);
                 }
                 return false;
+            }
+        });
+
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_delete.setVisibility(View.GONE);
+                }else{
+                    iv_delete.setVisibility(View.VISIBLE);
+                    iv_delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            et_search.setText("");
+                        }
+                    });
+                }
             }
         });
 

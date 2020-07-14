@@ -79,6 +79,39 @@
                         android:textSize="15sp" />
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/rl_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+                    android:padding="15dp"
+                    android:visibility="gone"
+                    android:background="@drawable/selector_item_bg">
+
+                    <ImageView
+                        android:id="@+id/img_leftarrow_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_cell_leftarrow" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_toLeftOf="@+id/img_leftarrow_position"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="9dp"
+                        android:src="@drawable/ic_position" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="我的岗位证"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1px"

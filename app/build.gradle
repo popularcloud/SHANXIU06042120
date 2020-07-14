@@ -8,8 +8,8 @@ android {
         applicationId "com.lwc.shanxiu"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 63
-        versionName "3.0.1"
+        versionCode 71
+        versionName "3.1.8"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {

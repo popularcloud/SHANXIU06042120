@@ -82,6 +82,8 @@ public class Order implements Serializable{
     private List<Malfunction> orderRepairs;
     private String hardwareCost;
     private String packageType;
+    private String packageId;
+    private String packagePrice;
 
     private String maintenanceName;// ": "维修师名称",          //维修师名称
 
@@ -509,5 +511,21 @@ public class Order implements Serializable{
 
     public void setMaintenanceName(String maintenanceName) {
         this.maintenanceName = maintenanceName;
+    }
+
+    public String getPackageId() {
+        return packageId;
+    }
+
+    public void setPackageId(String packageId) {
+        this.packageId = packageId;
+    }
+
+    public String getPackagePrice() {
+        return packagePrice;
+    }
+
+    public void setPackagePrice(String packagePrice) {
+        this.packagePrice = packagePrice;
     }
 }

@@ -281,7 +281,7 @@ public class LoadingActivity extends Activity {
                 public void onClick(CustomDialog dialog, int id, Object object) {
                     Bundle bundle = new Bundle();
                     bundle.putString("url", ServerConfig.DOMAIN.replace("https", "http") + "/main/h5/agreement.html?isEngineer=1");
-                    bundle.putString("title", "用户注册协议");
+                    bundle.putString("title", "用户协议和隐私政策");
                     IntentUtil.gotoActivity(LoadingActivity.this, InformationDetailsActivity.class, bundle);
                 }
             });

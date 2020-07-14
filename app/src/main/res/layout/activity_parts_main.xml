@@ -37,7 +37,7 @@
         android:id="@+id/rl_grid"
         android:layout_below="@+id/rl_header"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="210dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="15dp"

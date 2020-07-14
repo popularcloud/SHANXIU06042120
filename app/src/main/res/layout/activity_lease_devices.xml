@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,9 +10,10 @@
     <include layout="@layout/include_title" />
     <View style="@style/line_f0Style" />
     <ScrollView
+        android:layout_marginTop="44dp"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:paddingBottom="75dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,7 +31,7 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             android:text="公司名称"/>
-        <!--<EditText
+        <EditText
             android:id="@+id/et_companyName"
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -39,17 +41,17 @@
             android:textSize="15sp"
             android:layout_marginLeft="34dp"
             android:background="@color/white"
-            android:hint="请输入承租方公司名称"/>-->
+            android:hint="请输入承租方公司名称"/>
 
-        <com.lwc.shanxiu.widget.EditableSpinner
+     <!--   <com.lwc.shanxiu.widget.EditableSpinner
             android:id="@+id/es_spinner"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_marginLeft="34dp"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:layout_height="match_parent"
-            />
+            />-->
     </LinearLayout>
 
     <LinearLayout
@@ -290,7 +292,17 @@
         android:layout_margin="15dp"
         android:background="@drawable/button_login_selector"
         android:gravity="center"
+        android:layout_gravity="bottom"
         android:text="提交"
         android:textColor="#fff"
         android:textSize="16sp" />
-</LinearLayout>
+
+    <ListView
+        android:id="@+id/down_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginLeft="115dp"
+        android:layout_marginTop="80dp"
+        android:visibility="gone" />
+</FrameLayout>

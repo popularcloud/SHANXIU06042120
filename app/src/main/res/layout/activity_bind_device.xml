@@ -12,41 +12,126 @@
         android:id="@+id/rl_repair_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/btn_round_white_bg"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/et_company_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:paddingLeft="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:gravity="left|center_vertical"
-            android:hint="请输入单位名称"
-            android:background="@null"
-            android:textColorHint="@color/gray_99"
-            android:textColor="@color/black_66"
-            android:textSize="14sp" />
-        <EditText
-            android:id="@+id/et_company_phone"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_33"
+                android:textSize="14sp"
+                android:paddingLeft="15dp"
+                android:text="单位"/>
+            <EditText
+                android:id="@+id/et_company_name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:hint="请输入单位名称"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:paddingLeft="15dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:gravity="left|center_vertical"
-            android:hint="请输入单位使用人电话(非必填)"
-            android:background="@null"
-            android:inputType="number"
-            android:textColorHint="@color/gray_99"
-            android:textColor="@color/black_66"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_33"
+                android:textSize="14sp"
+                android:paddingLeft="15dp"
+                android:text="使用人"/>
+            <EditText
+                android:id="@+id/et_used_name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:hint="请输入使用人姓名"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_33"
+                android:textSize="14sp"
+                android:paddingLeft="15dp"
+                android:text="使用科室"/>
+            <EditText
+                android:id="@+id/et_used_room"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:hint="请输入使用科室"
+                android:background="@null"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_33"
+                android:textSize="14sp"
+                android:paddingLeft="15dp"
+                android:text="电话"/>
+            <EditText
+                android:id="@+id/et_company_phone"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:paddingLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:gravity="right|center_vertical"
+                android:hint="请输入使用人电话(非必填)"
+                android:background="@null"
+                android:inputType="number"
+                android:textColorHint="@color/gray_99"
+                android:textColor="@color/black_66"
+                android:textSize="14sp" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:background="@color/white"
             android:layout_height="44dp">
             <TextView
                 android:layout_width="wrap_content"
@@ -89,6 +174,8 @@
         <RelativeLayout
             android:id="@+id/rl_device_type"
             android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
             android:layout_height="44dp">
 
             <TextView
@@ -118,6 +205,8 @@
         <View style="@style/line_c8Style"/>
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
             android:layout_height="44dp">
 
             <TextView
@@ -160,6 +249,8 @@
         <View style="@style/line_c8Style"/>
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginTop="1dp"
+            android:background="@color/white"
             android:layout_height="44dp">
 
             <TextView

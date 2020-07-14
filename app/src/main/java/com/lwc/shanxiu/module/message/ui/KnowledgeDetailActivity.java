@@ -1,27 +1,30 @@
 package com.lwc.shanxiu.module.message.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
+import com.lwc.shanxiu.activity.ImageBrowseActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.module.message.adapter.OtherKnowlegeArticleAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeDetailBean;
 import com.lwc.shanxiu.module.message.bean.LikeArticleBean;
+import com.lwc.shanxiu.module.question.ui.activity.QuestionDetailActivity;
 import com.lwc.shanxiu.module.setting.ShareActivity;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -38,6 +41,7 @@ import org.jsoup.select.Elements;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,8 +75,11 @@ public class KnowledgeDetailActivity extends BaseActivity {
     private OtherKnowlegeArticleAdapter adapter;
     private KnowledgeDetailBean detailBean;
 
+    private ArrayList<String> showImgList = new ArrayList<>();
+
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         return R.layout.activity_knowledge_detail;
     }
 
@@ -180,6 +187,7 @@ public class KnowledgeDetailActivity extends BaseActivity {
         WebSettings webSettings = wv_detail.getSettings();//获取webview设置属性
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         webSettings.setJavaScriptEnabled(true);//支持js
+
         webSettings.setSupportZoom(false); // 支持缩放
        // webSettings.setBuiltInZoomControls(true); //设置可以缩放
        // webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
@@ -188,10 +196,18 @@ public class KnowledgeDetailActivity extends BaseActivity {
        // webSettings.setUseWideViewPort(true);
         //webSettings.setLoadWithOverviewMode(true);//缩放至屏幕大小
 
-        String context = getNewContent(detailBean.getKnowledgeDetails());
+
 
       //  wv_detail.addJavascriptInterface(new HeightGetter(), "jo");
 
+
+        String knowledgeDetails = getNewContent(detailBean.getKnowledgeDetails());
+       // String endContext = knowledgeDetails +setWebImageClick(wv_detail,"ImageJavascriptInterface");
+       // String context = getNewContent(knowledgeDetails);
+        Log.d("联网成功",knowledgeDetails);
+        wv_detail.loadDataWithBaseURL(null, knowledgeDetails, "text/html", "UTF-8", null);
+
+        wv_detail.addJavascriptInterface(new ImageJavascriptInterface(KnowledgeDetailActivity.this), "imageInterface");
         wv_detail.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -201,11 +217,17 @@ public class KnowledgeDetailActivity extends BaseActivity {
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                    initRecycleView(detailBean.getLike());
+                initRecycleView(detailBean.getLike());
+                setWebImageClick(wv_detail,"imageInterface");
             }
         });
-        Log.d("联网成功",context);
-        wv_detail.loadDataWithBaseURL(null, context, "text/html", "UTF-8", null);
+
+        wv_detail.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
     }
 
 
@@ -221,18 +243,66 @@ public class KnowledgeDetailActivity extends BaseActivity {
                 element.append("<meta name=\"viewport\" content=\"target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, user-scalable=no\" />");
             }*/
 
+            showImgList.clear();
+
             Elements elements = doc.getElementsByTag("img");
             for (Element element : elements) {
-                element.attr("width", "100%").attr("height", "auto");
+                element.attr("style", "width: 80%; height: auto;");
+                String src =  element.getElementsByAttribute("src").attr("src");
+                showImgList.add(src);
             }
-
             Elements videos = doc.getElementsByTag("video");
             for (Element element : videos) {
-                element.attr("width", "100%").attr("height", "auto");
+                element.attr("style", "width: 80%; height: auto;");
             }
             return doc.toString();
         } catch (Exception e) {
             return htmltext;
+        }
+    }
+
+
+    /**
+     * 设置网页中图片的点击事件
+     * @param view
+     *
+     */
+    public void setWebImageClick(WebView view, String method) {
+        String jsCode="javascript:(function(){" +
+                "var imgs=document.getElementsByTagName(\"img\");" +
+                "for(var i=0;i<imgs.length;i++){" +
+                "imgs[i].pos = i;"+
+                "imgs[i].onclick=function(){" +
+                "window."+method+".openImage(this.src,this.pos);" +
+                "}}})()";
+        view.loadUrl(jsCode);
+      //  return jsCode;
+    }
+
+    public class ImageJavascriptInterface {
+        private Context context;
+
+        public ImageJavascriptInterface(Context context) {
+            this.context = context;
+        }
+
+        //java回调js代码，不要忘了@JavascriptInterface这个注解，不然点击事件不起作用
+        @JavascriptInterface
+        public void openImage(String img, int pos) {
+
+
+            Log.d("联网成功","点击了图片");
+        /*    ArrayList arrayList = new ArrayList();
+            for (String item : imageUrls) {
+                arrayList.add(item);
+            }*/
+            //实现自己的图片浏览页面
+            //ImagePagerActivity.showActivity(context, arrayList, pos);
+
+            Intent intent = new Intent(KnowledgeDetailActivity.this, ImageBrowseActivity.class);
+            intent.putExtra("index", pos);
+            intent.putStringArrayListExtra("list", showImgList);
+            startActivity(intent);
         }
     }
 }

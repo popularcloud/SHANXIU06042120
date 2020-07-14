@@ -335,6 +335,11 @@ public class RequestValue {
     public static final String GET_KNOWLEDGE_INDEX = "/knowledge/index";
 
     /**
+     * 知识图谱首页--新搜索
+     */
+    public static final String GET_KNOWLEDGE_SEARCH_SIMPLE = "/knowledge/search/simple";
+
+    /**
      * 知识图谱详情
      */
     public static final String GET_KNOWLEDGE_DETAILS = "/knowledge/details";
@@ -453,6 +458,11 @@ public class RequestValue {
     public static final String QUESION_INDEX = "/quesion/index";
 
     /**
+     *  问答模块---问答首页(新搜索)
+     */
+    public static final String QUESION_SEARCH_SIMPLE = "/quesion/search/simple";
+
+    /**
      *  问答模块---我的提问
      */
     public static final String QUESION_MAINTENANCEQUESION = "/quesion/maintenanceQuesion";
@@ -466,6 +476,10 @@ public class RequestValue {
      *  问答模块---回答问题
      */
     public static final String QUESION_QUESIONANSWER = "/quesion/quesionAnswer";
+    /**
+     *  问答模块---回答问题
+     */
+    public static final String QUESION_ANSWERUPDATE = "/quesion/answerUpdate";
 
  /**
      *  问答模块--采纳答案

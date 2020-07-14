@@ -32,6 +32,7 @@ import com.lwc.shanxiu.module.message.adapter.PopSelectAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.module.message.bean.SearchConditionBean;
 import com.lwc.shanxiu.module.message.ui.KnowledgeDetailActivity;
+import com.lwc.shanxiu.module.message.ui.KnowledgeDetailWebActivity;
 import com.lwc.shanxiu.module.message.ui.KnowledgeSearchActivity;
 import com.lwc.shanxiu.module.message.ui.PublishActivity;
 import com.lwc.shanxiu.module.message.ui.PublishAndRequestListActivity;
@@ -131,28 +132,31 @@ public class KnowledgeBaseFragment extends BaseFragment {
         layoutParams.setMargins(30,0,30,0);
         ll_search.setLayoutParams(layoutParams);
 
-        et_search.setOnClickListener(new View.OnClickListener() {
+     /*   et_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
             }
-        });
+        });*/
 
         et_search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("search_txt",search_txt);
+                    IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class,bundle,ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
                 }
+
             }
         });
 
-        ll_search.setOnClickListener(new View.OnClickListener() {
+    /*    ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
             }
-        });
+        });*/
 
 
         bindRecycleView();
@@ -300,7 +304,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("knowledgeId", adapter.getItem(position).getKnowledgeId());
                 isDetail = true;
-                IntentUtil.gotoActivity(getActivity(), KnowledgeDetailActivity.class, bundle);
+                IntentUtil.gotoActivity(getActivity(), KnowledgeDetailWebActivity.class, bundle);
             }
         });
     }
@@ -458,7 +462,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
         map.put("brand_id",brand_id);
         map.put("wd", search_txt);
         map.put("curPage", ""+page);
-        HttpRequestUtils.httpRequest(getActivity(), "知识图谱首页", RequestValue.GET_KNOWLEDGE_INDEX, map, "GET", new HttpRequestUtils.ResponseListener() {
+        HttpRequestUtils.httpRequest(getActivity(), "知识图谱首页", RequestValue.GET_KNOWLEDGE_SEARCH_SIMPLE, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
                 isClearCondition = true;
@@ -520,6 +524,11 @@ public class KnowledgeBaseFragment extends BaseFragment {
         if(isDetail){
             isDetail =false;
         }
+
+        if(et_search != null){
+            et_search.clearFocus();
+        }
+
     }
 
     @Override
@@ -528,8 +537,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
         if(isVisibleToUser  && getActivity() != null){
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.blue_35)
-                    .statusBarDarkFont(true)
-                    .navigationBarColor(R.color.white).init();
+                    .statusBarDarkFont(true).init();
         }
     }
 

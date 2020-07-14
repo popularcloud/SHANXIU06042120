@@ -61,8 +61,7 @@ public class InformationFragment extends BaseFragment {
         if(isVisibleToUser  && getActivity() != null){
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.white)
-                    .statusBarDarkFont(true)
-                    .navigationBarColor(R.color.white).init();
+                    .statusBarDarkFont(true).init();
         }
     }
 

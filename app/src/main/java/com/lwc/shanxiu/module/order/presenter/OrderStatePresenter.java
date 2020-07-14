@@ -3,6 +3,7 @@ package com.lwc.shanxiu.module.order.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.bean.Common;
@@ -57,7 +58,7 @@ public class OrderStatePresenter {
      *
      * @param oid
      */
-    public void getOrderState(String oid) {
+    public void getOrderState(String oid,final String packageId) {
         Map<String, String> map = new HashMap<>();
         map.put("type", "1");
         HttpRequestUtils.httpRequest((Activity) context, "getOrderState", RequestValue.ORDER_STATE+oid, map, "GET", new HttpRequestUtils.ResponseListener() {
@@ -74,54 +75,57 @@ public class OrderStatePresenter {
                             OrderState orderState = orderStates.get(lastSize);
                             String lastTitle = orderState.getProcessTitle();
                             int state = orderState.getStatusId();  //订单状态，也就是标题
-                            switch (state) {
-                                //订单在这三种状态，设置状态按钮文字为取消订单，背景颜色为红色
-                                case Order.STATUS_DAIJIEDAN:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("接单", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    break;
-                                case Order.STATUS_DAODAXIANCHANG:
-//                                    iOrderStateFragmentView.cutBottomButton(false, state);
-//                                    iOrderStateFragmentView.setStateBtnText("填写检测报告", state);
-//                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    iOrderStateFragmentView.cutBottomButton(true, state);
-                                    iOrderStateFragmentView.setFinishLayoutBtnName("返厂维修", "填写检测报告", state);
-                                    break;
-                                case Order.STATUS_FANCHANGGUAQI:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("填写检测报告", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    break;
-                                case Order.STATUS_JIANCEBAOJIA:
-                                    if (!orderState.getOrderType().equals("3")) {
+
+                            if(!TextUtils.isEmpty(packageId)) {
+                                switch (state) {
+                                    //订单在这三种状态，设置状态按钮文字为取消订单，背景颜色为红色
+                                    case Order.STATUS_DAIJIEDAN:
                                         iOrderStateFragmentView.cutBottomButton(false, state);
-                                        iOrderStateFragmentView.setStateBtnText("等待用户确认报价", state);
-                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
-                                    } else {
-                                        iOrderStateFragmentView.cutBottomButton(false, state);
-                                        iOrderStateFragmentView.setStateBtnText("返厂维修", state);
+                                        iOrderStateFragmentView.setStateBtnText("接单", state);
                                         iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    }
-                                    break;
-                                case Order.STATUS_QUERENBAOJIA:
+                                        break;
+                                    case Order.STATUS_DAODAXIANCHANG:
+                                       /* iOrderStateFragmentView.cutBottomButton(true, state);
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("返厂维修", "填写检测报告", state);*/
+
+                                        String str1 = "开始处理";
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText(str1, state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_FANCHANGGUAQI:
+                                    /*    iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("填写检测报告", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);*/
+                                        break;
+                                    case Order.STATUS_JIANCEBAOJIA:
+                                        if (!orderState.getOrderType().equals("3")) {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("等待用户确认报价", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        } else {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("返厂维修", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        }
+                                        break;
+                                    case Order.STATUS_QUERENBAOJIA:
 //                                    iOrderStateFragmentView.cutBottomButton(false, state);
 //                                    iOrderStateFragmentView.setStateBtnText("开始处理", state);
 //                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    iOrderStateFragmentView.cutBottomButton(true, state);
-                                    iOrderStateFragmentView.setFinishLayoutBtnName("订单挂起", "开始处理", state);
-                                    break;
-                                case Order.STATUS_JIEDAN:
-                                    String str = "开始处理";
-                                    if (orderState.getOrderType() != null && !orderState.getOrderType().equals("2")) {
-                                        str = "到达现场";
-                                    }
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText(str, state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    break;
-
-                                case Order.STATUS_CHULI:
+                                        iOrderStateFragmentView.cutBottomButton(true, state);
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("订单挂起", "开始处理", state);
+                                        break;
+                                    case Order.STATUS_JIEDAN:
+                                        String str = "开始处理";
+                                        if (orderState.getOrderType() != null && !orderState.getOrderType().equals("2")) {
+                                            str = "到达现场";
+                                        }
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText(str, state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_CHULI:
                                         String str2 = "挂起";
                                         if (orderState.getOrderType().equals("1")) {
                                             str2 = "返厂维修";
@@ -136,53 +140,165 @@ public class OrderStatePresenter {
                                             iOrderStateFragmentView.setStateBtnText("已完成", state);
                                             iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
                                         }
-                                    break;
-                                case Order.STATUS_ZHUANDAN:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("确认接单", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    break;
-                                case Order.STATUS_BAOJIA:
-                                    //默认按钮只显示状态
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("已报价待确认", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
-                                    break;
-                                case Order.STATUS_YIWANCHENGDAIQUEREN:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("已维修完成待确认", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
-                                    break;
-                                case Order.STATUS_YIWANCHENG:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("订单已完成", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
-                                    break;
-                                case Order.STATUS_GUAQI:
-                                    if (!orderState.getOrderType().equals("3")) {
+                                        break;
+                                    case Order.STATUS_ZHUANDAN:
                                         iOrderStateFragmentView.cutBottomButton(false, state);
-                                        iOrderStateFragmentView.setStateBtnText("继续处理", state);
+                                        iOrderStateFragmentView.setStateBtnText("确认接单", state);
                                         iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    } else {
+                                        break;
+                                    case Order.STATUS_BAOJIA:
+                                        //默认按钮只显示状态
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("已报价待确认", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_YIWANCHENGDAIQUEREN:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("已维修完成待确认", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_YIWANCHENG:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("订单已完成", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_GUAQI:
+                                        if (!orderState.getOrderType().equals("3")) {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("继续处理", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        } else {
+                                            iOrderStateFragmentView.cutBottomButton(true, state);
+                                            iOrderStateFragmentView.setFinishLayoutBtnName("转单", "继续处理", state);
+                                        }
+                                        break;
+                                    case Order.STATUS_FANCHANGZHONG:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("送回安装", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_DAIFANXIU:
                                         iOrderStateFragmentView.cutBottomButton(true, state);
-                                        iOrderStateFragmentView.setFinishLayoutBtnName("转单", "继续处理", state);
-                                    }
-                                    break;
-                                case Order.STATUS_FANCHANGZHONG:
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText("送回安装", state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
-                                    break;
-                                case Order.STATUS_DAIFANXIU:
-                                    iOrderStateFragmentView.cutBottomButton(true, state);
-                                    iOrderStateFragmentView.setFinishLayoutBtnName("同意返修", "拒绝返修", state);
-                                    break;
-                                default:
-                                    //默认按钮只显示状态
-                                    iOrderStateFragmentView.cutBottomButton(false, state);
-                                    iOrderStateFragmentView.setStateBtnText(lastTitle, state);
-                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
-                                    break;
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("同意返修", "拒绝返修", state);
+                                        break;
+                                    default:
+                                        //默认按钮只显示状态
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText(lastTitle, state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                }
+                            }else{
+                                switch (state) {
+                                    //订单在这三种状态，设置状态按钮文字为取消订单，背景颜色为红色
+                                    case Order.STATUS_DAIJIEDAN:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("接单", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_DAODAXIANCHANG:
+//                                    iOrderStateFragmentView.cutBottomButton(false, state);
+//                                    iOrderStateFragmentView.setStateBtnText("填写检测报告", state);
+//                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        iOrderStateFragmentView.cutBottomButton(true, state);
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("返厂维修", "填写检测报告", state);
+                                        break;
+                                    case Order.STATUS_FANCHANGGUAQI:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("填写检测报告", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_JIANCEBAOJIA:
+                                        if (!orderState.getOrderType().equals("3")) {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("等待用户确认报价", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        } else {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("返厂维修", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        }
+                                        break;
+                                    case Order.STATUS_QUERENBAOJIA:
+//                                    iOrderStateFragmentView.cutBottomButton(false, state);
+//                                    iOrderStateFragmentView.setStateBtnText("开始处理", state);
+//                                    iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        iOrderStateFragmentView.cutBottomButton(true, state);
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("订单挂起", "开始处理", state);
+                                        break;
+                                    case Order.STATUS_JIEDAN:
+                                        String str = "开始处理";
+                                        if (orderState.getOrderType() != null && !orderState.getOrderType().equals("2")) {
+                                            str = "到达现场";
+                                        }
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText(str, state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+
+                                    case Order.STATUS_CHULI:
+                                        String str2 = "挂起";
+                                        if (orderState.getOrderType().equals("1")) {
+                                            str2 = "返厂维修";
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("已完成", state);
+                                        } else if (orderState.getOrderType().equals("2")) {
+                                            str2 = "挂起";
+                                            iOrderStateFragmentView.cutBottomButton(true, state);
+                                            iOrderStateFragmentView.setFinishLayoutBtnName(str2, "已完成", state);
+                                        }else if(orderState.getOrderType().equals("3")){
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("已完成", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        }
+                                        break;
+                                    case Order.STATUS_ZHUANDAN:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("确认接单", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_BAOJIA:
+                                        //默认按钮只显示状态
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("已报价待确认", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_YIWANCHENGDAIQUEREN:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("已维修完成待确认", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_YIWANCHENG:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("订单已完成", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                    case Order.STATUS_GUAQI:
+                                        if (!orderState.getOrderType().equals("3")) {
+                                            iOrderStateFragmentView.cutBottomButton(false, state);
+                                            iOrderStateFragmentView.setStateBtnText("继续处理", state);
+                                            iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        } else {
+                                            iOrderStateFragmentView.cutBottomButton(true, state);
+                                            iOrderStateFragmentView.setFinishLayoutBtnName("转单", "继续处理", state);
+                                        }
+                                        break;
+                                    case Order.STATUS_FANCHANGZHONG:
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText("送回安装", state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#2e344e"), state);
+                                        break;
+                                    case Order.STATUS_DAIFANXIU:
+                                        iOrderStateFragmentView.cutBottomButton(true, state);
+                                        iOrderStateFragmentView.setFinishLayoutBtnName("同意返修", "拒绝返修", state);
+                                        break;
+                                    default:
+                                        //默认按钮只显示状态
+                                        iOrderStateFragmentView.cutBottomButton(false, state);
+                                        iOrderStateFragmentView.setStateBtnText(lastTitle, state);
+                                        iOrderStateFragmentView.setBottomButtonColour(Color.parseColor("#9f9f9f"), state);
+                                        break;
+                                }
                             }
                         }
                         break;
@@ -227,7 +343,7 @@ public class OrderStatePresenter {
                         break;
 
                     case "10000":
-                        getOrderState(oId);
+                       // getOrderState(oId);
                         break;
                 }
             }
@@ -240,7 +356,7 @@ public class OrderStatePresenter {
      * @param oId
      * @param orderType
      */
-    public void upDataOrder(final String oId, int orderType) {
+    public void upDataOrder(final String oId, int orderType, final String packageId) {
         if (Utils.isFastClick(1000)) {
             return;
         }
@@ -269,7 +385,7 @@ public class OrderStatePresenter {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        getOrderState(oId);
+                        getOrderState(oId,packageId);
                         break;
                     default:
                         ToastUtil.showLongToast(context, common.getInfo());
@@ -284,7 +400,7 @@ public class OrderStatePresenter {
         });
     }
 
-    public void upDataOrder(final String oId, int orderType,String lat,String lon) {
+    public void upDataOrder(final String oId, int orderType, String lat, String lon, final String packageId) {
         if (Utils.isFastClick(1000)) {
             return;
         }
@@ -306,6 +422,11 @@ public class OrderStatePresenter {
         } else if (orderType == Order.STATUS_SONGHUIANZHUANG) {
             url =RequestValue.POST_ORDER_BACK;
         }
+
+        if(!TextUtils.isEmpty(packageId)){
+
+        }
+
         HttpRequestUtils.httpRequest((Activity) context, "updateOrderStatus", url, map, "POST", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
@@ -313,7 +434,7 @@ public class OrderStatePresenter {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        getOrderState(oId);
+                        getOrderState(oId,packageId);
                         break;
                     default:
                         ToastUtil.showLongToast(context, common.getInfo());
@@ -335,7 +456,7 @@ public class OrderStatePresenter {
      * @param msg       更新数据理由
      * @param warrantytime
      */
-    public void upDataOrder(final String oId, String msg, String warrantytime) {
+    public void upDataOrder(final String oId, String msg, String warrantytime,final String packageId) {
         Map<String, String> map = new HashMap<>();
         map.put("orderId", oId);
         map.put("remark", msg);
@@ -347,7 +468,7 @@ public class OrderStatePresenter {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
-                        getOrderState(oId);
+                        getOrderState(oId,packageId);
                         break;
                     default:
                         ToastUtil.showLongToast(context, common.getInfo());

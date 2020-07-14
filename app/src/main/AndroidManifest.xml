@@ -494,7 +494,7 @@
         <!-- 租赁设备 -->
         <activity android:name=".module.order.ui.activity.LeaseDevicesActivity" />
         <!-- 搜索知识库 -->
-        <activity android:name=".module.message.ui.KnowledgeSearchActivity" />
+        <activity android:name=".module.message.ui.KnowledgeSearchActivity" android:launchMode="singleTask"/>
         <!-- 租赁设备维修记录 -->
         <activity android:name=".module.order.ui.activity.LeaseDevicesHistoryActivity" />
         <activity android:name=".module.question.ui.activity.MyRequestActivity" android:launchMode="singleTask" />
@@ -502,8 +502,11 @@
         <activity android:name=".module.question.ui.activity.PublishQuestionActivity" />
         <activity android:name=".module.question.ui.activity.QuestionDetailActivity" />
         <activity android:name=".module.question.ui.activity.AnswerQuestionActivity" />
-        <activity android:name=".module.question.ui.activity.QuestionSearchActivity" />
+        <activity android:name=".module.question.ui.activity.QuestionSearchActivity" android:launchMode="singleTask"/>
         <activity android:name=".activity.InformationActivity" />
+        <activity android:name=".activity.WorkPositionActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".module.message.ui.KnowledgeDetailWebActivity"/>
+        <activity android:name=".module.question.ui.activity.EditeAnswerActivity"  android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

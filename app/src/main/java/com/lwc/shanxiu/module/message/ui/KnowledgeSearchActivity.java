@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.support.annotation.Dimension;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -47,6 +49,8 @@ public class KnowledgeSearchActivity extends BaseActivity {
     TagsLayout tl_tags;
     @BindView(R.id.ll_search)
     LinearLayout ll_search;
+    @BindView(R.id.iv_delete)
+    ImageView iv_delete;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -94,10 +98,46 @@ public class KnowledgeSearchActivity extends BaseActivity {
             }
         });
 
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(TextUtils.isEmpty(s)){
+                    iv_delete.setVisibility(View.GONE);
+                }else{
+                    iv_delete.setVisibility(View.VISIBLE);
+                    iv_delete.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            et_search.setText("");
+                        }
+                    });
+                }
+            }
+        });
+
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ll_search.getLayoutParams();
         layoutParams.setMargins(30, 0, 30, 0);
         ll_search.setLayoutParams(layoutParams);
         onGetKeyWord();
+
+
+       String search_txt = getIntent().getStringExtra("search_txt");
+       if(!TextUtils.isEmpty(search_txt)){
+           et_search.setText(search_txt);
+           et_search.setSelection(search_txt.length());
+           et_search.setFocusable(true);
+           et_search.findFocus();
+       }
     }
 
     @Override

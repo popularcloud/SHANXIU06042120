@@ -2,7 +2,6 @@ package com.lwc.shanxiu.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,13 +9,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
+import android.widget.PopupWindow;
 
 import com.lwc.shanxiu.R;
-import com.lwc.shanxiu.utils.DisplayUtil;
-import com.lwc.shanxiu.utils.DisplayUtils;
 
 public class EditableSpinner extends LinearLayout implements AdapterView.OnItemClickListener {
 
@@ -62,8 +59,12 @@ public class EditableSpinner extends LinearLayout implements AdapterView.OnItemC
     }
 
 
-    public void showEditableSpinner(){
+    public void showEditableSpinner(int length){
         mListPopupWindow.show();
+        mEtInput.requestFocus();
+        mEtInput.setFocusable(true);
+        mEtInput.setFocusableInTouchMode(true);
+        mEtInput.setSelection(length);
     }
 
     public void dismissEditableSpinner(){

@@ -240,6 +240,32 @@
                 android:layout_marginTop="4dp"
                 android:orientation="vertical">
                 <RelativeLayout
+                    android:id="@+id/rl_package_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="@color/white"
+                    android:layout_marginBottom="1px"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="套餐维修费用"
+                        android:textColor="@color/black_66"
+                        android:textSize="15dp" />
+                    <TextView
+                        android:id="@+id/tv_package_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="right"
+                        android:textStyle="bold"
+                        android:textColor="@color/red_3a"
+                        android:lineSpacingExtra="5dp"
+                        android:textSize="15dp" />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="15dp"

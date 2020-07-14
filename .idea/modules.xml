@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SHANXIU06042120.iml" filepath="$PROJECT_DIR$/SHANXIU06042120.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mzbanner/mzbanner.iml" filepath="$PROJECT_DIR$/mzbanner/mzbanner.iml" />
-      <module fileurl="file://$PROJECT_DIR$/refreshlayout/refreshlayout.iml" filepath="$PROJECT_DIR$/refreshlayout/refreshlayout.iml" />
-      <module fileurl="file://$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" filepath="$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SHANXIU06042120.iml" filepath="$PROJECT_DIR$/SHANXIU06042120.iml" group="SHANXIU06042120" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SHANXIU06042120/app" />
+      <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" group="SHANXIU06042120/matisse" />
+      <module fileurl="file://$PROJECT_DIR$/mzbanner/mzbanner.iml" filepath="$PROJECT_DIR$/mzbanner/mzbanner.iml" group="SHANXIU06042120/mzbanner" />
+      <module fileurl="file://$PROJECT_DIR$/refreshlayout/refreshlayout.iml" filepath="$PROJECT_DIR$/refreshlayout/refreshlayout.iml" group="SHANXIU06042120/refreshlayout" />
+      <module fileurl="file://$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" filepath="$PROJECT_DIR$/runtimepermissions-lib/runtimepermissions-lib.iml" group="SHANXIU06042120/runtimepermissions-lib" />
     </modules>
   </component>
 </project>

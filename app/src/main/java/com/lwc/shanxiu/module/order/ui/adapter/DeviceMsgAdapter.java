@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
@@ -77,7 +78,7 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
             TextView groupTv=(TextView) convertView.findViewById(R.id.tv_parent_name);
         if(groupPosition == 0){
             if(deviceAllMsgBean == null || deviceAllMsgBean.getUpdates() == null || deviceAllMsgBean.getUpdates().size() == 0){
-                groupTv.setText("暂无修改记录");
+                groupTv.setText("");
             }else{
                 groupTv.setText("历史记录");
             }
@@ -85,7 +86,7 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
             groupTv.setText("基本信息");
         }else if(groupPosition == 2){
             if(deviceAllMsgBean == null || deviceAllMsgBean.getOrders() == null || deviceAllMsgBean.getOrders().size() == 0){
-                groupTv.setText("暂无维修记录");
+                groupTv.setText("");
             }else{
                 groupTv.setText("维修记录");
             }
@@ -111,7 +112,8 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
                 convertView=View.inflate(mContext, R.layout.item_devicemsg_child_basic, null);
                 ViewHolder1 holder1 = new ViewHolder1(convertView);
                 holder1.tv_work_unit.setText(deviceAllMsgBean.getUserCompanyName());
-                holder1.tv_user.setText(deviceAllMsgBean.getUserPhone());
+                holder1.tv_user.setText(deviceAllMsgBean.getUserName());
+                holder1.tv_detailCompanyName.setText(deviceAllMsgBean.getUserDetailCompanyName());
                 holder1.tv_unit_address.setText(deviceAllMsgBean.getCompanyProvinceName()+ deviceAllMsgBean.getCompanyCityName() + deviceAllMsgBean.getCompanyTownName());
                 holder1.tv_type.setText(deviceAllMsgBean.getDeviceTypeName());
                 holder1.tv_brand.setText(deviceAllMsgBean.getDeviceTypeBrand());
@@ -119,6 +121,13 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
                 holder1.tv_engineer.setText(deviceAllMsgBean.getMaintenanceName());
                 holder1.tv_install_unit.setText(deviceAllMsgBean.getMaintenanceCompanyName());
                 holder1.tv_time.setText(deviceAllMsgBean.getCreateTime());
+
+                if(!TextUtils.isEmpty(deviceAllMsgBean.getUserPhone())){
+                    holder1.ll_phone.setVisibility(View.VISIBLE);
+                    holder1.tv_phone.setText(deviceAllMsgBean.getUserPhone());
+                }else{
+                    holder1.ll_phone.setVisibility(View.GONE);
+                }
                 break;
             case 2:
                 DeviceAllMsgBean.OrdersBean ordersBean = deviceAllMsgBean.getOrders().get(childPosition);
@@ -175,6 +184,9 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
         TextView tv_engineer;
         TextView tv_install_unit;
         TextView tv_time;
+        TextView tv_phone;
+        TextView tv_detailCompanyName;
+        LinearLayout ll_phone;
         public ViewHolder1(View view){
             tv_work_unit = (TextView) view.findViewById(R.id.tv_work_unit);
             tv_user = (TextView) view.findViewById(R.id.tv_user);
@@ -185,6 +197,9 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
             tv_engineer = (TextView) view.findViewById(R.id.tv_engineer);
             tv_install_unit = (TextView) view.findViewById(R.id.tv_install_unit);
             tv_time = (TextView) view.findViewById(R.id.tv_time);
+            tv_phone = (TextView) view.findViewById(R.id.tv_phone);
+            tv_detailCompanyName = (TextView) view.findViewById(R.id.tv_detailCompanyName);
+            ll_phone = (LinearLayout) view.findViewById(R.id.ll_phone);
         }
     }
 

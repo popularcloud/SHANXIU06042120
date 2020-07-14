@@ -12,10 +12,8 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -24,6 +22,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.CodeActivity;
+import com.lwc.shanxiu.activity.WorkPositionActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.FileConfig;
 import com.lwc.shanxiu.configs.ServerConfig;
@@ -32,7 +31,6 @@ import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.PhotoToken;
 import com.lwc.shanxiu.module.bean.User;
-import com.lwc.shanxiu.utils.FileUtil;
 import com.lwc.shanxiu.utils.GetImagePath;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
@@ -54,7 +52,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,6 +101,8 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     RelativeLayout rLayoutSign;
     @BindView(R.id.rLayoutChangePwd)
     RelativeLayout rLayoutChangePwd;
+    @BindView(R.id.rl_position)
+    RelativeLayout rl_position;
     /**
      * 拍照弹出框
      **/
@@ -156,8 +155,6 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         if (user == null) {
             IntentUtil.gotoActivityAndFinish(UserInfoActivity.this, LoginOrRegistActivity.class);
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
@@ -424,8 +421,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         //设置身份
         if (isSecrecy.equals("1")) {
             txtIde.setText("认证工程师");
+            rl_position.setVisibility(View.VISIBLE);
         } else {
             txtIde.setText("工程师");
+            rl_position.setVisibility(View.GONE);
         }
 
         if (user.getMaintenanceName() != null && !TextUtils.isEmpty(user.getMaintenanceName())) {
@@ -471,7 +470,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    @OnClick({R.id.rl_code, R.id.rLayoutSex, R.id.rLayoutName, R.id.rLayoutPhone, R.id.rLayoutAddress, R.id.rLayoutSign, R.id.rLayoutChangePwd, R.id.rl_head})
+    @OnClick({R.id.rl_code, R.id.rLayoutSex, R.id.rLayoutName, R.id.rLayoutPhone, R.id.rLayoutAddress, R.id.rLayoutSign, R.id.rLayoutChangePwd, R.id.rl_head,R.id.rl_position})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_code:
@@ -520,9 +519,13 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.rl_head:
                 if (isSecrecy.equals("1") || isSecrecy.equals("2")) {
+                    ToastUtil.showToast(UserInfoActivity.this,"认证工程师请登录后台提交申请修改头像");
                     break;
                 }
                 showTakePopupWindow();
+                break;
+            case R.id.rl_position:
+                IntentUtil.gotoActivity(UserInfoActivity.this, WorkPositionActivity.class);
                 break;
         }
     }

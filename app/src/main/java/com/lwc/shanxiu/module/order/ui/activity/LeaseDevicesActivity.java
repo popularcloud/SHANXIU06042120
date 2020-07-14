@@ -2,21 +2,23 @@ package com.lwc.shanxiu.module.order.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.adapter.ComfigNameAdapter;
+import com.lwc.shanxiu.adapter.SimpleItemAdapter;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.bean.PickerView;
 import com.lwc.shanxiu.bean.Sheng;
@@ -27,22 +29,18 @@ import com.lwc.shanxiu.module.bean.BrandTypesBean;
 import com.lwc.shanxiu.module.bean.BrandsBean;
 import com.lwc.shanxiu.module.bean.DeviceType;
 import com.lwc.shanxiu.module.bean.LeaseCompanyBean;
-import com.lwc.shanxiu.module.bean.LeaseDevicesHistoryBean;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.pickerview.OptionsPickerView;
 import com.lwc.shanxiu.utils.FileUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
-import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.KeyboardUtil;
 import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.FullyLinearLayoutManager;
-import com.lwc.shanxiu.widget.EditableSpinner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,8 +72,12 @@ public class LeaseDevicesActivity extends BaseActivity {
     TextView tv_brand;
     @BindView(R.id.tv_model)
     TextView tv_model;
-    @BindView(R.id.es_spinner)
-    EditableSpinner es_spinner;
+   /* @BindView(R.id.es_spinner)
+    EditableSpinner es_spinner;*/
+    @BindView(R.id.down_data)
+     ListView down_data;
+    @BindView(R.id.fl_group)
+    FrameLayout fl_group;
 
     private String qrcodeIndex;
 
@@ -108,10 +110,13 @@ public class LeaseDevicesActivity extends BaseActivity {
     private ArrayList<LeaseCompanyBean> leaseCompanyBeans = new ArrayList<>();
     private List<String> mOrders = new ArrayList<>();
 
-    private boolean isShowSpinner = true;
-
     List<String> strsToList2 = new ArrayList<>();
     private ComfigNameAdapter comfigNameAdapter;
+
+
+    private boolean spinnerIsShowIng = false;
+
+    private SimpleItemAdapter simpleItemAdapter;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -131,6 +136,33 @@ public class LeaseDevicesActivity extends BaseActivity {
         FullyLinearLayoutManager fullyLinearLayoutManager = new FullyLinearLayoutManager(LeaseDevicesActivity.this);
         rv_deviceProperty.setLayoutManager(fullyLinearLayoutManager);
         rv_deviceProperty.setAdapter(comfigNameAdapter);
+
+        getWindow().getDecorView().getRootView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.lwc.shanxiu.map.ToastUtil.show(LeaseDevicesActivity.this,"点击了");
+                if(down_data.getVisibility() == View.VISIBLE){
+                    down_data.setVisibility(View.GONE);
+                }
+            }
+        });
+        getWindow().getDecorView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.lwc.shanxiu.map.ToastUtil.show(LeaseDevicesActivity.this,"点击了");
+                if(down_data.getVisibility() == View.VISIBLE){
+                    down_data.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        fl_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.lwc.shanxiu.map.ToastUtil.show(LeaseDevicesActivity.this,"点击了");
+                down_data.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -144,7 +176,7 @@ public class LeaseDevicesActivity extends BaseActivity {
 
     }
 
-    private void getCompanyName(String searchCompanyName) {
+    private void getCompanyName(final String searchCompanyName) {
         Map<String, String> params = new HashMap<>();
         params.put("userCompanyName", searchCompanyName);
         HttpRequestUtils.httpRequest(this, "获得租赁二维码设备信息", RequestValue.SCAN_CODELEASEINFO, params, "GET", new HttpRequestUtils.ResponseListener() {
@@ -156,55 +188,26 @@ public class LeaseDevicesActivity extends BaseActivity {
                     case "1":
                         leaseCompanyBeans = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<LeaseCompanyBean>>() {
                         });
-
                         mOrders.clear();
                         for (int i = 0; i < leaseCompanyBeans.size(); i++) {
                             mOrders.add(leaseCompanyBeans.get(i).getUserCompanyName());
                         }
 
-                        ArrayAdapter<String> mOrderAdapter = new ArrayAdapter<String>(LeaseDevicesActivity.this, android.R.layout.simple_spinner_dropdown_item, mOrders);
-
-                        es_spinner.setAdapter(mOrderAdapter)
-                                .setOnItemClickListener(new EditableSpinner.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(int position) {
-
-                                        // isShowSpinner = false;
-
-                                        es_spinner.dismissEditableSpinner();
-
-                                        LeaseCompanyBean leaseCompanyBean = leaseCompanyBeans.get(position);
-
-                                        //   ToastUtil.showToast(LeaseDevicesActivity.this,leaseCompanyBean.getUserCompanyName());
-                                        mOrders.clear();
-                                        et_companyName.setText(leaseCompanyBean.getUserCompanyName());
-                                        et_companyContacts.setText(leaseCompanyBean.getUserName());
-                                        et_companyPhone.setText(leaseCompanyBean.getUserPhone());
-                                        et_companyDetailAddress.setText(leaseCompanyBean.getUserCompanyAddrs());
-                                        tv_companyAddress.setText(leaseCompanyBean.getCompanyProvinceName() + "-" + leaseCompanyBean.getCompanyCityName() + "-" + leaseCompanyBean.getCompanyTownName());
-
-
-                                        selectedSheng = new Sheng();
-                                        selectedSheng.setDmId(leaseCompanyBean.getCompanyProvinceId());
-                                        selectedSheng.setName(leaseCompanyBean.getCompanyProvinceName());
-
-                                        selectedShi = new Shi();
-                                        selectedShi.setDmId(leaseCompanyBean.getCompanyCityId());
-                                        selectedShi.setName(leaseCompanyBean.getCompanyCityName());
-
-                                        selectedXian = new Xian();
-                                        selectedXian.setDmId(leaseCompanyBean.getCompanyTownId());
-                                        selectedXian.setName(leaseCompanyBean.getCompanyTownName());
-                                    }
-                                });
-
-                        if (mOrders.size() > 0 && isShowSpinner) {
-                            es_spinner.showEditableSpinner();
-                            isShowSpinner = false;
+                        if(mOrders.size() > 0){
+                            down_data.setVisibility(View.VISIBLE);
+                            if(simpleItemAdapter != null){
+                                simpleItemAdapter.notifyDataSetChanged();
+                            }
+                        }else{
+                            down_data.setVisibility(View.GONE);
                         }
+
+
                         break;
                     default:
                         LLog.i("getDeviceTypes" + common.getInfo());
+                        mOrders.clear();
+                        down_data.setVisibility(View.GONE);
                         break;
                 }
             }
@@ -327,28 +330,64 @@ public class LeaseDevicesActivity extends BaseActivity {
     protected void widgetListener() {
         et_companyName.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!TextUtils.isEmpty(s) && isShowSpinner) {
-                    getCompanyName(s.toString());
-                }
-
-                if (TextUtils.isEmpty(s)) {
-                    isShowSpinner = true;
-                }
-
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s) && !spinnerIsShowIng) {
+                    getCompanyName(s.toString());
+                }
 
+                if(TextUtils.isEmpty(s)) {
+                    down_data.setVisibility(View.GONE);
+                }
+                spinnerIsShowIng = false;
             }
         });
+        //down_data.setLayoutManager(new LinearLayoutManager(LeaseDevicesActivity.this));
+
+        simpleItemAdapter = new SimpleItemAdapter(LeaseDevicesActivity.this, mOrders, R.layout.item_simple_item);
+
+        down_data.setAdapter(simpleItemAdapter);
+        down_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(leaseCompanyBeans != null && leaseCompanyBeans.size() >= position){
+
+                    LeaseCompanyBean leaseCompanyBean = leaseCompanyBeans.get(position);
+
+                    spinnerIsShowIng = true;
+                    //   ToastUtil.showToast(LeaseDevicesActivity.this,leaseCompanyBean.getUserCompanyName());
+                    mOrders.clear();
+                    et_companyName.setText(leaseCompanyBean.getUserCompanyName());
+                    et_companyName.setSelection(leaseCompanyBean.getUserCompanyName().length());
+                    et_companyContacts.setText(leaseCompanyBean.getUserName());
+                    et_companyPhone.setText(leaseCompanyBean.getUserPhone());
+                    et_companyDetailAddress.setText(leaseCompanyBean.getUserCompanyAddrs());
+                    tv_companyAddress.setText(leaseCompanyBean.getCompanyProvinceName() + "-" + leaseCompanyBean.getCompanyCityName() + "-" + leaseCompanyBean.getCompanyTownName());
+
+
+                    selectedSheng = new Sheng();
+                    selectedSheng.setDmId(leaseCompanyBean.getCompanyProvinceId());
+                    selectedSheng.setName(leaseCompanyBean.getCompanyProvinceName());
+
+                    selectedShi = new Shi();
+
+                    selectedShi.setDmId(leaseCompanyBean.getCompanyCityId());
+                    selectedShi.setName(leaseCompanyBean.getCompanyCityName());
+
+                    selectedXian = new Xian();
+                    selectedXian.setDmId(leaseCompanyBean.getCompanyTownId());
+                    selectedXian.setName(leaseCompanyBean.getCompanyTownName());
+                }
+
+                down_data.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 

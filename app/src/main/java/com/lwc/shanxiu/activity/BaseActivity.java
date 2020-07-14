@@ -103,7 +103,7 @@ BaseActivity extends FragmentActivity {
 		ImmersionBar.with(this)
 				.statusBarColor(R.color.white)
 				.statusBarDarkFont(true)
-				.navigationBarColor(R.color.white).init();
+				.init();
 	}
 
 	private int getNavigationBarHeight() {

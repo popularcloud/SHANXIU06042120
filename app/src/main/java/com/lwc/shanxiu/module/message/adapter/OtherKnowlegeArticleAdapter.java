@@ -2,7 +2,9 @@ package com.lwc.shanxiu.module.message.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,8 +39,13 @@ public class OtherKnowlegeArticleAdapter extends SuperAdapter<LikeArticleBean>{
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, LikeArticleBean item) {
-        holder.setText(R.id.tv_title, item.getKnowledge_title());
+
+
+        SpannableString content = new SpannableString(item.getKnowledge_title());
+        UnderlineSpan underlineSpan = new UnderlineSpan();
+        content.setSpan(underlineSpan, 0, item.getKnowledge_title().length(), 0);
+        holder.setText(R.id.tv_title, content);
         TextView textView = holder.findViewById(R.id.tv_title);
-        textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+       // textView.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
     }
 }

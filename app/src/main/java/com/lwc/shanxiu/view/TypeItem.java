@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
-import com.lwc.shanxiu.map.ToastUtil;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.Solution;
 import com.lwc.shanxiu.module.order.ui.activity.QuoteAffirmActivity;

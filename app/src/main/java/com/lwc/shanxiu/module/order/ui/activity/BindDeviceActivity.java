@@ -59,10 +59,16 @@ public class BindDeviceActivity extends BaseActivity {
     EditText et_company_name;
     @BindView(R.id.et_company_phone)
     EditText et_company_phone; //单位使用人电话
+    
+    @BindView(R.id.et_used_name)
+    EditText et_used_name; //单位使用人 
+    @BindView(R.id.et_used_room)
+    EditText et_used_room; //使用科室
+    
     private String device, companyName,qrcodeIndex,companyPhone;
-    private ArrayList<DeviceType> deviceTypes;
-    private ArrayList<BrandsBean> brandsBeenList;
-    private ArrayList<BrandTypesBean> brandTypesBeenList;
+    private ArrayList<DeviceType> deviceTypes  = new ArrayList<>();
+    private ArrayList<BrandsBean> brandsBeenList = new ArrayList<>();
+    private ArrayList<BrandTypesBean> brandTypesBeenList  = new ArrayList<>();
     private DeviceType checkedDeviceType;
     private BrandsBean checkedBrandsBean;
     private BrandTypesBean checkedBrandTypesBean;
@@ -83,6 +89,8 @@ public class BindDeviceActivity extends BaseActivity {
     private Sheng selectedSheng;
     private Shi selectedShi;
     private Xian selectedXian;
+    private String usedName;
+    private String usedRoom;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -110,6 +118,33 @@ public class BindDeviceActivity extends BaseActivity {
         });
         shis = JsonUtil.parserGsonToArray(shi, new TypeToken<ArrayList<Shi>>() {
         });
+
+        String address_city = (String) SharedPreferencesUtils.getParam(this,"address_city","东莞");
+
+        if (!TextUtils.isEmpty(address_city) && shis != null) {
+            for (int i = 0; i < shis.size(); i++) {
+                if (shis.get(i).getName().equals(address_city)) {
+                    selectedShi = shis.get(i);
+                    shis.remove(selectedShi);
+                    break;
+                }
+            }
+            if (selectedShi != null) {
+                for (int i = 0; i < shengs.size(); i++) {
+                    if (shengs.get(i).getDmId().equals(selectedShi.getParentid())) {
+                        selectedSheng = shengs.get(i);
+                        shengs.remove(selectedSheng);
+                        break;
+                    }
+                }
+                if (selectedSheng != null) {
+                    //shengs.clear();
+                    shengs.add(0,selectedSheng);
+                    // shis.clear();
+                    shis.add(0,selectedShi);
+                }
+            }
+        }
         xians = JsonUtil.parserGsonToArray(xian, new TypeToken<ArrayList<Xian>>() {
         });
     }
@@ -234,6 +269,10 @@ public class BindDeviceActivity extends BaseActivity {
                         LLog.i("getBrands:获取数据成功" + common.getInfo());
                         brandsBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<BrandsBean>>() {
                         });
+                        if(brandsBeenList != null && brandsBeenList.size() > 0){
+                            initBrandsPicker();
+                        }
+
                         break;
                     default:
                         LLog.i("getBrands" + common.getInfo());
@@ -257,6 +296,8 @@ public class BindDeviceActivity extends BaseActivity {
             return;
         }
 
+        brandTypesBeenList.clear();
+
         Map<String,String> param = new HashMap<>();
         param.put("device_type_brand_id",checkedBrandsBean.getDeviceTypeBrandId());
         HttpRequestUtils.httpRequest(this, "getModels", RequestValue.GET_SCAN_GETMODELS, param, "POST", new HttpRequestUtils.ResponseListener() {
@@ -269,10 +310,10 @@ public class BindDeviceActivity extends BaseActivity {
                         LLog.i("getModels:获取数据成功" + common.getInfo());
                         brandTypesBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<BrandTypesBean>>() {
                         });
+
                         if(brandTypesBeenList != null && brandTypesBeenList.size() > 0){
                             initBrandTypesPicker();
                         }
-
                         break;
                     default:
                         LLog.i("getModels" + common.getInfo());
@@ -294,8 +335,19 @@ public class BindDeviceActivity extends BaseActivity {
                 device = tv_device.getText().toString().trim();
                 companyName = et_company_name.getText().toString().trim();
                 companyPhone = et_company_phone.getText().toString().trim();
+                usedName = et_used_name.getText().toString().trim();
+                usedRoom = et_used_room.getText().toString().trim();
                 if (TextUtils.isEmpty(companyName) ) {
                     ToastUtil.showLongToast(this, "请输入单位名称");
+                    return;
+                }   
+                
+                if (TextUtils.isEmpty(usedName) ) {
+                    ToastUtil.showLongToast(this, "请输入使用人姓名");
+                    return;
+                }
+                if (TextUtils.isEmpty(usedRoom) ) {
+                    ToastUtil.showLongToast(this, "请输入使用科室");
                     return;
                 }
                 if (selectedSheng == null) {
@@ -343,6 +395,8 @@ public class BindDeviceActivity extends BaseActivity {
         map.put("deviceTypeModelId", checkedBrandTypesBean.getDeviceTypeModelId());
         map.put("deviceTypeModel", checkedBrandTypesBean.getDeviceTypeModel());
         map.put("userCompanyName", companyName);
+        map.put("userName", usedName);
+        map.put("userDetailCompanyName", usedRoom);
 
         if (!TextUtils.isEmpty(companyPhone) ) {
             map.put("userPhone", companyPhone);
@@ -351,7 +405,7 @@ public class BindDeviceActivity extends BaseActivity {
         //工程师和工程师所属公司信息
         User user = SharedPreferencesUtils.getInstance(this).loadObjectData(User.class);
 
-        String maintenanceId = TextUtils.isEmpty(user.getMaintenanceId())?"":user.getMaintenanceId();
+        String maintenanceId = TextUtils.isEmpty(user.getUserId())?"":user.getUserId();
         map.put("maintenanceId", maintenanceId);
         String maintenanceName = TextUtils.isEmpty(user.getUserPhone())?"":user.getUserPhone();
         map.put("maintenanceName",maintenanceName);
@@ -400,7 +454,7 @@ public class BindDeviceActivity extends BaseActivity {
             getTypeAll();
             return;
         }
-        if (companyOptions == null) {
+       // if (companyOptions == null) {
             ArrayList<DeviceType> items = deviceTypes;
             companyOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                 @Override
@@ -410,6 +464,20 @@ public class BindDeviceActivity extends BaseActivity {
                     tv_device.setText(tx);
                     checkedDeviceType = deviceTypes.get(options1);
                     Log.i("onOptionsSelect", tx);
+                    if(brandsBeenList != null){
+                        brandsBeenList.clear();
+                    }
+                    if(brandTypesBeenList != null){
+                        brandTypesBeenList.clear();
+                    }
+
+                    checkedBrandsBean = null;
+                    checkedBrandTypesBean = null;
+
+                    tv_brand.setText("请选择品牌");
+                    tv_type.setText("请选择型号");
+
+
                     getBrands();
                 }
             })
@@ -430,9 +498,9 @@ public class BindDeviceActivity extends BaseActivity {
                     .build();
             companyOptions.setPicker(items);//二级选择器
             companyOptions.show();
-        } else {
+    /*    } else {
             companyOptions.show();
-        }
+        }*/
     }
 
     /**
@@ -443,7 +511,7 @@ public class BindDeviceActivity extends BaseActivity {
             getBrands();
             return;
         }
-        if (brandsOptions == null) {
+      //  if (brandsOptions == null) {
             ArrayList<BrandsBean> items = brandsBeenList;
             brandsOptions = new OptionsPickerView.Builder(this, new OptionsPickerView.OnOptionsSelectListener() {
                 @Override
@@ -452,9 +520,18 @@ public class BindDeviceActivity extends BaseActivity {
                     String tx = brandsBeenList.get(options1).getDeviceTypeBrand();
                     tv_brand.setText(tx);
                     tv_type.setText("");
-                    checkedBrandTypesBean = null;
+
                     checkedBrandsBean = brandsBeenList.get(options1);
                     Log.i("onOptionsSelect", tx);
+
+                    if(brandTypesBeenList != null){
+                        brandTypesBeenList.clear();
+                    }
+
+                    checkedBrandTypesBean = null;
+
+                    tv_type.setText("请选择型号");
+
                     getBrandTypes();
                 }
             })
@@ -475,9 +552,9 @@ public class BindDeviceActivity extends BaseActivity {
                     .build();
             brandsOptions.setPicker(items);//二级选择器
             brandsOptions.show();
-        } else {
+    /*    } else {
             brandsOptions.show();
-        }
+        }*/
     }
 
     /**

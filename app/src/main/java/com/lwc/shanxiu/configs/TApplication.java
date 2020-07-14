@@ -15,6 +15,7 @@ import com.taobao.sophix.SophixManager;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareConfig;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 
@@ -83,7 +84,7 @@ public class TApplication extends MultiDexApplication {//MultiDexApplication
 //		Config.DEBUG = true;
 //		UMConfigure.init(this,"58c8823b677baa0d81001491"
 //				,"umeng", UMConfigure.DEVICE_TYPE_PHONE,"");
-		UMShareAPI.get(this);
+		//UMShareAPI.get(this);
 //		UMConfigure.setEncryptEnabled(true);
 //		InAppMessageManager.getInstance(context).setInAppMsgDebugMode(true);
 //		//华为推送

@@ -44,6 +44,8 @@ public class DeviceAllMsgBean {
     private String companyTownId;
     private String relevanceId;
     private String updateTime;
+    private String userName;
+    private String userDetailCompanyName;
     private int relevanceType;  //设备状态（1：正常 2：报废 3：销毁 4：报废中）
     private int isRelevance;   //是否能报废销毁设备（0：否，1：是）
     private java.util.List<OrdersBean> orders;
@@ -72,6 +74,22 @@ public class DeviceAllMsgBean {
 
     public void setDeviceTypeBrand(String deviceTypeBrand) {
         this.deviceTypeBrand = deviceTypeBrand;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserDetailCompanyName() {
+        return userDetailCompanyName;
+    }
+
+    public void setUserDetailCompanyName(String userDetailCompanyName) {
+        this.userDetailCompanyName = userDetailCompanyName;
     }
 
     public String getCreateTime() {

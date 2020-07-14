@@ -179,7 +179,7 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
      * 请求网络获取数据
      */
     private void getData() {
-        presenter.getOrderState(myOrder.getOrderId());
+        presenter.getOrderState(myOrder.getOrderId(),myOrder.getPackageId());
     }
 
     @Override
@@ -388,7 +388,7 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
      * @param state 状态
      */
     private void upDataOrder(int state) {
-        presenter.upDataOrder(myOrder.getOrderId(), state);
+        presenter.upDataOrder(myOrder.getOrderId(), state,myOrder.getPackageId());
     }
 
     @Override
@@ -609,7 +609,7 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
                 Log.d("联网成功","获取了位置信息 lat:"
                         + lat + ", lon:"
                         + lon);
-                presenter.upDataOrder(myOrder.getOrderId(), Order.STATUS_DAODAXIANCHANG,String.valueOf(lat),String.valueOf(lon));
+                presenter.upDataOrder(myOrder.getOrderId(), Order.STATUS_DAODAXIANCHANG,String.valueOf(lat),String.valueOf(lon),myOrder.getPackageId());
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                 Log.e("AmapError","location Error, ErrCode:"

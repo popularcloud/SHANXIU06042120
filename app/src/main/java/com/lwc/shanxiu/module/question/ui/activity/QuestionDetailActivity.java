@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -113,6 +114,7 @@ public class QuestionDetailActivity extends BaseActivity {
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         return R.layout.activity_question_detail;
     }
 
@@ -306,6 +308,11 @@ public class QuestionDetailActivity extends BaseActivity {
         questionDetailAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
+                if(user.getUserId().equals(questionDetailAdapter.getItem(position).getMaintenanceId())){ //自己的问题){
+                    Bundle bundle = new Bundle();
+                    bundle.putString("quesionId", questionDetailAdapter.getItem(position).getQuesionId());
+                    IntentUtil.gotoActivity(QuestionDetailActivity.this, EditeAnswerActivity.class, bundle);
+                }
             }
         });
         recyclerView.setAdapter(questionDetailAdapter);

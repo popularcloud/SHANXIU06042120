@@ -126,6 +126,7 @@ public class MainActivity extends BaseFragmentActivity {
     private NearOrderFragment nearOrderFragment;
     private MineFragment mineFragment;
     public static MainActivity activity;
+
     public class MessageReceiver extends BroadcastReceiver {
 
         @Override
@@ -272,8 +273,7 @@ public class MainActivity extends BaseFragmentActivity {
         }
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
     public void registerMessageReceiver() {

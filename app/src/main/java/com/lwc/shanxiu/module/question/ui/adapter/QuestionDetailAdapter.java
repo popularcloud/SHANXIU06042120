@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.ImageBrowseActivity;
 import com.lwc.shanxiu.adapter.MyGridViewPhotoAdpter;
+import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.question.bean.PublishQuestionDetialBean;
 import com.lwc.shanxiu.module.question.bean.QuestionIndexBean;
 import com.lwc.shanxiu.module.question.ui.activity.QuestionDetailActivity;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
+import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.utils.TimeUtil;
 import com.lwc.shanxiu.view.MyGridView;
 import com.lwc.shanxiu.widget.CircleImageView;
@@ -65,6 +67,10 @@ public class QuestionDetailAdapter extends SuperAdapter<PublishQuestionDetialBea
             ImageLoaderUtil.getInstance().displayFromLocal(context,img_head,R.drawable.default_portrait_100);
         }
         holder.setText(R.id.tv_desc, item.getAnswerDetail());
+        if(item.getMaintenanceId().equals(SharedPreferencesUtils.getInstance(mContext).loadObjectData(User.class).getUserId())){
+            holder.setVisibility(R.id.tv_edit, View.VISIBLE);
+        }
+
         MyGridView myGridView = holder.findViewById(R.id.gridview_show);
         TextView tv_status = holder.findViewById(R.id.tv_status);
         final ImageView iv_adopt = holder.findViewById(R.id.iv_adopt);

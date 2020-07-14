@@ -259,7 +259,7 @@ public class MyRequestQuestionFragment extends BaseFragment {
         Map<String, String> map = new HashMap<>();
         map.put("wd", search_txt);
         map.put("curPage", ""+page);
-        HttpRequestUtils.httpRequest(getActivity(), "问答首页", RequestValue.QUESION_INDEX, map, "GET", new HttpRequestUtils.ResponseListener() {
+        HttpRequestUtils.httpRequest(getActivity(), "问答首页", RequestValue.QUESION_SEARCH_SIMPLE, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
@@ -313,8 +313,7 @@ public class MyRequestQuestionFragment extends BaseFragment {
         if(isVisibleToUser  && getActivity() != null){
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.white)
-                    .statusBarDarkFont(true)
-                    .navigationBarColor(R.color.white).init();
+                    .statusBarDarkFont(true).init();
         }
     }
 

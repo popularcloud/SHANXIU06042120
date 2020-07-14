@@ -67,8 +67,6 @@ public class NavigationActivity extends BaseActivity implements AMapNaviViewList
 
 	}
 
-
-
 	@Override
 	protected void init() {
 
@@ -383,6 +381,11 @@ public class NavigationActivity extends BaseActivity implements AMapNaviViewList
 
 	@Override
 	public void onNaviRouteNotify(AMapNaviRouteNotifyData aMapNaviRouteNotifyData) {
+
+	}
+
+	@Override
+	public void onGpsSignalWeak(boolean b) {
 
 	}
 }
