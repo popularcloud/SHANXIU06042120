@@ -175,4 +175,18 @@ public class ImageLoaderUtil implements ImageLoaderInterface {
                     .into(imageView);
         }
     }
+
+
+    public void displayFromNetDCircular8(Context context, String url, ImageView imageView,int defaultImg) {
+        if (context != null && imageView != null) {
+            //圆角图标
+            RequestOptions mRequestOptions = RequestOptions.bitmapTransform(new RoundedCorners(8))
+                    .error(defaultImg)
+                    .placeholder(defaultImg);
+            Glide.with(context).load(url)
+                    .apply(mRequestOptions)//圆角半径
+                    .thumbnail(0.8f)
+                    .into(imageView);
+        }
+    }
 }

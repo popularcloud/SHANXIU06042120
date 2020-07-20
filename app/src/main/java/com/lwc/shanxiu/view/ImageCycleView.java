@@ -13,9 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.bean.ADInfo;
+import com.lwc.shanxiu.module.lease_parts.inteface_callback.OnPageSelectCallBack;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class ImageCycleView extends LinearLayout {
 	/**
 	 * 图片轮播指示器控件
 	 */
-	private ViewGroup mGroup;
+	public ViewGroup mGroup;
 
 	/**
 	 * 图片轮播指示器-个图
@@ -81,6 +81,8 @@ public class ImageCycleView extends LinearLayout {
 	public ImageCycleView(Context context) {
 		super(context);
 	}
+
+	private OnPageSelectCallBack onPageSelectCallBack;
 
 	/**
 	 * @param context
@@ -148,6 +150,36 @@ public class ImageCycleView extends LinearLayout {
 		}
 		mAdvAdapter = new ImageCycleAdapter(mContext, infoList, imageCycleViewListener);
 		mBannerPager.setAdapter(mAdvAdapter);
+		startImageTimerTask();
+	}
+
+	public void setImageResources(ArrayList<ADInfo> infoList, ImageCycleViewListener imageCycleViewListener,OnPageSelectCallBack onPageSelectCallBack) {
+		// 清除所有子视图
+		mGroup.removeAllViews();
+		// 图片广告数量
+		final int imageCount = infoList.size();
+		mImageViews = new ImageView[imageCount];
+		for (int i = 0; i < imageCount; i++) {
+			mImageView = new ImageView(mContext);
+			int imageParams = (int) (mScale * 20 + 0.5f);// XP与DP转换，适应不同分辨率
+			int imagePadding = (int) (mScale * 5 + 0.5f);
+			LayoutParams layout = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
+			layout.setMargins(3, 0, 3, 0);
+			mImageView.setLayoutParams(layout);
+			//mImageView.setPadding(imagePadding, imagePadding, imagePadding, imagePadding);
+			mImageViews[i] = mImageView;
+			if (i == 0) {
+				mImageViews[i].setBackgroundResource(R.mipmap.icon_point);
+			} else {
+				mImageViews[i].setBackgroundResource(R.mipmap.icon_point_pre);
+			}
+			mGroup.addView(mImageViews[i]);
+		}
+		mAdvAdapter = new ImageCycleAdapter(mContext, infoList, imageCycleViewListener);
+		mBannerPager.setAdapter(mAdvAdapter);
+
+		this.onPageSelectCallBack = onPageSelectCallBack;
+
 		startImageTimerTask();
 	}
 
@@ -237,8 +269,10 @@ public class ImageCycleView extends LinearLayout {
 				}
 			}
 
+			if(onPageSelectCallBack != null){
+				onPageSelectCallBack.onPageSelect(index);
+			}
 		}
-
 	}
 
 	private class ImageCycleAdapter extends PagerAdapter {

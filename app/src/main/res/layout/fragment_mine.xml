@@ -269,6 +269,45 @@
                     android:textColor="@color/black_66"
                     android:textSize="14sp" />
             </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_authentication"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8px"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_item_bg"
+                    android:drawableLeft="@drawable/ic_my_customer_service"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="10dp"
+                    android:text="认证工程师"
+                    android:padding="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"/>
+                <TextView
+                    android:id="@+id/txtAuthentication"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="未认证"
+                    android:padding="15dp"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/you_new"
+                    android:textColor="@color/gray_99"
+                    android:textSize="15sp"
+                    android:gravity="right|center_vertical"
+                    android:background="@drawable/selector_item_bg"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+            <View
+                style="@style/line_c8Style"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:visibility="visible"/>
             <TextView
                 android:id="@+id/txtUserInfor"
                 android:layout_width="match_parent"

@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.MainActivity;
+import com.lwc.shanxiu.activity.NewMainActivity;
 import com.lwc.shanxiu.bean.ActivityBean;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.BroadcastFilters;
@@ -207,7 +208,13 @@ public class LoginOrRegistActivity extends BaseActivity {
                         preferencesUtils.saveObjectData(user);
                         getActivity();
                         KeyboardUtil.showInput(false, LoginOrRegistActivity.this);
-                        IntentUtil.gotoActivityAndFinish(LoginOrRegistActivity.this, MainActivity.class);
+
+                         if("3".equals(user.getCompanySecrecy())){
+                             IntentUtil.gotoActivityAndFinish(LoginOrRegistActivity.this, NewMainActivity.class);
+                         }else{
+                             IntentUtil.gotoActivityAndFinish(LoginOrRegistActivity.this, MainActivity.class);
+                         }
+
                         sendBroadcast(new Intent(BroadcastFilters.UPDATE_USER_LOGIN_SUCCESSED));
                         overridePendingTransition(R.anim.enter_exit, R.anim.enter_enter);
                         progressUtils.dismissCustomProgressDialog();

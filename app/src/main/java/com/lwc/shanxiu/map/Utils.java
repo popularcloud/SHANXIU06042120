@@ -3,10 +3,13 @@
  */
 package com.lwc.shanxiu.map;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -19,15 +22,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.icu.text.DecimalFormat;
-import android.icu.text.NumberFormat;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.TelephonyManager;
 import android.text.Spannable;
@@ -35,8 +41,11 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.AbsoluteSizeSpan;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.lwc.shanxiu.R;
@@ -62,6 +71,8 @@ import java.util.regex.Pattern;
 
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
+
+import static com.lwc.shanxiu.controler.global.GlobalValue.MY_PERMISSIONS_REQUEST_CALL_PHONE;
 
 /**
  * 辅助工具类
@@ -143,6 +154,65 @@ public class Utils {
 	}
 
 	private static SimpleDateFormat sdf = null;
+
+	/**
+	 * 判定输入汉字
+	 *
+	 * @param c
+	 * @return
+	 */
+	public static boolean isChinese(char c) {
+		if ((c >= 0x4e00) && (c <= 0x9fbb)) {
+			return true;
+		} else {
+			return false;
+		}
+//		Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+//		if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+//				|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+//				|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+//				|| ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+//				|| ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+//				|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+//			return true;
+//		}
+//		return false;
+	}
+
+	public static void lxkf(Context context, String phone) {
+// 检查是否获得了权限（Android6.0运行时权限）
+		if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+// 没有获得授权，申请授权
+			if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.CALL_PHONE)) {
+// 返回值：
+//如果app之前请求过该权限,被用户拒绝, 这个方法就会返回true.
+//如果用户之前拒绝权限的时候勾选了对话框中”Don’t ask again”的选项,那么这个方法会返回false.
+//如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
+// 弹窗需要解释为何需要该权限，再次请求授权
+				Toast.makeText(context, "请授权！", Toast.LENGTH_LONG).show();
+// 帮跳转到该应用的设置界面，让用户手动授权
+				Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+				Uri uri = Uri.fromParts("package", "com.lwc.common", null);
+				intent.setData(uri);
+				context.startActivity(intent);
+			} else {
+// 不需要解释为何需要该权限，直接请求授权
+				ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+			} } else {
+// 已经获得授权，可以打电话
+			CallPhone(context, phone);
+		}
+	}
+
+	private static void CallPhone(Context context, String phone) {
+		if (!TextUtils.isEmpty(phone)) {
+			phone = "tel:"+phone;
+		}
+		Intent intent = new Intent(Intent.ACTION_CALL);
+		Uri data = Uri.parse(phone);
+		intent.setData(data);
+		context.startActivity(intent);
+	}
 
 	public synchronized static String formatUTC(long l, String strPattern) {
 		if (TextUtils.isEmpty(strPattern)) {
@@ -455,6 +525,33 @@ public class Utils {
 		ForegroundColorSpan redSpan = new ForegroundColorSpan(color);
 		builder.setSpan(redSpan, start, end,  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		builder.setSpan(new AbsoluteSizeSpan(textSize,true), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return builder;
+	}
+
+	public static SpannableStringBuilder getSpannableStringBuilder(int start, int end, int color, String str, int textSize, boolean isBold) {
+		SpannableStringBuilder builder = new SpannableStringBuilder(str);
+		ForegroundColorSpan redSpan = new ForegroundColorSpan(color);
+		builder.setSpan(redSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(new AbsoluteSizeSpan(textSize, true), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return builder;
+	}
+
+	public static SpannableStringBuilder getSpannableStringBuilder(int start, int end, String str, int textSize, boolean isBold) {
+		SpannableStringBuilder builder = new SpannableStringBuilder(str);
+		builder.setSpan(new AbsoluteSizeSpan(textSize, true), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		return builder;
+	}
+
+	public static SpannableStringBuilder getSpannableStringBuilder(int start, int end, int color, int bgColor, String str, int textSize, boolean isBold) {
+		SpannableStringBuilder builder = new SpannableStringBuilder(str);
+		ForegroundColorSpan redSpan = new ForegroundColorSpan(color);
+		BackgroundColorSpan bgSpan = new BackgroundColorSpan(bgColor);
+		builder.setSpan(redSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(bgSpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(new AbsoluteSizeSpan(textSize, true), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		builder.setSpan(new StyleSpan(Typeface.BOLD), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 		return builder;
 	}
 
@@ -828,5 +925,64 @@ public class Utils {
 		// 驾车导航
 		intent.setData(Uri.parse("http://uri.amap.com/navigation?from=" + sLon + "," + sLat + "&to="+ toLon + "," + toLat + "&mode=car&src=nyx_super"));
 		context.startActivity(intent); // 启动调用
+	}
+
+	/**
+	 * 复制内容到剪切板
+	 *
+	 * @param copyStr
+	 * @return
+	 */
+	public static boolean copy(String copyStr,Context context) {
+		try {
+			//获取剪贴板管理器
+			ClipboardManager cm = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+			// 创建普通字符型ClipData
+			ClipData mClipData = ClipData.newPlainText("Label", copyStr);
+			// 将ClipData内容放到系统剪贴板里。
+			cm.setPrimaryClip(mClipData);
+			return true;
+		} catch (Exception e) {
+			Log.d("复制失败",e.getMessage());
+			return false;
+		}
+	}
+
+	public static String getTimeMill(long time) {
+		String timeStr = null;
+		long hour = 0;
+		long minute = 0;
+		long second = 0;
+		if (time <= 0)
+			return "00:00";
+		else {
+			minute = time / (1000 * 60);
+			if (minute < 60) {
+				second = (time % (1000 * 60)) / 1000;
+
+				timeStr = unitFormat(minute) + "分钟" + unitFormat(second) + "秒";
+			} else {
+				hour = minute / 60;
+//				if (hour < 24) {
+				minute = minute % 60;
+				second = time - hour * 3600 - minute * 60;
+				timeStr = unitFormat(hour) + "小时" + unitFormat(minute) + "分" + unitFormat(second) + "秒";
+//				} else {
+//					int day = hour/24;
+//					hour = hour % 24;
+//					timeStr = day + "天" + hour + "小时";
+//				}
+
+			}
+		}
+		return timeStr;
+	}
+	private static String unitFormat(long i) {
+		String retStr = null;
+		if (i >= 0 && i < 10)
+			retStr = "0" + Long.toString(i);
+		else
+			retStr = "" + i;
+		return retStr;
 	}
 }

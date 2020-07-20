@@ -83,8 +83,6 @@ public class LoadingActivity extends Activity {
         countdownProgressView = (CountDownProgressView) findViewById(R.id.countdownProgressView);
 
 
-
-
         /*
          *  GT usage
          * 与GT控制台连接，同时注册输入输出参数
@@ -247,7 +245,12 @@ public class LoadingActivity extends Activity {
         }
         String token = preferencesUtils.loadString("token");
         if (token != null && !token.equals("")) {
-            IntentUtil.gotoActivityAndFinish(LoadingActivity.this, MainActivity.class);
+            if("3".equals(user.getCompanySecrecy())){
+                IntentUtil.gotoActivityAndFinish(LoadingActivity.this, NewMainActivity.class);
+            }else{
+                IntentUtil.gotoActivityAndFinish(LoadingActivity.this, MainActivity.class);
+            }
+          //  IntentUtil.gotoActivityAndFinish(LoadingActivity.this, NewMainActivity.class);
         } else {
             IntentUtil.gotoActivityAndFinish(LoadingActivity.this, LoginOrRegistActivity.class);
         }

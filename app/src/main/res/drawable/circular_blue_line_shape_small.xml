@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval" android:useLevel="false">
+    <solid android:color="@color/white" />
+    <stroke android:color="@color/btn_blue_nomal" android:width="1px" />
+    <size android:height="15dp" android:width="15dp" />
+</shape>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@color/white">
+    <include layout="@layout/include_title"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_75"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/ic_pay_success"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_18"
+        android:layout_marginTop="@dimen/dp_30"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="订单支付成功！"/>
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:layout_marginTop="@dimen/dp_17"
+        android:textColor="@color/red_money"
+        android:gravity="center"
+        android:text="实付金额："/>
+
+    <TextView
+        android:id="@+id/tv_look_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginLeft="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_37"
+        android:layout_marginTop="@dimen/dp_85"
+        android:text="查看订单"
+        android:gravity="center"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/black_66"
+        android:background="@drawable/button_gray_cirle_shape"/>
+
+    <TextView
+        android:id="@+id/tv_to_home"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        android:layout_marginLeft="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_37"
+        android:layout_marginTop="@dimen/dp_25"
+        android:text="返回首页"
+        android:gravity="center"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/white"
+        android:background="@drawable/btn_red_fill"/>
+</LinearLayout>

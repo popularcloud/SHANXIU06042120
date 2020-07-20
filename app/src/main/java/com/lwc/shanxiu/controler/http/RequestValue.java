@@ -490,4 +490,225 @@ public class RequestValue {
      * 问题搜索历史
      */
     public static final String GET_QUESION_KNOWLEDGEKEYWORDRANK = "/quesion/knowledgeKeywordRank";
+
+
+    /**
+     * ================================备件库模块
+     */
+
+    /**
+     * 备件库商品类型
+     */
+    public static final String GET_PARTSMANAGE_GETDEVICETYPES = "/partsManage/getDeviceTypes";
+
+    /**
+     * 备件库商品类型（小类）
+     */
+    public static final String GET_PARTSMANAGE_GETDEVICETYPEDETAILS = "/partsManage/getDeviceTypeDetails";
+    /**
+     * 备件库商品列表
+     */
+    public static final String GET_PARTSMANAGE_GETPARTSGOODS = "/partsManage/getPartsGoods";
+
+    /**
+     * 轮播图
+     */
+    public static final String GET_PARTSMANAGE_GETPARTSMAGES = "/partsManage/getPartsImages";
+
+    /**
+     * 查看购物车
+     */
+    public static final String GET_PARTSMANAGE_QUERYPARTSGOODSCAR = "/partsManage/queryPartsGoodsCar";
+
+    /**
+     * 删除购物车
+     */
+    public static final String GET_PARTSMANAGE_DELPARTSGOODSCAR = "/partsManage/delPartsGoodsCar";
+
+    /**
+     * 购物车移入收藏夹
+     */
+    public static final String GET_PARTSMANAGE_PARTSGOODSCARTOCOLLE = "/partsManage/partsGoodsCarToColle";
+
+    /**
+     * 加入收藏夹
+     */
+    public static final String PARTSMANAGE_ADDPARTSGOODSCOLLECTION = "/partsManage/addPartsGoodsCollection";
+
+    /**
+     * 删除收藏夹
+     */
+    public static final String PARTSMANAGE_DELPARTSGOODSCOLLECTION = "/partsManage/delPartsGoodsCollection";
+
+    /**
+     * 备件库商品相关规格
+     */
+    public static final String GET_PARTSMANAGE_GETPARTSSPECSREVELENCE = "/partsManage/getPartsSpecsRevelence";
+
+    /**
+     * 修改购物车
+     */
+    public static final String GET_PARTSMANAGE_MODPARTSGOODSCAR = "/partsManage/modPartsGoodsCar";
+
+    /**
+     * 查询用户订单数量
+     */
+    public static final String GET_PARTSMANAGE_ORDERNUMDATA = "/partsManage/orderNumData";
+
+    /**
+     * 用户地址
+     */
+    public static final String GET_USER_ADDRESS = "/user/address/list";
+
+    /**
+     * 添加或修改用户地址
+     */
+    public static final String ADD_OR_AMEND_ADDRESS = "/user/address/save";
+
+    /**
+     * 删除用户地址
+     */
+    public static final String DELETE_ADDRESS = "/user/address/del/";
+
+    /**
+     * 备件库商品下单
+     */
+    public static final String PARTSMANAGE_ORDER_SAVE = "/partsManage/order/save";
+
+    /**
+     * 备件库商品筛选内容
+     */
+    public static final String PARTSMANAGE_GETPARTSTYPEALL = "/partsManage/getPartsTypeAll";
+
+    /**
+     * 获取备件库详情
+     */
+    public static final String PARTSMANAGE_GETPARTSGOOD = "/partsManage/getPartsGood";
+
+    /**
+     * 加入购物车
+     */
+    public static final String PARTSMANAGE_ADDPARTSGOODSCAR = "/partsManage/addPartsGoodsCar";
+
+    /**
+     * 查看收藏夹
+     */
+    public static final String PARTSMANAGE_QUERYPARTSGOODSCOLLECTION = "/partsManage/queryPartsGoodsCollection";
+
+    /**
+     * 查看我的备件库订单
+     */
+    public static final String PARTSMANAGE_QUERYPARTSORDERS = "/partsManage/queryPartsOrders";
+
+    /**
+     * 查看我的备件库订单（退货）
+     */
+    public static final String PARTSMANAGE_QUERYPARTSBRANCHORDERS = "/partsManage/queryPartsBranchOrders";
+
+    /**
+     * 删除备件库订单
+     */
+    public static final String PARTSMANAGE_DELETEPARTSORDER = "/partsManage/deletePartsOrder";
+
+    /**
+     * 删除备件库订单（退货）
+     */
+    public static final String PARTSMANAGE_DELETEPARTSBRANCHORDER = "/partsManage/deletePartsBranchOrder";
+
+    /**
+     * 撤销申请
+     */
+    public static final String PARTSMANAGE_UODOPARTSBRANCHORDER = "/partsManage/uodoPartsBranchOrder";
+
+    /**
+     * 确认收货
+     */
+    public static final String PARTSMANAGE_INPARTS = "/partsManage/inParts";
+
+    /**
+     * 取消订单
+     */
+    public static final String PARTSMANAGE_CANCELPARTSORDER = "/partsManage/cancelPartsOrder";
+
+
+    /**
+     * 用户申请退货
+     */
+    public static final String PARTSMANAGE_APPLYREFUNDGOODS = "/partsManage/applyRefundGoods";
+
+    /**
+     * 查看我的备件库订单详情（退货）
+     */
+    public static final String PARTSMANAGE_GETPARTSBRANCHORDER = "/partsManage/getPartsBranchOrder";
+
+    /**
+     * 查看我的备件库订单详情（退货）
+     */
+    public static final String PARTSMANAGE_GETPARTSORDER = "/partsManage/getPartsOrder";
+
+    /**
+     * ================================认证
+     */
+
+
+    /**
+     * 试卷列表
+     */
+    public static final String EXAMMANAGE_GETEXAMPAPER = "/examManage/getExamPaper";
+
+    /**
+     * 视频列表
+     */
+    public static final String EXAMMANAGE_GETEXAMVIDEO = "/examManage/getExamVideo";
+
+    /**
+     * 试卷题目
+     */
+    public static final String EXAMMANAGE_GETEXAMPAPERINFO = "/examManage/getExamPaperInfo";
+
+    /**
+     * 提交试卷
+     */
+    public static final String EXAMMANAGE_SAVEEXAMPAPER = "/examManage/saveExamPaper";
+
+    /**
+     * 错题列表
+     */
+    public static final String EXAMMANAGE_GETEXAMERRORBOOK = "/examManage/getExamErrorBook";
+
+    /**
+     * 更新视频观看时间
+     */
+    public static final String EXAMMANAGE_UPDATEEXAMVIDEO = "/examManage/updateExamVideo";
+
+    /**
+     * 清空错题本
+     */
+    public static final String EXAMMANAGE_DELETEEXAMERRORBOOK = "/examManage/deleteExamErrorBook";
+
+    /**
+     * 是否可以考试
+     */
+    public static final String EXAMMANAGE_GETEXAMSTATUS = "/examManage/getExamStatus";
+
+    /**
+     * 申请成为认证工程师
+     */
+    public static final String EXAMMANAGE_APPLYSECRECY = "/examManage/applySecrecy";
+
+    /**
+     * 根据商品名称模糊查询备件库商品信息
+     */
+    public static final String PARTSMANAGE_GOODSPARTSINFO = "/partsManage/goodsPartsInfo";
+
+    /**
+     * 备件库商品搜索历史及热搜榜
+     */
+    public static final String PARTSMANAGE_PARTSGOODSKEYWORD = "/partsManage/partsGoodsKeyword";
+
+    /**
+     * 清空备件库商品搜索历史
+     */
+    public static final String PARTSMANAGE_DELPARTSGOODSKEYWORD = "/partsManage/delPartsGoodsKeyword";
+
 }

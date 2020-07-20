@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0_gray_line"
+    android:layout_marginTop="@dimen/dp_5">
+    <TextView style="@style/text_tip"
+        android:id="@+id/textTip"
+        android:visibility="gone"/>
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mBGARefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/dp_46"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:background="@color/f0_gray_line"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/dp_11"></android.support.v7.widget.RecyclerView>
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_clear"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:paddingLeft="15dp"
+        android:layout_alignParentBottom="true"
+        android:paddingRight="15dp"
+        android:orientation="horizontal"
+        android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/btn_blue_nomal"
+            android:text="清空错题本"
+            android:textSize="16sp"/>
+    </LinearLayout>
+</RelativeLayout>

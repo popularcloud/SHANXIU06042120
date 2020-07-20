@@ -145,7 +145,7 @@
     <color name="txt_color_b4">#B4B4B4</color>
     <!-- 字体颜色 -->
     <color name="color_33">#333333</color>
-    <color name="red_money">#FE5778</color>
+    <color name="red_money">#ff3a3a</color>
     <color name="red_ff">#EEA6A6</color>
     <color name="red_fc">#ffcccc</color>
     <color name="red_f3a">#B3ff3a3a</color>
@@ -172,6 +172,10 @@
     <color name="blue_ff">#2db9ff</color>
     <color name="yellow_52">#fdf052</color>
     <color name="gray_88">#888888</color>
+    <color name="red_f47">#ff473a</color>
+    <color name="gray_f9">#f9f9f9</color>
+    <color name="yellow_fe">#FEA128</color>
 
-
+    <color name="cp_alpha_gray">#CC646464</color>
+    <color name="blue_96">#96C7FF</color>
 </resources>

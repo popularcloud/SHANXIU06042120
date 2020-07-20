@@ -31,5 +31,10 @@
       <option name="name" value="maven2" />
       <option name="url" value="http://maven.aliyun.com/nexus/content/repositories/releases" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven2" />
+      <option name="name" value="maven2" />
+      <option name="url" value="http://lib.gcssloop.com/repository/gcssloop-central/" />
+    </remote-repository>
   </component>
 </project>

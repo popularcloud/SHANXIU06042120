@@ -18,6 +18,7 @@ import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.UserGuideActivity;
 import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.map.Utils;
+import com.lwc.shanxiu.module.authentication.activity.AuthenticationMainActivity;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.order.ui.activity.MyOrderListActivity;
 import com.lwc.shanxiu.module.setting.SettingActivity;
@@ -96,7 +97,7 @@ public class MineFragment extends BaseFragment {
     }
 
     @OnClick({R.id.txtEvaluate, R.id.txtUserGuide, R.id.txtFeedback, R.id.txtMyOrder, R.id.img_head, R.id.txt_share,
-            R.id.txt_jineng, R.id.txtUserInfor, R.id.txtWallet, R.id.ll_kf,R.id.ll_OrderCountTitle,R.id.ll_myMoneyTitle})
+            R.id.txt_jineng, R.id.txtUserInfor, R.id.txtWallet, R.id.ll_kf,R.id.ll_OrderCountTitle,R.id.ll_myMoneyTitle,R.id.ll_authentication})
     public void onViewClicked(View v) {
         switch (v.getId()) {
             case R.id.txtUserGuide:
@@ -142,6 +143,9 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.txtUserInfor:
                 IntentUtil.gotoActivity(getActivity(), UserInfoActivity.class);
+                break;
+            case R.id.ll_authentication:  //工程师认证
+                IntentUtil.gotoActivity(getActivity(), AuthenticationMainActivity.class);
                 break;
             case R.id.txtMyOrder:
             case R.id.ll_OrderCountTitle:

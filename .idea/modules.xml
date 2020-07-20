@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/7moor_sdk/7moor_sdk.iml" filepath="$PROJECT_DIR$/.idea/modules/7moor_sdk/7moor_sdk.iml" group="SHANXIU06042120/7moor_sdk" />
       <module fileurl="file://$PROJECT_DIR$/SHANXIU06042120.iml" filepath="$PROJECT_DIR$/SHANXIU06042120.iml" group="SHANXIU06042120" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="SHANXIU06042120/app" />
       <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" group="SHANXIU06042120/matisse" />

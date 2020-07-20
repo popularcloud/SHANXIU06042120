@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.InformationActivity;
+import com.lwc.shanxiu.activity.NewMainActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.BroadcastFilters;
 import com.lwc.shanxiu.configs.ServerConfig;
@@ -126,7 +127,13 @@ public class KnowledgeBaseFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setTitle("知识库");
-        imgBack.setVisibility(View.GONE);
+
+        if(getActivity() instanceof NewMainActivity){
+            imgBack.setVisibility(View.VISIBLE);
+        }else{
+            imgBack.setVisibility(View.GONE);
+        }
+
         tv_search.setVisibility(View.GONE);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) ll_search.getLayoutParams();
         layoutParams.setMargins(30,0,30,0);

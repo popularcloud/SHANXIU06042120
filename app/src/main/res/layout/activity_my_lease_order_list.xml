@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/f0_gray_line"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/include_search_title_lease" />
+    <com.gxz.PagerSlidingTabStrip
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:textColor="@color/black_66"
+        android:background="@color/white"
+        android:textSize="16sp"
+        app:pstsDividerColor="@android:color/transparent"
+        app:pstsIndicatorColor="@color/accent_material_light"
+        app:pstsShouldExpand="true"
+        app:pstsTextSelectedColor="@color/accent_material_light"
+        app:pstsUnderlineColor="@color/colorAccent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_10"
+        android:background="@drawable/down_radius_white"/>
+    <com.lwc.shanxiu.widget.CustomViewPager
+        android:id="@+id/cViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

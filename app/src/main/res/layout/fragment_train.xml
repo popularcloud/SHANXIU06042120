@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/item_white_circle"
+    android:layout_marginTop="@dimen/dp_5">
+    <TextView style="@style/text_tip"
+        android:id="@+id/textTip"
+        android:visibility="gone"/>
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout
+        android:id="@+id/mBGARefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/item_white_circle">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:background="@drawable/item_white_circle"
+            android:layout_height="0dp"
+            android:paddingBottom="@dimen/dp_11"
+            android:layout_weight="1"></android.support.v7.widget.RecyclerView>
+
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:text="申请认证"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@drawable/btn_blue_select_shape"/>
+</RelativeLayout>

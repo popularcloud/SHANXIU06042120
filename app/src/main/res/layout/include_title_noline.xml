@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_46"
+    android:id="@+id/rl_title"
+    android:background="@color/white">
+    <TextView
+        android:id="@+id/txtActionbarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text=""
+        android:textSize="@dimen/sp_18" />
+    <ImageView
+        android:onClick="onBack"
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/dp_15"
+        android:src="@drawable/ic_black_back" />
+    <TextView
+        android:id="@+id/tvQd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
+        android:layout_marginRight="@dimen/dp_15"
+        android:text="提交"
+        android:textSize="@dimen/sp_15"
+        android:visibility="gone"/>
+    <ImageView
+        android:id="@+id/imgRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/dp_20"
+        android:paddingRight="@dimen/dp_15"
+        android:visibility="gone"
+        android:src="@drawable/me_news_icon" />
+    <ImageView
+        android:id="@+id/imgNewMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp_13"
+        android:layout_marginTop="@dimen/dp_10"
+        android:visibility="gone"
+        android:src="@drawable/red_mention" />
+</RelativeLayout>

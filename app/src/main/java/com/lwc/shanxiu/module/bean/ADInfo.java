@@ -18,9 +18,15 @@ public class ADInfo implements Serializable{
 	private String isValid;//": 1,                                         //是否有效
 	private String modifyTime;//": "2017-12-06 15:08:08",                   //修改时间
 	private String sn;//": 0
+	private String urlType; // 4 表示抽奖
 
 	public ADInfo(){
 
+	}
+
+	public ADInfo(String advertisingId,String advertisingImageUrl){
+		this.advertisingId = advertisingId;
+		this.advertisingImageUrl = advertisingImageUrl;
 	}
 
 	public ADInfo(String imgUrl){
@@ -97,5 +103,13 @@ public class ADInfo implements Serializable{
 
 	public void setModifyTime(String modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public String getUrlType() {
+		return urlType;
+	}
+
+	public void setUrlType(String urlType) {
+		this.urlType = urlType;
 	}
 }

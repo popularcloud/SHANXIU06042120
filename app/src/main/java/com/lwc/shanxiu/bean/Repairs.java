@@ -17,6 +17,8 @@ public class Repairs extends DataSupport implements Serializable, IPickerViewDat
 
     private String deviceTypeId;
     private String deviceTypeName;
+    private String deviceTypeIcon;
+    private Long deviceTypeMold;
     private ArrayList<Solution> faults;
 
     public Repairs(String deviceTypeId, String deviceTypeName) {
@@ -46,6 +48,22 @@ public class Repairs extends DataSupport implements Serializable, IPickerViewDat
 
     public void setDeviceTypeId(String deviceTypeId) {
         this.deviceTypeId = deviceTypeId;
+    }
+
+    public String getDeviceTypeIcon() {
+        return deviceTypeIcon;
+    }
+
+    public void setDeviceTypeIcon(String deviceTypeIcon) {
+        this.deviceTypeIcon = deviceTypeIcon;
+    }
+
+    public Long getDeviceTypeMold() {
+        return deviceTypeMold;
+    }
+
+    public void setDeviceTypeMold(Long deviceTypeMold) {
+        this.deviceTypeMold = deviceTypeMold;
     }
 
     @Override

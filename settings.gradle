@@ -1,3 +1,4 @@
+include ':7moor_sdk'
 include ':app', ':runtimepermissions-lib'
 include ':refreshlayout'
 include ':mzbanner'

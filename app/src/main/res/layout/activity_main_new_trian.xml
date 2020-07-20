@@ -1,0 +1,83 @@
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/my_content_view"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/white"
+	android:fitsSystemWindows="true">
+<!--	<SurfaceView android:layout_width="0dp"
+		android:layout_height="0dp"/>-->
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/white"
+		android:orientation="vertical">
+		<com.lwc.shanxiu.widget.CustomViewPager
+			android:id="@+id/cViewPager"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1"
+			></com.lwc.shanxiu.widget.CustomViewPager>
+		<View
+			style="@style/line_ccStyle" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="45dp">
+
+			<RadioGroup
+				android:id="@+id/group_tab"
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:background="@color/white"
+				android:gravity="center"
+				android:orientation="horizontal">
+
+				<RadioButton
+					android:id="@+id/radio_main"
+					style="@style/main_menu_radiobutton_style"
+					android:checked="true"
+					android:drawableTop="@drawable/tab_map_selector"
+					android:text="首页" />
+
+				<RadioButton
+					android:id="@+id/radio_order"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_order_selector"
+					android:text="附近订单" />
+				<RadioButton
+					android:id="@+id/radio_information"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_question_selector"
+					android:text="资讯" />
+
+				<RadioButton
+					android:id="@+id/radio_mine"
+					style="@style/main_menu_radiobutton_style"
+					android:drawableTop="@drawable/tab_mine_selector"
+					android:text="我的" />
+			</RadioGroup>
+		</LinearLayout>
+	</LinearLayout>
+	<ImageView
+		android:id="@+id/iv_red_dian_map"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true"
+		android:layout_marginLeft="44dp"
+		android:layout_marginBottom="33dp"
+		android:src="@drawable/red_point_shape"
+		android:visibility="visible"/>
+
+	<ImageView
+		android:id="@+id/iv_red_dian"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true"
+		android:layout_marginRight="20dp"
+		android:layout_marginBottom="33dp"
+		android:src="@drawable/red_point_shape"
+		android:visibility="gone"/>
+</RelativeLayout>

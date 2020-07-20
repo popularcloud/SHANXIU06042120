@@ -97,7 +97,7 @@ public class InformationDetailsActivity extends BaseActivity {
 		} else {
 			setTitle("资讯详情");
 		}
-		if ((TextUtils.isEmpty(title) || (!title.equals("导航")) && !title.equals("扫描结果"))) {
+		if ((TextUtils.isEmpty(title) || (!title.equals("导航")) && !title.equals("扫描结果") && !title.equals("在线客服"))) {
 			setRightImg(R.drawable.ic_share, new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
