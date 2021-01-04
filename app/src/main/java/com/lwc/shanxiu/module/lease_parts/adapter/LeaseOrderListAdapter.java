@@ -53,9 +53,9 @@ public class LeaseOrderListAdapter extends SuperAdapter<MyOrderBean> {
         ImageLoaderUtil.getInstance().displayFromNetDCircular(context,item.getGoodsImg(),iv_header,R.drawable.image_default_picture);
 
         String goodsName = item.getGoodsName();
-        String goodsNameStr = "租赁  " + goodsName;
-        SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-        tv_title.setText(showGoodsName);
+       // String goodsNameStr = "租赁  " + goodsName;
+        //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+        tv_title.setText(goodsName);
 
         tv_spece.setText(item.getLeaseSpecs());
 

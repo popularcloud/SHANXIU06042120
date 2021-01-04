@@ -40,10 +40,12 @@ import butterknife.OnClick;
 public class UpdateDeviceMsgActivity extends BaseActivity {
 
 
-    @BindView(R.id.et_work_unit)
-    EditText etWorkUnit;
+    @BindView(R.id.tv_detailCompanyName)
+    EditText tv_detailCompanyName;
     @BindView(R.id.et_user)
     EditText etUser;
+    @BindView(R.id.et_phone)
+    EditText et_phone;
     @BindView(R.id.tv_unit_address)
     TextView tv_unit_address;
     @BindView(R.id.et_update_reason)
@@ -84,8 +86,9 @@ public class UpdateDeviceMsgActivity extends BaseActivity {
     @Override
     protected void init() {
         if(updateDeviceMsgBean != null){
-            etWorkUnit.setText(updateDeviceMsgBean.getUserCompanyName());
-            etUser.setText(updateDeviceMsgBean.getUserPhone());
+            tv_detailCompanyName.setText(updateDeviceMsgBean.getUserDetailCompanyName());
+            etUser.setText(updateDeviceMsgBean.getUserName());
+            et_phone.setText(updateDeviceMsgBean.getUserPhone());
             tv_unit_address.setText(updateDeviceMsgBean.getCompanyProvinceName()+updateDeviceMsgBean.getCompanyCityName()+updateDeviceMsgBean.getCompanyTownName());
         }
         getAreaData();
@@ -124,18 +127,23 @@ public class UpdateDeviceMsgActivity extends BaseActivity {
                 showPickerView();
                 break;
             case R.id.btnSubmit:
-                String workUnit = etWorkUnit.getText().toString().trim();
+                String detailCompanyName = tv_detailCompanyName.getText().toString().trim();
                 String user = etUser.getText().toString().trim();
+                String phone = et_phone.getText().toString().trim();
                 String unitAddress = tv_unit_address.getText().toString().trim();
                 String reason = etUpdateReason.getText().toString().trim();
-                if(TextUtils.isEmpty(workUnit)){
-                    ToastUtil.showToast(this,"请填写使用单位");
+                if(TextUtils.isEmpty(detailCompanyName)){
+                    ToastUtil.showToast(this,"请填写科室");
                     return;
                 }
                 if(TextUtils.isEmpty(user)){
-                    ToastUtil.showToast(this,"请填写使用人号码");
+                    ToastUtil.showToast(this,"请填写使用人");
                     return;
                 }
+           /*     if(TextUtils.isEmpty(phone)){
+                    ToastUtil.showToast(this,"请填写使用人号码");
+                    return;
+                }*/
                 if(TextUtils.isEmpty(unitAddress)){
                     ToastUtil.showToast(this,"请选择单位地址");
                     return;
@@ -144,8 +152,9 @@ public class UpdateDeviceMsgActivity extends BaseActivity {
                     ToastUtil.showToast(this,"请填写修改原因");
                     return;
                 }
-                updateDeviceMsgBean.setUserCompanyName(workUnit);
-                updateDeviceMsgBean.setUserPhone(user);
+                updateDeviceMsgBean.setUserDetailCompanyName(detailCompanyName);
+                updateDeviceMsgBean.setUserName(user);
+                updateDeviceMsgBean.setUserPhone(phone);
                 updateDeviceMsgBean.setUpdateReason(reason);
 
                 submitDate(updateDeviceMsgBean);
@@ -157,7 +166,8 @@ public class UpdateDeviceMsgActivity extends BaseActivity {
         Map<String, String> map = new HashMap<>();
         map.put("relevanceId",updateDeviceMsgBean.getRelevanceId());
         map.put("userPhone",updateDeviceMsgBean.getUserPhone());
-        map.put("userCompanyName",updateDeviceMsgBean.getUserCompanyName());
+        map.put("userName",updateDeviceMsgBean.getUserName());
+        map.put("userDetailCompanyName",updateDeviceMsgBean.getUserDetailCompanyName());
         map.put("companyProvinceId",updateDeviceMsgBean.getCompanyProvinceId());
         map.put("companyProvinceName",updateDeviceMsgBean.getCompanyProvinceName());
         map.put("companyCityId",updateDeviceMsgBean.getCompanyCityId());

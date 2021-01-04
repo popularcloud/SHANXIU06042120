@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 /**
  * json的解析,用Gson,fastJson
@@ -83,6 +84,18 @@ public class JsonUtil {
 	 */
 	public static <T, V> HashMap<T, V> parserGsonToMap(String json,
 			TypeToken<HashMap<T, V>> typeToken) {
+		return (new Gson()).fromJson(json, typeToken.getType());
+	}
+
+	/**
+	 * 解析字符串,返回map对象
+	 *
+	 * @param json
+	 * @param typeToken
+	 * @return
+	 */
+	public static <T, V> LinkedHashMap<T, V> parserGsonToSortMap(String json,
+															 TypeToken<LinkedHashMap<T, V>> typeToken) {
 		return (new Gson()).fromJson(json, typeToken.getType());
 	}
 

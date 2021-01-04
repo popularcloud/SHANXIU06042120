@@ -77,6 +77,8 @@ public class MyRequestQuestionFragment extends BaseFragment {
     private int page = 1;
     private String search_txt = "";
 
+    private boolean isClearCondition = true;
+
 
     @Override
     protected View getViews() {
@@ -133,6 +135,9 @@ public class MyRequestQuestionFragment extends BaseFragment {
             @Override
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 page = 1;
+                if(isClearCondition){
+                    clearTextAndTagSearch();
+                }
                 loadData();
             }
 
@@ -149,7 +154,7 @@ public class MyRequestQuestionFragment extends BaseFragment {
         iv_no_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                et_search.setText("");
+                isClearCondition = true;
                 mBGARefreshLayout.beginRefreshing();
                 iv_no_data.setVisibility(View.GONE);
                 mBGARefreshLayout.setVisibility(View.VISIBLE);
@@ -170,6 +175,8 @@ public class MyRequestQuestionFragment extends BaseFragment {
             ToastUtil.showToast(getActivity(),"请输入您想要搜索的关键字");
             return;
         }
+
+        isClearCondition = false;
         et_search.setText(serachKey);
         mBGARefreshLayout.beginRefreshing();
     }
@@ -226,6 +233,7 @@ public class MyRequestQuestionFragment extends BaseFragment {
                     ToastUtil.showToast(getActivity(),"请输入要搜索的内容");
                     return;
                 }
+                isClearCondition = false;
                 mBGARefreshLayout.beginRefreshing();
                 break;
             case R.id.iv_request:

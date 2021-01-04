@@ -107,6 +107,33 @@ public class ToastUtil {
     }
 
     /**
+     * 显示只能拍照
+     * @param context
+     * @param count
+     */
+    public static void showTakePhoto(final Activity context, final int count) {
+        SelectPhotoDialog picturePopupWindow = new SelectPhotoDialog(context, new SelectPhotoDialog.CallBack() {
+            @Override
+            public void oneClick() {
+                Intent openCameraIntent = new Intent(
+                        MediaStore.ACTION_IMAGE_CAPTURE);
+                context.startActivityForResult(openCameraIntent, GlobalValue.CAMERA_REQUESTCODE);
+            }
+
+            @Override
+            public void twoClick() {
+
+            }
+
+            @Override
+            public void cancelCallback() {
+            }
+        }, "拍照","");// 拍照弹出框
+        picturePopupWindow.setCanceledOnTouchOutside(true);
+        picturePopupWindow.show();
+    }
+
+    /**
      * 显示提示信息
      *
      * @param text 提示内容

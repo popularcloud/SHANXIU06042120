@@ -13,10 +13,10 @@ import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.InformationDetailsActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
+import com.lwc.shanxiu.module.lease_parts.activity.LeaseOrderDetailActivity;
 import com.lwc.shanxiu.module.message.adapter.MsgListAdapter;
 import com.lwc.shanxiu.module.message.bean.MyMsg;
 import com.lwc.shanxiu.module.order.ui.activity.OrderDetailActivity;
-import com.lwc.shanxiu.module.setting.VesionActivity;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -78,6 +78,8 @@ public class MsgListActivity extends BaseActivity {
                 setTitle("活动消息");
             } else if (myMsg.getMessageType().equals("4")) {
                 setTitle("订单消息");
+            }else if (myMsg.getMessageType().equals("6")) {
+                setTitle("租赁消息");
             }
         } else {
             ToastUtil.showLongToast(this,"数据错误，请稍候重试!");
@@ -115,6 +117,19 @@ public class MsgListActivity extends BaseActivity {
                     Bundle bundle2 = new Bundle();
                     bundle2.putString("orderId", msg.getObjectId());
                     IntentUtil.gotoActivity(MsgListActivity.this, OrderDetailActivity.class, bundle2);
+                }else if (!TextUtils.isEmpty(type) && type.equals("6")) {
+                  /*  Bundle bundle2 = new Bundle();
+                    bundle2.putString("orderId", msg.getObjectId());
+                    IntentUtil.gotoActivity(MsgListActivity.this, OrderDetailActivity.class, bundle2);*/
+
+                  if(!TextUtils.isEmpty(adapter.getItem(position).getObjectId())){
+                      String [] ids = adapter.getItem(position).getObjectId().split(",");
+                      Bundle bundle = new Bundle();
+                      bundle.putString("order_id",ids[0]);
+                      bundle.putInt("openType",1);
+                      IntentUtil.gotoActivity(MsgListActivity.this, LeaseOrderDetailActivity.class,bundle);
+                  }
+
                 }
             }
         });

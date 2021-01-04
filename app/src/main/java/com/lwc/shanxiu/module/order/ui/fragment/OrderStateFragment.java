@@ -122,8 +122,7 @@ public class OrderStateFragment extends BaseFragment implements IOrderStateFragm
 
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
     @Override

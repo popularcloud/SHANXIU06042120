@@ -64,4 +64,61 @@
     <string name="pull_to_refresh">下拉可以刷新</string>
     <string name="release_to_refresh">松开可以刷新</string>
     <string name="lastUpdateTime">最近更新：%s</string>
+
+    <string-array name="chinese_week_string_array">
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+
+    <string-array name="date_spinner_values">
+        <item>2019-01</item>
+        <item>2019-02</item>
+        <item>2019-03</item>
+        <item>2019-04</item>
+        <item>2019-05</item>
+        <item>2019-06</item>
+        <item>2019-07</item>
+        <item>2019-08</item>
+        <item>2019-09</item>
+        <item>2019-11</item>
+        <item>2019-12</item>
+        <item>2020-01</item>
+        <item>2020-02</item>
+        <item>2020-03</item>
+        <item>2020-04</item>
+        <item>2020-05</item>
+        <item>2020-06</item>
+        <item>2020-07</item>
+        <item>2020-08</item>
+        <item>2020-09</item>
+        <item>2020-11</item>
+        <item>2020-12</item>
+        <item>2021-01</item>
+        <item>2021-02</item>
+        <item>2021-03</item>
+        <item>2021-04</item>
+        <item>2021-05</item>
+        <item>2021-06</item>
+        <item>2021-07</item>
+        <item>2021-08</item>
+        <item>2021-09</item>
+        <item>2021-11</item>
+        <item>2021-12</item>
+        <item>2022-01</item>
+        <item>2022-02</item>
+        <item>2022-03</item>
+        <item>2022-04</item>
+        <item>2022-05</item>
+        <item>2022-06</item>
+        <item>2022-07</item>
+        <item>2022-08</item>
+        <item>2022-09</item>
+        <item>2022-11</item>
+        <item>2022-12</item>
+    </string-array>
 </resources>

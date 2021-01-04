@@ -24,17 +24,16 @@ public class ExaminationAdapter extends SuperAdapter<ExaminationBean> {
         holder.setText(R.id.tv_title,item.getPaperName());
         switch (item.getIsPass()){
             case 0:
-                holder.setText(R.id.tv_status,"未通过");
+                holder.setText(R.id.tv_status,"未考试");
                 break;
             case 1:
                 holder.setText(R.id.tv_status,"已通过");
                 break;
             case 2:
-                holder.setText(R.id.tv_status,"未考试");
+                holder.setText(R.id.tv_status,"未通过");
                 break;
 
         }
-
         holder.setText(R.id.tv_time,item.getCreateTime());
     }
 }

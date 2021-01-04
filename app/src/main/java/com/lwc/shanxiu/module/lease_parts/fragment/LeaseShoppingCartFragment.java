@@ -63,8 +63,8 @@ public class LeaseShoppingCartFragment extends BaseFragment {
     TextView txtActionbarTitle;
     @BindView(R.id.img_back)
     ImageView img_back;
-    @BindView(R.id.tvQd)
-    TextView tvQd;
+    @BindView(R.id.txtRight)
+    TextView txtRight;
     @BindView(R.id.tv_goodSum)
     TextView tv_goodSum;
     @BindView(R.id.ll_no_data)
@@ -165,21 +165,21 @@ public class LeaseShoppingCartFragment extends BaseFragment {
                 .statusBarDarkFont(true).init();
 
         txtActionbarTitle.setText("购物车");
-        tvQd.setText("管理");
-        tvQd.setVisibility(View.VISIBLE);
+        txtRight.setText("管理");
+        txtRight.setVisibility(View.VISIBLE);
         initRecyclerView();
 
-        tvQd.setOnClickListener(new View.OnClickListener() {
+        txtRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtS = tvQd.getText().toString();
+                String txtS = txtRight.getText().toString();
                 if("管理".equals(txtS)){
-                    tvQd.setText("完成");
+                    txtRight.setText("完成");
                     isManager = true;
                     ll_bottom_button02.setVisibility(View.VISIBLE);
                     ll_bottom_button.setVisibility(View.GONE);
                 }else{
-                    tvQd.setText("管理");
+                    txtRight.setText("管理");
                     isManager = false;
                     ll_bottom_button02.setVisibility(View.GONE);
                     ll_bottom_button.setVisibility(View.VISIBLE);
@@ -350,9 +350,9 @@ public class LeaseShoppingCartFragment extends BaseFragment {
                 tv_prices.setText(showPrices);
 
                 String goodsName = data.getGoodsName();
-                String goodsNameStr = "租赁  " + goodsName;
-                SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-                tv_title.setText(showGoodsName);
+                //String goodsNameStr = "租赁  " + goodsName;
+              //  SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+                tv_title.setText(goodsName);
 
 
                 ImageLoaderUtil.getInstance().displayFromNetDCircular(getContext(),data.getGoodsImg(),iv_display,R.drawable.image_default_picture);
@@ -379,7 +379,7 @@ public class LeaseShoppingCartFragment extends BaseFragment {
                         int currentSum = Integer.parseInt(s.toString());
                         if(currentSum < 1 || currentSum > 200){
                             ToastUtil.showToast(getContext(),"请输入正确的数量(1~200)");
-                            et_sum.setText(String.valueOf(data.getGoodsNum()));
+                            et_sum.setText("1");
                             return;
                         }
 
@@ -526,8 +526,8 @@ public class LeaseShoppingCartFragment extends BaseFragment {
                                     .padding(0)
                                     .into(recyclerView);  //填充到recyclerView中
 
-                            tvQd.setVisibility(View.VISIBLE);
-                            tvQd.setText("管理");
+                            txtRight.setVisibility(View.VISIBLE);
+                            txtRight.setText("管理");
                             ll_bottom_button.setVisibility(View.VISIBLE);
                             ll_bottom_button02.setVisibility(View.GONE);
                         }else{
@@ -537,7 +537,7 @@ public class LeaseShoppingCartFragment extends BaseFragment {
                             mBGARefreshLayout.setVisibility(View.GONE);
                             tv_goodSum.setVisibility(View.GONE);
 
-                            tvQd.setVisibility(View.GONE);
+                            txtRight.setVisibility(View.GONE);
                             ll_bottom_button.setVisibility(View.GONE);
                             ll_bottom_button02.setVisibility(View.GONE);
                         }
@@ -689,13 +689,13 @@ public class LeaseShoppingCartFragment extends BaseFragment {
         for(int i = 0;i < shopCarBeans.size();i++){
             ShopCarBean shopCarBean = shopCarBeans.get(i);
             if(shopCarBean.isChecked()){
-                if("2".equals(shopCarBean.getPayType())){
+     /*           if("2".equals(shopCarBean.getPayType())){
                     totalMoney =totalMoney + Double.parseDouble(shopCarBean.getGoodsPrice()) * shopCarBean.getGoodsNum() * 3;
                     goodsSum = goodsSum + shopCarBean.getGoodsNum();
-                }else{
+                }else{*/
                     totalMoney =totalMoney + Double.parseDouble(shopCarBean.getGoodsPrice()) * shopCarBean.getGoodsNum();
                     goodsSum = goodsSum + shopCarBean.getGoodsNum();
-                }
+               // }
 
             }
         }

@@ -11,7 +11,8 @@ public class UpdateDeviceMsgBean implements Serializable{
 
     private String relevanceId;         //设备id
     private String userPhone;          //使用人号码
-    private String userCompanyName;  //使用人所属单位
+    private String userName;          //使用人
+    private String userDetailCompanyName;  //使用人所属科室
     private String companyProvinceId;        //单位所在省ID
     private String companyProvinceName;    //单位公司所在省名称
     private String companyCityId;         //单位公司所在市ID
@@ -34,14 +35,6 @@ public class UpdateDeviceMsgBean implements Serializable{
 
     public void setUserPhone(String userPhone) {
         this.userPhone = userPhone;
-    }
-
-    public String getUserCompanyName() {
-        return userCompanyName;
-    }
-
-    public void setUserCompanyName(String userCompanyName) {
-        this.userCompanyName = userCompanyName;
     }
 
     public String getCompanyProvinceId() {
@@ -98,5 +91,22 @@ public class UpdateDeviceMsgBean implements Serializable{
 
     public void setUpdateReason(String updateReason) {
         this.updateReason = updateReason;
+    }
+
+
+    public String getUserDetailCompanyName() {
+        return userDetailCompanyName;
+    }
+
+    public void setUserDetailCompanyName(String userDetailCompanyName) {
+        this.userDetailCompanyName = userDetailCompanyName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

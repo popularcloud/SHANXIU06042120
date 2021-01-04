@@ -10,6 +10,7 @@ import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.RedPacketActivity;
 import com.lwc.shanxiu.bean.ActivityBean;
 import com.lwc.shanxiu.bean.Common;
+import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.NetManager;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
@@ -72,7 +73,7 @@ public class HttpRequestUtils {
 			token = "";
 		}
 		String DEVICE_ID = Utils.getDeviceId(context);
-		LLog.iNetSucceed("方法:" + tag+",URL:"+URL+",方式："+RequestMethod+",参数："+map);
+		LLog.iNetSucceed("方法:" + tag+",URL:"+ ServerConfig.DOMAIN +URL+",方式："+RequestMethod+",参数："+map);
 		try {
 			// 1.首先判断请求的URL是否为空
 			if (TextUtils.isEmpty(URL)) {

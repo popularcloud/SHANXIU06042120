@@ -808,6 +808,24 @@ public class Utils {
 	}
 
 	private static long lastClickTime;
+
+	private static String urlStr = "";
+	/**
+	 * 防止连续点击触发重复提交事件
+	 *
+	 * @return
+	 */
+	public synchronized static boolean isFastClick(int number,String url) {
+		long time = System.currentTimeMillis();
+		if ( time - lastClickTime < number && urlStr.equals(url)) {
+			return true;
+		}
+
+		urlStr = url;
+		lastClickTime = time;
+		return false;
+	}
+
 	/**
 	 * 防止连续点击触发重复提交事件
 	 *
@@ -977,6 +995,37 @@ public class Utils {
 		}
 		return timeStr;
 	}
+
+	public static String getTimeMillTwo(long time) {
+		String timeStr = null;
+		long hour = 0;
+		long minute = 0;
+		long second = 0;
+		if (time <= 0)
+			return "00:00";
+		else {
+			minute = time / (1000 * 60);
+			if (minute < 60) {
+				second = (time % (1000 * 60)) / 1000;
+
+				timeStr = unitFormat(minute) + ":" + unitFormat(second) + "";
+			} else {
+				hour = minute / 60;
+//				if (hour < 24) {
+				minute = minute % 60;
+				second = time - hour * 3600 - minute * 60;
+				timeStr = unitFormat(hour) + ":" + unitFormat(minute) + ":" + unitFormat(second) + "";
+//				} else {
+//					int day = hour/24;
+//					hour = hour % 24;
+//					timeStr = day + "天" + hour + "小时";
+//				}
+
+			}
+		}
+		return timeStr;
+	}
+
 	private static String unitFormat(long i) {
 		String retStr = null;
 		if (i >= 0 && i < 10)

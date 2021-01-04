@@ -51,8 +51,7 @@ public class LeaseGoodLogisticsActivity extends BaseActivity {
 
         ImmersionBar.with(LeaseGoodLogisticsActivity.this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.gray_white).init();
+                .statusBarDarkFont(true).init();
     }
 
 

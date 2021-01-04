@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -26,6 +27,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -51,6 +53,8 @@ public class LeaseOrderSearchActivity extends BaseActivity {
     TextView tv_msg;
     @BindView(R.id.et_search)
     TextView et_search;
+    @BindView(R.id.iv_right)
+    ImageView iv_right;
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
     private LeaseOrderListAdapter adapter;
@@ -76,12 +80,11 @@ public class LeaseOrderSearchActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        setTitle("订单缴费");
-        setRightImg(R.drawable.ic_message, new View.OnClickListener() {
+        iv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyMsg msg = new MyMsg();
-                msg.setMessageType("5");
+                msg.setMessageType("6");
                 msg.setMessageTitle("租赁消息");
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("myMsg", msg);
@@ -96,7 +99,7 @@ public class LeaseOrderSearchActivity extends BaseActivity {
         super.onResume();
 
         //获取未读租赁消息
-       // MsgReadUtil.hasMessage(LeaseOrderSearchActivity.this,tv_msg);
+        MsgReadUtil.hasMessage(LeaseOrderSearchActivity.this,tv_msg);
     }
 
     @Override
@@ -141,8 +144,8 @@ public class LeaseOrderSearchActivity extends BaseActivity {
                 switch (btnText){
                     case "取消订单":
                         reasons.clear();
-                        reasons.add("我不想租了");
-                        reasons.add("信息填写错误，我不想拍了");
+                        reasons.add("多拍/拍错/不想要");
+                        reasons.add("未按约定时间发货");
                         reasons.add("平台缺货");
                         reasons.add("其他原因");
                         cancelOrderDialog = new CancelOrderDialog(LeaseOrderSearchActivity.this, new CancelOrderDialog.CallBack() {
@@ -152,13 +155,22 @@ public class LeaseOrderSearchActivity extends BaseActivity {
                                 cancelLeaseOrder(reasons.get(position),myOrder.getOrderId());
                             }
                         },reasons,"取消订单","请选择取消订单原因",true);
-
                         cancelOrderDialog.show();
                         break;
                     case "确认收货":
                         inLease(myOrder.getOrderId());
                         break;
-                    case "退租":
+                    case "查看物流":
+                        Bundle bundle = new Bundle();
+                        bundle.putString("order_id",myOrder.getOrderId());
+                        bundle.putInt("openType",1);
+                        IntentUtil.gotoActivity(LeaseOrderSearchActivity.this, LeaseOrderDetailActivity.class,bundle);
+                        break;
+                    case "删除订单":
+                        delOrder(myOrder.getOrderId());
+                        break;
+                    case "退货":
+
                         OrderDetailBean orderDetailBean = new OrderDetailBean();
                         orderDetailBean.setGoodsImg(myOrder.getGoodsImg());
                         orderDetailBean.setGoodsName(myOrder.getGoodsName());
@@ -172,36 +184,10 @@ public class LeaseOrderSearchActivity extends BaseActivity {
                         orderDetailBean.setOrderId(myOrder.getOrderId());
                         orderDetailBean.setLeaseSpecs(myOrder.getLeaseSpecs());
 
-                        Bundle bundle01 = new Bundle();
-                        bundle01.putSerializable("orderDetailBean", orderDetailBean);
-                        bundle01.putInt("returnType", 3);
-                        IntentUtil.gotoActivity(LeaseOrderSearchActivity.this, LeaseApplyForRefundActivity.class, bundle01);
-                        break;
-                    case "联系客服":
-
-                        break;
-                    case "付款":
-
-                        break;
-                    case "撤销申请":
-                        retrunApply(myOrder.getOrderId());
-                        break;
-                    case "退租订单":
-                       // MyLeaseOrderListActivity.showReturnOrder(7,myOrder.getOrderId());
-                        Bundle bundle03 = new Bundle();
-                        bundle03.putInt("pageType",7);
-                        bundle03.putString("orderId",myOrder.getOrderId());
-                        IntentUtil.gotoActivity(LeaseOrderSearchActivity.this, MyLeaseOrderListActivity.class,bundle03);
-                        break;
-                    case "退款订单":
-                       // ((MyLeaseOrderListActivity)getActivity()).showReturnOrder(6,myOrder.getOrderId());
-                        Bundle bundle04 = new Bundle();
-                        bundle04.putInt("pageType",6);
-                        bundle04.putString("orderId",myOrder.getOrderId());
-                        IntentUtil.gotoActivity(LeaseOrderSearchActivity.this, MyLeaseOrderListActivity.class,bundle04);
-                        break;
-                    case "删除订单":
-                        delOrder(myOrder.getOrderId());
+                        Bundle bundle02 = new Bundle();
+                        bundle02.putSerializable("orderDetailBean", orderDetailBean);
+                        bundle02.putInt("returnType", 0);
+                        IntentUtil.gotoActivity(LeaseOrderSearchActivity.this, LeaseApplyForRefundActivity.class, bundle02);
                         break;
                 }
             }
@@ -241,11 +227,11 @@ public class LeaseOrderSearchActivity extends BaseActivity {
      * 获取我的订单
      */
     private void getDateList(){
-        String requestUrl = RequestValue.PARTSMANAGE_QUERYPARTSBRANCHORDERS+"?status_id=4&curPage="+page;
+        String requestUrl = RequestValue.PARTSMANAGE_QUERYPARTSORDERS+"?curPage="+page;
         if(!TextUtils.isEmpty(wd)){
             requestUrl = requestUrl + "&wd="+wd;
         }
-        HttpRequestUtils.httpRequest(LeaseOrderSearchActivity.this, "备件库退货订单",requestUrl, null, "GET", new HttpRequestUtils.ResponseListener() {
+        HttpRequestUtils.httpRequest(LeaseOrderSearchActivity.this, "备件库订单",requestUrl, null, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);

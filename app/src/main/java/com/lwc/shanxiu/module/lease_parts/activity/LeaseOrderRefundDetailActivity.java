@@ -14,19 +14,17 @@ import android.widget.TextView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
-import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.lease_parts.bean.LeaseReturnDetailBean;
 import com.lwc.shanxiu.module.lease_parts.fragment.LeaseShoppingCartFragment;
 import com.lwc.shanxiu.module.lease_parts.widget.GetPhoneDialog;
-import com.lwc.shanxiu.module.wallet.WalletActivity;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
-import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.PopupWindowUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import java.util.ArrayList;
@@ -104,6 +102,8 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
     TextView tv_detail_money;
     @BindView(R.id.ll_return_num)
     LinearLayout ll_return_num;
+    @BindView(R.id.view_up)
+    View view_up;
 
     @BindView(R.id.fragment_container)
     FrameLayout fragment_container;
@@ -114,7 +114,6 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
     private List<String> reasons = new ArrayList<>();
     private String branchId;
     private LeaseReturnDetailBean orderDetailBean;
-    private String pageType;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -150,7 +149,7 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
         setRightImg(R.drawable.photo_img_priview_more, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             //  PopupWindowUtil.showHeaderPopupWindow(LeaseOrderRefundDetailActivity.this,imgRight,leaseShoppingCartFragment,fragment_container,fragmentManager);
+               PopupWindowUtil.showHeaderPopupWindow(LeaseOrderRefundDetailActivity.this,imgRight,leaseShoppingCartFragment,fragment_container,fragmentManager);
             }
         });
 
@@ -162,7 +161,7 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
     @Override
     protected void initGetData() {
         branchId = getIntent().getStringExtra("branch_id");
-        pageType = getIntent().getStringExtra("pageType");
+      //  pageType = getIntent().getStringExtra("pageType");
       //  if("6".equals(pageType)){
             setTitle("退货详情");
             tv_detail_title.setText("退货信息");
@@ -176,6 +175,10 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
             tv_detail_reason.setText("退租原因：");
             tv_detail_explain.setText("退租说明：");
             tv_detail_money.setText("退租金额：");
+
+
+
+
             tv_detail_num.setText("退租单号：");
         }*/
         getOrderReturnDetail();
@@ -256,11 +259,13 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
                     ImageLoaderUtil.getInstance().displayFromNetDCircular(LeaseOrderRefundDetailActivity.this,orderDetailBean.getGoodsImg(),iv_header,R.drawable.image_default_picture);
 
                     String goodsName = orderDetailBean.getGoodsName();
-                    String goodsNameStr = "租赁  " + goodsName;
-                    SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-                    tv_title.setText(showGoodsName);
+                   // String goodsNameStr = "租赁  " + goodsName;
+                    //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+                    tv_title.setText(goodsName);
 
                     tv_spece.setText(orderDetailBean.getLeaseSpecs());
+
+                    tv_status_desc.setText(orderDetailBean.getApplyTime());
 
                     String needShowMoney = "￥"+Utils.getMoney(Utils.chu(orderDetailBean.getGoodsPrice(),"100"));
                     SpannableStringBuilder showGoodsPrice = Utils.getSpannableStringBuilder(1, needShowMoney.length() - 2, getResources().getColor(R.color.black), needShowMoney, 15, true);
@@ -286,6 +291,7 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
 
                             rl_status_01.setVisibility(View.VISIBLE);
                             rl_status_02.setVisibility(View.GONE);
+                            view_up.setVisibility(View.VISIBLE);
                             txtName.setText("您已成功发起退货申请，请耐心等待平台处理");
                             txtAddress.setText("如果平台拒绝，您可以联系客服咨询原因");
                             break;
@@ -295,6 +301,7 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
                             tv_btn02.setVisibility(View.VISIBLE);
                             rl_status_01.setVisibility(View.GONE);
                             rl_status_02.setVisibility(View.GONE);
+                            view_up.setVisibility(View.GONE);
                             break;
                         case 2: //失败
                             tv_btn01.setVisibility(View.VISIBLE);
@@ -302,6 +309,7 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
                             tv_btn02.setVisibility(View.VISIBLE);
                             rl_status_01.setVisibility(View.VISIBLE);
                             rl_status_02.setVisibility(View.GONE);
+                            view_up.setVisibility(View.VISIBLE);
                             txtName.setText("拒绝原因:");
                             txtAddress.setText(orderDetailBean.getRefusedReason());
                             break;
@@ -349,9 +357,5 @@ public class LeaseOrderRefundDetailActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("pageType",Integer.parseInt(pageType));
-        IntentUtil.gotoActivity(this, MyLeaseOrderListActivity.class,bundle);
     }
 }

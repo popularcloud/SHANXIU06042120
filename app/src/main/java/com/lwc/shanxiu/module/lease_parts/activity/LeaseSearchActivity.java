@@ -31,6 +31,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
+import com.lwc.shanxiu.view.TagListView;
 import com.lwc.shanxiu.widget.TagsLayout;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -49,7 +50,7 @@ public class LeaseSearchActivity extends BaseActivity {
     @BindView(R.id.et_search)
     EditText et_search;
     @BindView(R.id.tl_tags)
-    TagsLayout tl_tags;
+    TagListView tl_tags;
     @BindView(R.id.rv_data)
     RecyclerView rv_data;
     @BindView(R.id.rv_searchData)
@@ -95,12 +96,12 @@ public class LeaseSearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!TextUtils.isEmpty(s.toString().trim())){
+             /*   if(!TextUtils.isEmpty(s.toString().trim())){
                     onGetGoodNameList(s.toString().trim());
                 }else{
                     ll_search.setVisibility(View.VISIBLE);
                     rv_searchData.setVisibility(View.GONE);
-                }
+                }*/
             }
         });
 
@@ -159,7 +160,7 @@ public class LeaseSearchActivity extends BaseActivity {
                         SearchListWordBean searchKeyWordBeen = JsonUtil.parserGsonToObject(JsonUtil.getGsonValueByKey(response, "data"),SearchListWordBean.class);
                         if(searchKeyWordBeen != null){
 
-                            List<SearchListWordBean.LeaseGoodsKeywordBean> leaseGoodsKeywordBeans = searchKeyWordBeen.getLeaseGoodsKeyword();
+                            List<SearchListWordBean.LeaseGoodsKeywordBean> leaseGoodsKeywordBeans = searchKeyWordBeen.getPartsGoodsKeyword();
 
                             if(leaseGoodsKeywordBeans != null && leaseGoodsKeywordBeans.size() >0){
                                 tl_tags.setVisibility(View.VISIBLE);
@@ -193,9 +194,10 @@ public class LeaseSearchActivity extends BaseActivity {
                                 tl_tags.setVisibility(View.GONE);
                             }
 
-                            SearchListWordBean.LeaseGoodsKeywordNewBean leaseGoodsKeywordNewBean = searchKeyWordBeen.getLeaseGoodsKeywordNew();
-                            if(leaseGoodsKeywordNewBean != null && leaseGoodsKeywordNewBean.getList() != null){
-                                initLeftRecyclerView(leaseGoodsKeywordNewBean.getList());
+                            List<SearchListWordBean.LeaseGoodsKeywordBean> leaseGoodsKeywordNewBeans = searchKeyWordBeen.getPartsGoodsKeywordNew();
+
+                            if(leaseGoodsKeywordNewBeans != null){
+                                initLeftRecyclerView(leaseGoodsKeywordNewBeans);
                             }
                         }
                         break;
@@ -270,7 +272,7 @@ public class LeaseSearchActivity extends BaseActivity {
      * 初始化热搜列表
      * @param beans
      */
-    private void initLeftRecyclerView(final List<SearchListWordBean.LeaseGoodsKeywordNewBean.ListBean> beans) {
+    private void initLeftRecyclerView(final List<SearchListWordBean.LeaseGoodsKeywordBean> beans) {
         hotSearchAdapter = new HotSearchAdapter(this,beans,R.layout.item_hot_search);
         rv_data.setLayoutManager(new GridLayoutManager(this,2));
         rv_data.setAdapter(hotSearchAdapter);

@@ -32,7 +32,7 @@
             android:ellipsize="end"
             android:text="密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台密修平台"/>
 
-        <com.lwc.shanxiu.widget.TagsLayout
+        <com.lwc.shanxiu.widget.AutoLayoutTagsGroup
             android:id="@+id/tl_tags"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

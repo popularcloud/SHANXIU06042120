@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
@@ -65,6 +66,11 @@ public class MineFragment extends BaseFragment {
     TextView txtOrderCount;
     @BindView(R.id.txtmyMoney)
     TextView txtmyMoney;
+    @BindView(R.id.tv_uthentication)
+    TextView tv_uthentication;
+    @BindView(R.id.ll_authentication)
+    LinearLayout ll_authentication;
+
     private SharedPreferencesUtils preferencesUtils = null;
     private User user = null;
     private ImageLoaderUtil imageLoaderUtil = null;
@@ -93,6 +99,7 @@ public class MineFragment extends BaseFragment {
     protected void findViews(Bundle savedInstanceState) {
         preferencesUtils = SharedPreferencesUtils.getInstance(getContext());
         user = preferencesUtils.loadObjectData(User.class);
+
         setTitle("我的");
     }
 
@@ -145,7 +152,11 @@ public class MineFragment extends BaseFragment {
                 IntentUtil.gotoActivity(getActivity(), UserInfoActivity.class);
                 break;
             case R.id.ll_authentication:  //工程师认证
-                IntentUtil.gotoActivity(getActivity(), AuthenticationMainActivity.class);
+              //  if("0".equals(user.getIsSecrecy())){
+                    IntentUtil.gotoActivity(getActivity(), AuthenticationMainActivity.class);
+               /* }else{
+
+                }*/
                 break;
             case R.id.txtMyOrder:
             case R.id.ll_OrderCountTitle:
@@ -200,6 +211,22 @@ public class MineFragment extends BaseFragment {
         } else {
             ratingBar.setStar(0);
         }
+
+
+       if("1".equals(user.getIsSecrecy())){
+            tv_uthentication.setText("已认证");
+        }else if("2".equals(user.getIsSecrecy())){
+            tv_uthentication.setText("申请中");
+        }else{
+           tv_uthentication.setText("未认证");
+       }
+
+      /*  if("3".equals(user.getCompanySecrecy())){
+            ll_authentication.setVisibility(View.VISIBLE);
+        }else{
+            ll_authentication.setVisibility(View.GONE);
+        }*/
+
         updateVersion();
 
         super.onResume();

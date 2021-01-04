@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,8 +13,6 @@ import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
@@ -25,28 +20,19 @@ import com.lwc.shanxiu.activity.ImageBrowseActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
-import com.lwc.shanxiu.module.message.adapter.OtherKnowlegeArticleAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeDetailBean;
-import com.lwc.shanxiu.module.message.bean.LikeArticleBean;
 import com.lwc.shanxiu.module.setting.ShareActivity;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
-import com.lwc.shanxiu.utils.TimeUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
-import com.lwc.shanxiu.widget.MyWebView;
 
-import org.byteam.superadapter.OnItemClickListener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -70,7 +56,7 @@ public class KnowledgeDetailWebActivity extends BaseActivity {
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         return R.layout.activity_knowledge_web_detail;
     }
 
@@ -79,7 +65,7 @@ public class KnowledgeDetailWebActivity extends BaseActivity {
         knowledgeId = getIntent().getStringExtra("knowledgeId");
         showBack();
         setTitle("详情");
-        setRightImg(R.drawable.ic_share, new View.OnClickListener() { //分享
+        /*setRightImg(R.drawable.ic_share, new View.OnClickListener() { //分享
             @Override
             public void onClick(View view) {
                 if (detailBean != null) {
@@ -90,7 +76,7 @@ public class KnowledgeDetailWebActivity extends BaseActivity {
                     IntentUtil.gotoActivity(KnowledgeDetailWebActivity.this, ShareActivity.class, bundle);
                 }
             }
-        });
+        });*/
     }
 
 

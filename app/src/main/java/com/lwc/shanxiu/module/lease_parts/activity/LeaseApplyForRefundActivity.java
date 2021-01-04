@@ -120,8 +120,7 @@ public class LeaseApplyForRefundActivity extends BaseActivity {
 
         ImmersionBar.with(LeaseApplyForRefundActivity.this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.gray_white).init();
+                .statusBarDarkFont(true).init();
 
         orderDetailBean = (OrderDetailBean) getIntent().getSerializableExtra("orderDetailBean");
         returnType = getIntent().getIntExtra("returnType",0);
@@ -186,9 +185,9 @@ public class LeaseApplyForRefundActivity extends BaseActivity {
             ImageLoaderUtil.getInstance().displayFromNetDCircular(this,orderDetailBean.getGoodsImg(),iv_header,R.drawable.image_default_picture);
 
             String goodsName = orderDetailBean.getGoodsName();
-            String goodsNameStr = "租赁  " + goodsName;
-            SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, LeaseApplyForRefundActivity.this.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-            tv_title.setText(showGoodsName);
+          //  String goodsNameStr = "租赁  " + goodsName;
+           // SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, LeaseApplyForRefundActivity.this.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+            tv_title.setText(goodsName);
 
             String needShowMoney = "￥"+Utils.getMoney(Utils.chu(orderDetailBean.getGoodsPrice(),"100"));
             SpannableStringBuilder showGoodsPrice = Utils.getSpannableStringBuilder(1, needShowMoney.length() - 2, getResources().getColor(R.color.black), needShowMoney, 15, true);
@@ -292,7 +291,7 @@ public class LeaseApplyForRefundActivity extends BaseActivity {
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 if("1".equals(common.getStatus())){
-                    ToastUtil.showToast(LeaseApplyForRefundActivity.this,common.getInfo());
+                    ToastUtil.showToast(LeaseApplyForRefundActivity.this,"退货成功");
                     String data = JsonUtil.getGsonValueByKey(response,"data");
 
                     Bundle bundle = new Bundle();

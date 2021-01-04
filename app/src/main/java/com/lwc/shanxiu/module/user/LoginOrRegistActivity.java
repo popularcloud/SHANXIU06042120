@@ -209,11 +209,11 @@ public class LoginOrRegistActivity extends BaseActivity {
                         getActivity();
                         KeyboardUtil.showInput(false, LoginOrRegistActivity.this);
 
-                         if("3".equals(user.getCompanySecrecy())){
+                 /*        if("3".equals(user.getCompanySecrecy())){
                              IntentUtil.gotoActivityAndFinish(LoginOrRegistActivity.this, NewMainActivity.class);
-                         }else{
+                         }else{*/
                              IntentUtil.gotoActivityAndFinish(LoginOrRegistActivity.this, MainActivity.class);
-                         }
+                       //  }
 
                         sendBroadcast(new Intent(BroadcastFilters.UPDATE_USER_LOGIN_SUCCESSED));
                         overridePendingTransition(R.anim.enter_exit, R.anim.enter_enter);

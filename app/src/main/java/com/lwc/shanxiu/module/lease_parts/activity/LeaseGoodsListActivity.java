@@ -34,6 +34,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.PopupWindowUtil;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -137,6 +138,25 @@ public class LeaseGoodsListActivity extends BaseActivity {
             }
         });
 
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchText = s.toString();
+                currentPage = 1;
+                searchData();
+            }
+        });
+
 
         Intent myIntent = getIntent();
         typeId = myIntent.getStringExtra("typeId");
@@ -152,14 +172,13 @@ public class LeaseGoodsListActivity extends BaseActivity {
 
     @Override
     protected void init() {
-  /*      iv_right.setImageResource(R.drawable.ic_more_black);
+        iv_right.setImageResource(R.drawable.ic_more_black);
         iv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PopupWindowUtil.showHeaderPopupWindow(LeaseGoodsListActivity.this,iv_right,);
-               // PopupWindowUtil.showHeaderPopupWindow(LeaseGoodsListActivity.this,tv_msg,leaseShoppingCartFragment,fragment_container,fragmentManager);
+                PopupWindowUtil.showHeaderPopupWindow(LeaseGoodsListActivity.this,tv_msg,leaseShoppingCartFragment,fragment_container,fragmentManager);
             }
-        });*/
+        });
     }
 
     @OnClick({R.id.tv_filter,R.id.tv_search,R.id.tv_price,R.id.ll_no_data,R.id.img_back})
@@ -319,24 +338,7 @@ public class LeaseGoodsListActivity extends BaseActivity {
 
     @Override
     protected void widgetListener() {
-        et_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                searchText = s.toString();
-                currentPage = 1;
-                searchData();
-            }
-        });
     }
 
 

@@ -68,6 +68,7 @@ public class LeaseGoodBean {
     private String goodsDetail;
     private String isCollection;
     private boolean isChecked;
+    private int num;
 
     public String getGoodsRules() {
         return goodsRules;
@@ -315,6 +316,14 @@ public class LeaseGoodBean {
 
     public void setCollectionId(String collectionId) {
         this.collectionId = collectionId;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     public static class ModifyTimeBean {

@@ -117,8 +117,8 @@ public class LeaseOrderFragment extends BaseFragment {
                 switch (btnText){
                     case "取消订单":
                         reasons.clear();
-                        reasons.add("我不想租了");
-                        reasons.add("信息填写错误，我不想拍了");
+                        reasons.add("多拍/拍错/不想要");
+                        reasons.add("未按约定时间发货");
                         reasons.add("平台缺货");
                         reasons.add("其他原因");
                         cancelOrderDialog = new CancelOrderDialog(getContext(), new CancelOrderDialog.CallBack() {
@@ -134,7 +134,10 @@ public class LeaseOrderFragment extends BaseFragment {
                         inLease(myOrder.getOrderId());
                         break;
                     case "查看物流":
-                        IntentUtil.gotoActivity(getActivity(), LeaseGoodLogisticsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("order_id",myOrder.getOrderId());
+                        bundle.putInt("openType",1);
+                        IntentUtil.gotoActivity(getContext(), LeaseOrderDetailActivity.class,bundle);
                         break;
                     case "删除订单":
                         delOrder(myOrder.getOrderId());

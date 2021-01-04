@@ -161,6 +161,12 @@ public class WrongTopicFragment extends BaseFragment {
                 switch (common.getStatus()) {
                     case "1":
                         List<WrongTopicBean> beanList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"),new TypeToken<ArrayList<WrongTopicBean>>(){});
+
+                        if(beanList != null && beanList.size() > 0){
+                            ll_clear.setVisibility(View.VISIBLE);
+                        }else{
+                            ll_clear.setVisibility(View.GONE);
+                        }
                         if(page == 1){
                             notifyData(beanList);
                             mBGARefreshLayout.endRefreshing();

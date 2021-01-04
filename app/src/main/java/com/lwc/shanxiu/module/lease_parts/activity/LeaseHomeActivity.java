@@ -80,9 +80,8 @@ public class LeaseHomeActivity extends BaseFragmentActivity {
         addFragmenInList();
         addRadioButtonIdInList();
         bindViewPage(fragmentHashMap);
-        cViewPager.setCurrentItem(0, false);
-        radioHome.setChecked(true);
-
+      //  cViewPager.setCurrentItem(0, false);
+       // radioHome.setChecked(true);
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
                 .statusBarDarkFont(true)
@@ -120,11 +119,11 @@ public class LeaseHomeActivity extends BaseFragmentActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
-        int startType = intent.getIntExtra("startType",0);
-
-        if(cViewPager != null){
-            cViewPager.setCurrentItem(startType, false);
+        if(intent != null){
+            int startType = intent.getIntExtra("startType",0);
+            if(cViewPager != null){
+                cViewPager.setCurrentItem(startType, false);
+            }
         }
     }
 

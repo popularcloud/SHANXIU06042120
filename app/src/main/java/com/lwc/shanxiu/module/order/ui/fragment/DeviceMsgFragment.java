@@ -107,7 +107,8 @@ public class DeviceMsgFragment extends BaseFragment{
                     updateDeviceMsgBean.setCompanyTownName(presentBean.getCompanyTownName());
                     updateDeviceMsgBean.setCompanyTownId(presentBean.getCompanyTownId());
                     updateDeviceMsgBean.setUserPhone(presentBean.getUserPhone());
-                    updateDeviceMsgBean.setUserCompanyName(presentBean.getUserCompanyName());
+                    updateDeviceMsgBean.setUserName(presentBean.getUserName());
+                    updateDeviceMsgBean.setUserDetailCompanyName(presentBean.getUserDetailCompanyName());
                     bundle.putSerializable("presentBean",updateDeviceMsgBean);
                     IntentUtil.gotoActivity(getActivity(), UpdateDeviceMsgActivity.class,bundle);
                 }else{

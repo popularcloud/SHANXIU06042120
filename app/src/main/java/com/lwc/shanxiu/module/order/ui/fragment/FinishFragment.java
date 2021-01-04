@@ -82,8 +82,7 @@ public class FinishFragment extends BaseFragment implements IOrderListFragmentVi
 
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
 

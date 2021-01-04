@@ -76,8 +76,7 @@ public class ProceedFragment extends BaseFragment implements IOrderListFragmentV
 
         ImmersionBar.with(getActivity())
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
     @Override

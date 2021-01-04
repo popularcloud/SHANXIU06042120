@@ -29,6 +29,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -113,7 +114,7 @@ public class LeaseCategoryFragment extends BaseFragment {
             case R.id.iv_right:
             case R.id.tv_msg:
                 MyMsg msg = new MyMsg();
-                msg.setMessageType("5");
+                msg.setMessageType("6");
                 msg.setMessageTitle("租赁消息");
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("myMsg", msg);
@@ -141,7 +142,7 @@ public class LeaseCategoryFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         //获取未读租赁消息
-       // MsgReadUtil.hasMessage(getActivity(),tv_msg);
+        MsgReadUtil.hasMessage(getActivity(),tv_msg);
     }
 
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -152,7 +153,7 @@ public class LeaseCategoryFragment extends BaseFragment {
                     .statusBarDarkFont(true).init();
 
             //获取未读租赁消息
-          //  MsgReadUtil.hasMessage(getActivity(),tv_msg);
+            MsgReadUtil.hasMessage(getActivity(),tv_msg);
         }
     }
 
@@ -196,8 +197,11 @@ public class LeaseCategoryFragment extends BaseFragment {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 if("1".equals(common.getStatus())){
                     leaseLeftBeans = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response,"data"),new TypeToken<ArrayList<LeaseGoodsTypeBig>>(){});
-                    leftTypeAdapter.addAll(leaseLeftBeans);
-                    getSmalGoodType(leaseLeftBeans.get(0).getDeviceTypeId());
+                    if(leaseLeftBeans != null && leaseLeftBeans.size() > 0){
+                        leftTypeAdapter.addAll(leaseLeftBeans);
+                        getSmalGoodType(leaseLeftBeans.get(0).getDeviceTypeId());
+                    }
+
                 }else{
                     ToastUtil.showToast(getActivity(),common.getInfo());
                 }

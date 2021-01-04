@@ -38,6 +38,9 @@ public class Constants {
 	public static final int RED_ID_RESULT = 10005;// 红包关闭
 	public static final int RED_ID_TO_RESULT = 10006;// 查看详情
 
+
+	public static final int REQUEST_CODE_SELECT_ADDRESS = 1112;// 微调地址
+
 	/** 从本地获取图片请求码 */
 	public static final int REQUEST_CODE_SELECT_LOCAL = 11;
 

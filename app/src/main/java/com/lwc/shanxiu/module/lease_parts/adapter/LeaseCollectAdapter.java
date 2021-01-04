@@ -75,13 +75,13 @@ public class LeaseCollectAdapter extends SuperAdapter<LeaseGoodBean>{
         }
 
         String goodsName = item.getGoodsName();
-        String goodsNameStr = "租赁  " + goodsName;
-        SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-        tv_title.setText(showGoodsName);
+       // String goodsNameStr = "租赁  " + goodsName;
+       // SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+        tv_title.setText(goodsName);
 
         tv_specs.setText(item.getLeaseSpecs());
         String goodsPrice = Utils.chu(item.getGoodsPrice(), "100");
-        String goodsPriceStr = "￥" + goodsPrice + "/月";
+        String goodsPriceStr = "￥" + goodsPrice + "";
         SpannableStringBuilder showPrices = Utils.getSpannableStringBuilder(1, goodsPrice.length()+1, mContext.getResources().getColor(R.color.red_money), goodsPriceStr, 18, true);
         tv_prices.setText(showPrices);
 

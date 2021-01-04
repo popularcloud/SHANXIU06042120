@@ -11,17 +11,17 @@ import org.byteam.superadapter.SuperViewHolder;
 
 import java.util.List;
 
-public class HotSearchAdapter extends SuperAdapter<SearchListWordBean.LeaseGoodsKeywordNewBean.ListBean> {
+public class HotSearchAdapter extends SuperAdapter<SearchListWordBean.LeaseGoodsKeywordBean> {
 
 	private Context mContext;
 
-	public HotSearchAdapter(Context context, List<SearchListWordBean.LeaseGoodsKeywordNewBean.ListBean> items, int layoutResId) {
+	public HotSearchAdapter(Context context, List<SearchListWordBean.LeaseGoodsKeywordBean> items, int layoutResId) {
 		super(context, items, layoutResId);
 		mContext = context;
 	}
 
 	@Override
-	public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, SearchListWordBean.LeaseGoodsKeywordNewBean.ListBean item) {
+	public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, SearchListWordBean.LeaseGoodsKeywordBean item) {
 
 		TextView tv_name = holder.itemView.findViewById(R.id.tv_name);
 		tv_name.setText(item.getKeyword_name());

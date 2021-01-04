@@ -54,11 +54,11 @@ public class LeaseOrderReturnListAdapter extends SuperAdapter<LeaseReturnDetailB
         ImageLoaderUtil.getInstance().displayFromNetDCircular(context,item.getGoodsImg(),iv_header,R.drawable.image_default_picture);
 
         String goodsName = item.getGoodsName();
-        String goodsNameStr = "租赁  " + goodsName;
-        SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-        tv_title.setText(showGoodsName);
+        //String goodsNameStr = "租赁  " + goodsName;
+        //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+        tv_title.setText(goodsName);
 
-        tv_spece.setText(item.getLeaseSpecs()+","+item.getLeaseMonTime()+"个月,"+("1".equals(item.getPayType())?"月付":"季付"));
+        tv_spece.setText(item.getLeaseSpecs());
 
         String returnPrice = Utils.chu((TextUtils.isEmpty(item.getMoney())?"0":item.getMoney()), "100");
         String goodsPrice = Utils.chu(item.getGoodsPrice(), "100");
@@ -67,7 +67,7 @@ public class LeaseOrderReturnListAdapter extends SuperAdapter<LeaseReturnDetailB
         tv_price.setText(Utils.getMoney(showPrices.toString()));
 
         tv_number.setText("X"+item.getGoodsNum());
-        String totalMoney = "共计"+item.getGoodsNum()+"件商品 退款:"+ "￥" + returnPrice;
+        String totalMoney = "共计"+item.getGoodsNum()+"件商品";
         tv_total.setText(Utils.getMoney(totalMoney));
 
         tv_order_num.setText("订单号:"+item.getBranchId());

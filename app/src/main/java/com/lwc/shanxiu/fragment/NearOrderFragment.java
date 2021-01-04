@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -251,9 +252,31 @@ public class NearOrderFragment extends BaseFragment {
      * 获取附近订单
      */
     private void getOrderList() {
+        //cityId = "52";
         if (cityId == null || cityId.equals("")){
+            if(curPage == 1){
+                mBGARefreshLayout.endRefreshing();
+            }else{
+                mBGARefreshLayout.endLoadingMore();
+            }
+
+            Location location = preferencesUtils.loadObjectData(Location.class);
+            String shi = FileUtil.readAssetsFile(getActivity(), "shi.json");
+            shis = JsonUtil.parserGsonToArray(shi, new TypeToken<ArrayList<Shi>>() {
+            });
+            if (location != null) {
+                for (int i=0; i<shis.size(); i++) {
+                    Shi str = shis.get(i);
+                    if (str.getCode().equals(location.getCityCode())){
+                        cityId = str.getDmId();
+                        getOrderList();
+                    }
+                }
+            }
+         //   ToastUtil.showToast(getActivity(),"定位信息获取失败!请稍后重试");
             return;
         }
+
         if (orders == null || orders.size() == 0) {
             progressUtils.showCustomProgressDialog(getActivity());
         }
@@ -289,28 +312,36 @@ public class NearOrderFragment extends BaseFragment {
                         nearbyOrderAdapter.replaceAll(orders);
                         if (orders != null && orders.size() > 0) {
                             iv_nodate.setVisibility(View.GONE);
-                            mBGARefreshLayout.setVisibility(View.VISIBLE);
                         } else {
                             iv_nodate.setVisibility(View.VISIBLE);
-                            mBGARefreshLayout.setVisibility(View.GONE);
                         }
                         break;
                     default:
                         break;
                 }
+
                 progressUtils.dismissCustomProgressDialog();
-                BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
-                BGARefreshLayoutUtils.endLoadingMore(mBGARefreshLayout);
+
+                if(curPage == 1){
+                    mBGARefreshLayout.endRefreshing();
+                }else{
+                    mBGARefreshLayout.endLoadingMore();
+                }
             }
 
             @Override
             public void returnException(Exception e, String msg) {
                 LLog.eNetError("getOrderList  " + e.toString());
+
                 progressUtils.dismissCustomProgressDialog();
                 if (!TextUtils.isEmpty(msg))
                     ToastUtil.showLongToast(getContext(), msg);
-                BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
-                BGARefreshLayoutUtils.endLoadingMore(mBGARefreshLayout);
+
+                if(curPage == 1){
+                    mBGARefreshLayout.endRefreshing();
+                }else{
+                    mBGARefreshLayout.endLoadingMore();
+                }
             }
         });
     }
@@ -359,6 +390,7 @@ public class NearOrderFragment extends BaseFragment {
     }
 
     public void initData() {
+       // Log.e("比较城市code","initData");
         if (selectedShi == null && strList.size() == 0) {
             String shi = FileUtil.readAssetsFile(getActivity(), "shi.json");
             String xian = FileUtil.readAssetsFile(getActivity(), "xian.json");
@@ -367,29 +399,21 @@ public class NearOrderFragment extends BaseFragment {
             ArrayList<Xian> allXians = JsonUtil.parserGsonToArray(xian, new TypeToken<ArrayList<Xian>>() {
             });
             Location location = preferencesUtils.loadObjectData(Location.class);
-            if (location != null) {
-                String [] list = location.getStrValue().split("#");
-                if (list != null && list.length > 0) {
-                    Map<String, String> map = new HashMap<>();
-                    for (int i=0; i<list.length; i++) {
-                        String str = list[i];
-                        if (str != null && !str.equals("")){
-                            String [] arr = str.split("=");
-                            if (arr != null && arr.length > 1) {
-                                map.put(arr[0], arr[1]);
-                            }
-                        }
-                    }
-                    cityCode = map.get("cityCode");
-                }
-            }
+            cityCode = location.getCityCode();
+           // Log.e("比较城市code","cityCode"+cityCode);
             if (!TextUtils.isEmpty(cityCode) && shis != null) {
                 for (int i=0; i<shis.size(); i++) {
+                  //  Log.e("比较城市code","code"+cityCode+"=====shicode"+shis.get(i).getCode());
                     if (shis.get(i).getCode().equals(cityCode)) {
                         selectedShi = shis.get(i);
                         cityId = selectedShi.getDmId();
+                       // Log.e("比较城市结果code","cityId==="+cityId);
                         break;
                     }
+                 /*   if(location.getCityCode().equals(shis.get(i).getCode())){
+                        selectedShi = shis.get(i);
+                        cityId = shis.get(i).getDmId();
+                    }*/
                 }
                 if (selectedShi != null) {
                     strList.add("全部");
@@ -531,7 +555,6 @@ public class NearOrderFragment extends BaseFragment {
                 break;
             case R.id.iv_nodate:
                 iv_nodate.setVisibility(View.GONE);
-                mBGARefreshLayout.setVisibility(View.VISIBLE);
                 mBGARefreshLayout.beginRefreshing();
                 break;
             default:

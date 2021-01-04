@@ -28,6 +28,7 @@ public class CancelReasonAdapter extends SuperAdapter<String> {
         presentPosition = position;
         //notifyDataSetChanged();
     }
+
     @Override
     public void onBind(SuperViewHolder holder, int viewType, final int layoutPosition, String item) {
 

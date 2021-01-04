@@ -60,6 +60,14 @@ public class MyMsgActivity extends BaseActivity {
         ButterKnife.bind(this);
         BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout);
         setTitle("我的消息");
+
+        setRightText("一键已读", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                readAllMsg();
+            }
+        });
+
         showBack();
     }
 
@@ -77,14 +85,15 @@ public class MyMsgActivity extends BaseActivity {
 
     }
 
-    private void readMsg(String type) {
+    private void readAllMsg() {
         if (Utils.isFastClick(1000)) {
             return;
         }
-        HttpRequestUtils.httpRequest(this, "readMsg", RequestValue.READ_MESSAGE+type, null, "POST", new HttpRequestUtils.ResponseListener() {
+        HttpRequestUtils.httpRequest(this, "read_all", RequestValue.READ_READALL, null, "POST", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String result) {
-                ToastUtil.showToast(MyMsgActivity.this,result);
+                ToastUtil.showToast(MyMsgActivity.this,"操作成功!");
+                hasMessage();
             }
             @Override
             public void returnException(Exception e, String msg) {

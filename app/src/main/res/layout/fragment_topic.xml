@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:textSize="15sp"
+                android:padding="@dimen/dp_2"
                 android:gravity="left|top"
                 android:textColor="@color/black"
                 android:text=""/>
@@ -89,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:textSize="15sp"
+                android:padding="@dimen/dp_2"
                 android:gravity="left|top"
                 android:textColor="@color/black"
                 android:text=""/>
@@ -114,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:textSize="15sp"
+                android:padding="@dimen/dp_2"
                 android:gravity="left|top"
                 android:textColor="@color/black"
                 android:text=""/>
@@ -138,10 +141,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:gravity="left|top"
+                android:padding="@dimen/dp_2"
                 android:textSize="15sp"
                 android:textColor="@color/black"
-                android:text=""/>
+                android:text="富士康就付款福克斯的附近可适当减肥看电视剧福克水电费肯定是速度快"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

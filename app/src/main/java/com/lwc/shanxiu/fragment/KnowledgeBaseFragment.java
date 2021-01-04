@@ -32,7 +32,6 @@ import com.lwc.shanxiu.module.message.adapter.Madapter;
 import com.lwc.shanxiu.module.message.adapter.PopSelectAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.module.message.bean.SearchConditionBean;
-import com.lwc.shanxiu.module.message.ui.KnowledgeDetailActivity;
 import com.lwc.shanxiu.module.message.ui.KnowledgeDetailWebActivity;
 import com.lwc.shanxiu.module.message.ui.KnowledgeSearchActivity;
 import com.lwc.shanxiu.module.message.ui.PublishActivity;
@@ -158,12 +157,14 @@ public class KnowledgeBaseFragment extends BaseFragment {
             }
         });
 
-    /*    ll_search.setOnClickListener(new View.OnClickListener() {
+        ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class, ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
+                Bundle bundle = new Bundle();
+                bundle.putString("search_txt",search_txt);
+                IntentUtil.gotoActivityForResult(getContext(), KnowledgeSearchActivity.class,bundle,ServerConfig.REQUESTCODE_KNOWLEDGESEARCH);
             }
-        });*/
+        });
 
 
         bindRecycleView();
@@ -181,6 +182,10 @@ public class KnowledgeBaseFragment extends BaseFragment {
                     clearTextAndTagSearch();
                     clearTypeSearch();
                 }
+
+                beanList.clear();
+                adapter.clear();
+
                 loadData();
             }
 
@@ -307,7 +312,6 @@ public class KnowledgeBaseFragment extends BaseFragment {
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
-
                 Bundle bundle = new Bundle();
                 bundle.putString("knowledgeId", adapter.getItem(position).getKnowledgeId());
                 isDetail = true;
@@ -521,6 +525,7 @@ public class KnowledgeBaseFragment extends BaseFragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
         if(mBGARefreshLayout != null && !isDetail){
             isClearCondition = true;

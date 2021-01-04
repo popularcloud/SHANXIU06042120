@@ -3,6 +3,7 @@ package com.lwc.shanxiu.module.authentication.activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
+import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.authentication.adapter.AnswerTopicAdapter;
 import com.lwc.shanxiu.module.authentication.adapter.AnswerTopicReturnAdapter;
 import com.lwc.shanxiu.module.authentication.bean.AnswerReturnBean;
@@ -63,7 +65,7 @@ public class ExaminationStatusActivity extends BaseActivity {
     protected void findViews() {
         showBack();
         setTitle("成绩报告");
-        setRightText("错题本", new View.OnClickListener() {
+        setRightText("错题本","#1481ff", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
@@ -96,7 +98,11 @@ public class ExaminationStatusActivity extends BaseActivity {
                 rv_myData.setLayoutManager(new GridLayoutManager(this,7));
                 rv_myData.setAdapter(answerTopicAdapter);
 
-                tv_score.setText(String.valueOf(answerReturnBean.getScore())+"分");
+                 String goodsNameStr = answerReturnBean.getScore()+"分";
+
+                SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(goodsNameStr.length()-1, goodsNameStr.length(),getResources().getColor(R.color.btn_blue_nomal), goodsNameStr, 12, false);
+
+                tv_score.setText(goodsNameStr);
                 if(answerReturnBean.getPass() == 1){ //通过考试
                     tv_status.setText("恭喜通过");
                     ImageLoaderUtil.getInstance().displayFromLocal(ExaminationStatusActivity.this,iv_status,R.drawable.ic_test_pass);

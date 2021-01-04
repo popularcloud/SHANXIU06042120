@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +29,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 
 import org.byteam.superadapter.OnItemClickListener;
@@ -53,6 +55,8 @@ public class LeaseReturnOrderSearchActivity extends BaseActivity {
     TextView tv_msg;
     @BindView(R.id.et_search)
     TextView et_search;
+    @BindView(R.id.iv_right)
+    ImageView iv_right;
     @BindView(R.id.mBGARefreshLayout)
     BGARefreshLayout mBGARefreshLayout;
     private LeaseOrderReturnListAdapter adapter;
@@ -79,11 +83,11 @@ public class LeaseReturnOrderSearchActivity extends BaseActivity {
     @Override
     protected void init() {
         setTitle("订单缴费");
-        setRightImg(R.drawable.ic_message, new View.OnClickListener() {
+        iv_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MyMsg msg = new MyMsg();
-                msg.setMessageType("5");
+                msg.setMessageType("6");
                 msg.setMessageTitle("租赁消息");
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("myMsg", msg);
@@ -98,7 +102,7 @@ public class LeaseReturnOrderSearchActivity extends BaseActivity {
         super.onResume();
 
         //获取未读租赁消息
-       // MsgReadUtil.hasMessage(LeaseOrderSearchActivity.this,tv_msg);
+        MsgReadUtil.hasMessage(LeaseReturnOrderSearchActivity.this,tv_msg);
 
         mBGARefreshLayout.beginRefreshing();
     }

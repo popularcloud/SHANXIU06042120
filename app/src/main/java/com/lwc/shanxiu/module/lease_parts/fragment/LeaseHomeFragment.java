@@ -40,13 +40,14 @@ import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.view.ImageCycleView;
 import com.lwc.shanxiu.widget.CustomViewPager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -69,6 +70,8 @@ public class LeaseHomeFragment extends BaseFragment {
     LinearLayout user_head_container;
     @BindView(R.id.ll_hide_or_show)
     LinearLayout ll_hide_or_show;
+/*    @BindView(R.id.mBGARefreshLayout)
+    BGARefreshLayout mBGARefreshLayout;*/
 
     @BindView(R.id.ad_view)
     ImageCycleView mAdView;
@@ -98,6 +101,7 @@ public class LeaseHomeFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lease_home, container, false);
         ButterKnife.bind(this, view);
+       // BGARefreshLayoutUtils.initRefreshLayout(getContext(), mBGARefreshLayout,false);
         return view;
     }
 
@@ -132,7 +136,7 @@ public class LeaseHomeFragment extends BaseFragment {
         et_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // IntentUtil.gotoActivity(getContext(), LeaseSearchActivity.class);
+                IntentUtil.gotoActivity(getContext(), LeaseSearchActivity.class);
             }
         });
 
@@ -145,13 +149,24 @@ public class LeaseHomeFragment extends BaseFragment {
             }
         });
 
+
+        /*mBGARefreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+            @Override
+            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+                getWheelPic();
+                mBGARefreshLayout.endRefreshing();
+            }
+
+            @Override
+            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+                return false;
+            }
+        });*/
+
+
         calcWheelPicHeight();
-
         getWheelPic();
-
-        getLeaseType();
-
-        getRecommendsType();
+       //mBGARefreshLayout.beginRefreshing();
     }
 
 
@@ -161,7 +176,7 @@ public class LeaseHomeFragment extends BaseFragment {
             case R.id.iv_right:
             case R.id.tv_msg:
                 MyMsg msg = new MyMsg();
-                msg.setMessageType("5");
+                msg.setMessageType("6");
                 msg.setMessageTitle("租赁消息");
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("myMsg", msg);
@@ -193,7 +208,7 @@ public class LeaseHomeFragment extends BaseFragment {
                     .statusBarDarkFont(true).init();
 
             //获取未读租赁消息
-           // MsgReadUtil.hasMessage(getActivity(),tv_msg);
+            MsgReadUtil.hasMessage(getActivity(),tv_msg);
         }
     }
 
@@ -201,16 +216,15 @@ public class LeaseHomeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         //获取未读租赁消息
-       // MsgReadUtil.hasMessage(getActivity(),tv_msg);
+        MsgReadUtil.hasMessage(getActivity(),tv_msg);
     }
 
     /*
       *  获取轮播图
      */
     public void getWheelPic() {
-        Map<String,String> params = new HashMap<>();
-        params.put("image_type","2");//租赁商城页
-        HttpRequestUtils.httpRequest(getActivity(), "获取首页租赁轮播图", RequestValue.GET_PARTSMANAGE_GETPARTSMAGES, params, "GET", new HttpRequestUtils.ResponseListener() {
+
+        HttpRequestUtils.httpRequest(getActivity(), "获取首页租赁轮播图", RequestValue.GET_PARTSMANAGE_GETPARTSMAGES, null, "GET", new HttpRequestUtils.ResponseListener() {
 
             @Override
             public void getResponseData(String response) {
@@ -238,10 +252,12 @@ public class LeaseHomeFragment extends BaseFragment {
                         LLog.i("获取首页轮播图" + common.getInfo());
                         break;
                 }
+                getLeaseType();
             }
 
             @Override
             public void returnException(Exception e, String msg) {
+                getLeaseType();
                 LLog.eNetError(e.toString());
             }
         });
@@ -275,9 +291,7 @@ public class LeaseHomeFragment extends BaseFragment {
                     bundle.putString("title", info.getAdvertisingTitle());
                 IntentUtil.gotoActivity(MainActivity.activity, InformationDetailsActivity.class, bundle);
             }
-
         }
-
         @Override
         public void displayImage(final String imageURL, final ImageView imageView) {
             ImageLoaderUtil.getInstance().displayFromNetDCircular(getActivity(), imageURL, imageView,R.drawable.image_default_picture);// 使用ImageLoader对图片进行加装！
@@ -289,7 +303,6 @@ public class LeaseHomeFragment extends BaseFragment {
      */
     public void getLeaseType() {
         HttpRequestUtils.httpRequest(getActivity(), "获取首页租赁设备类型", RequestValue.GET_PARTSMANAGE_GETDEVICETYPES, null, "GET", new HttpRequestUtils.ResponseListener() {
-
             @Override
             public void getResponseData(String response) {
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
@@ -305,10 +318,13 @@ public class LeaseHomeFragment extends BaseFragment {
                         LLog.i("获取租赁设备类型" + common.getInfo());
                         break;
                 }
+
+                getRecommendsType();
             }
 
             @Override
             public void returnException(Exception e, String msg) {
+                getRecommendsType();
                 LLog.eNetError(e.toString());
             }
         });
@@ -342,7 +358,6 @@ public class LeaseHomeFragment extends BaseFragment {
     }
 
     public void setViewpageHeight(int height) {
-
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) vp_goodList.getLayoutParams();
         layoutParams.height = height;
         vp_goodList.setLayoutParams(layoutParams);
@@ -373,7 +388,7 @@ public class LeaseHomeFragment extends BaseFragment {
             }
         });
 
-        vp_goodList.setCurrentItem(0, false);
+        //vp_goodList.setCurrentItem(0, false);
 
 /*        // 设置Tab底部线的高度,传入的是dp
         tabs.setUnderlineHeight(0);

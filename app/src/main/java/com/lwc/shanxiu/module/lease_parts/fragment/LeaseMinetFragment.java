@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
-import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
@@ -21,8 +20,6 @@ import com.lwc.shanxiu.module.BaseFragment;
 import com.lwc.shanxiu.module.addressmanager.AddressManagerActivity;
 import com.lwc.shanxiu.module.authentication.activity.AuthenticationMainActivity;
 import com.lwc.shanxiu.module.bean.User;
-import com.lwc.shanxiu.module.lease_parts.activity.LeaseNeedPayActivity;
-import com.lwc.shanxiu.module.lease_parts.activity.LeaseOrderSearchActivity;
 import com.lwc.shanxiu.module.lease_parts.activity.LeaseReturnOrderSearchActivity;
 import com.lwc.shanxiu.module.lease_parts.activity.MyCollectActivity;
 import com.lwc.shanxiu.module.lease_parts.activity.MyLeaseOrderListActivity;
@@ -34,6 +31,7 @@ import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 
 import java.util.HashMap;
@@ -128,7 +126,7 @@ public class LeaseMinetFragment extends BaseFragment {
         loadUI();
 
         //获取未读租赁消息
-        //MsgReadUtil.hasMessage(getActivity(),tv_msg);
+        MsgReadUtil.hasMessage(getActivity(),tv_msg);
     }
 
 
@@ -160,7 +158,7 @@ public class LeaseMinetFragment extends BaseFragment {
             user = preferencesUtils.loadObjectData(User.class);
 
             //获取未读租赁消息
-            //MsgReadUtil.hasMessage(getActivity(),tv_msg);
+            MsgReadUtil.hasMessage(getActivity(),tv_msg);
 
             loadUI();
         }
@@ -223,8 +221,8 @@ public class LeaseMinetFragment extends BaseFragment {
             case R.id.iv_right:
             case R.id.tv_msg:
                 MyMsg msg = new MyMsg();
-                msg.setMessageType("5");
-                msg.setMessageTitle("租赁消息");
+                msg.setMessageType("6");
+                msg.setMessageTitle("备件消息");
                 Bundle bundle1 = new Bundle();
                 bundle1.putSerializable("myMsg", msg);
                 IntentUtil.gotoActivity(getContext(), MsgListActivity.class,bundle1);
@@ -234,28 +232,24 @@ public class LeaseMinetFragment extends BaseFragment {
 
     private void loadUI(){
         ImageLoaderUtil.getInstance().displayFromNetDCircular(getContext(),user.getMaintenanceHeadImage(),iv_header,R.drawable.default_portrait_100);
-        if(!TextUtils.isEmpty(user.getUserName())){
-            tv_name.setText(user.getUserName());
+        if(!TextUtils.isEmpty(user.getMaintenanceName())){
+            tv_name.setText(user.getMaintenanceName());
         }else{
             tv_name.setText(user.getUserPhone());
         }
 
         tv_money.setText(user.getBanlance());
-      /*switch (user.getIsCertification()){
+      /*switch (user.getIsSecrecy()){
           case "0":
               tv_authentication.setText("未认证");
               tv_heaer_authentication.setText("未实名 >");
               break;
           case "1":
-              tv_authentication.setText("审核中");
-              tv_heaer_authentication.setText("未实名 >");
-              break;
-          case "2":
               tv_authentication.setText("已认证");
               tv_heaer_authentication.setText("已实名 >");
               break;
-          case "3":
-              tv_authentication.setText("认证失败");
+          case "2":
+              tv_authentication.setText("申请中");
               tv_heaer_authentication.setText("未实名 >");
               break;
       }*/

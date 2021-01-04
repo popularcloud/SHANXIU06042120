@@ -14,16 +14,14 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
-import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.BaseFragment;
 import com.lwc.shanxiu.module.authentication.activity.TopicActivity;
 import com.lwc.shanxiu.module.authentication.adapter.ExaminationAdapter;
-import com.lwc.shanxiu.module.authentication.adapter.TrainAdapter;
 import com.lwc.shanxiu.module.authentication.bean.ExaminationBean;
-import com.lwc.shanxiu.module.bean.Order;
-import com.lwc.shanxiu.module.question.bean.QuestionIndexBean;
+import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
+import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
@@ -58,6 +56,9 @@ public class ExaminationFragment extends BaseFragment {
     //加载的page页
     private int page = 1;
 
+    private User user = null;
+    private ImageLoaderUtil imageLoaderUtil = null;
+
     private SharedPreferencesUtils preferencesUtils = null;
 
     @Nullable
@@ -66,6 +67,9 @@ public class ExaminationFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_train, null);
         ButterKnife.bind(this, view);
         BGARefreshLayoutUtils.initRefreshLayout(getContext(), mBGARefreshLayout,false);
+
+        preferencesUtils = SharedPreferencesUtils.getInstance(getContext());
+        user = preferencesUtils.loadObjectData(User.class);
         return view;
     }
 
@@ -82,7 +86,15 @@ public class ExaminationFragment extends BaseFragment {
                 .statusBarColor(R.color.white)
                 .statusBarDarkFont(true).init();
 
-        tv_submit.setVisibility(View.VISIBLE);
+       // tv_submit.setVisibility(View.VISIBLE);
+
+        if("1".equals(user.getIsSecrecy())){  //已认证
+            tv_submit.setVisibility(View.GONE);
+        }else if("2".equals(user.getIsSecrecy())){ //申请中
+            tv_submit.setVisibility(View.GONE);
+        }else{
+            tv_submit.setVisibility(View.VISIBLE); //未认证
+        }
     }
 
 
@@ -100,8 +112,6 @@ public class ExaminationFragment extends BaseFragment {
             }
         });
         recyclerView.setAdapter(adapter);
-
-        mBGARefreshLayout.beginRefreshing();
     }
 
 
@@ -125,6 +135,12 @@ public class ExaminationFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mBGARefreshLayout.beginRefreshing();
+    }
+
+    @Override
     public void setListener() {
         mBGARefreshLayout.setIsShowLoadingMoreView(false);
         mBGARefreshLayout.setPullDownRefreshEnable(false);
@@ -134,6 +150,7 @@ public class ExaminationFragment extends BaseFragment {
             public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
                 page = 1;
                 loadData();
+                mBGARefreshLayout.endRefreshing();
             }
 
             @Override

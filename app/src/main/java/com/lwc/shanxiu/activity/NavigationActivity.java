@@ -384,10 +384,10 @@ public class NavigationActivity extends BaseActivity implements AMapNaviViewList
 
 	}
 
-	@Override
+/*	@Override
 	public void onGpsSignalWeak(boolean b) {
 
-	}
+	}*/
 }
 
 

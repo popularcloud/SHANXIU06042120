@@ -1,15 +1,18 @@
 package com.lwc.shanxiu.module.authentication.activity;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dueeeke.videocontroller.StandardVideoController;
 import com.dueeeke.videocontroller.component.CompleteView;
@@ -27,6 +30,7 @@ import com.lwc.shanxiu.module.authentication.adapter.TrainAdapter;
 import com.lwc.shanxiu.module.authentication.bean.TrainBean;
 import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
+import com.lwc.shanxiu.utils.Constants;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
@@ -42,6 +46,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+
+import static com.dueeeke.videoplayer.player.VideoView.PLAYER_NORMAL;
+import static com.dueeeke.videoplayer.player.VideoView.STATE_PLAYBACK_COMPLETED;
 
 
 /**
@@ -68,6 +75,8 @@ public class SeeVideoActivity extends BaseActivity {
     TextView tv_status;
     @BindView(R.id.tv_time)
     TextView tv_time;
+    @BindView(R.id.rl_title)
+    LinearLayout rl_title;
 
     private TrainAdapter adapter;
     private List<Order> myOrders = new ArrayList<>();
@@ -99,6 +108,7 @@ public class SeeVideoActivity extends BaseActivity {
 
 
         trainBean = (TrainBean) getIntent().getSerializableExtra("videoBean");
+        isSeeFinish = Integer.parseInt(trainBean.getIsPass());
         bindRecycleView();
 
         ImmersionBar.with(this)
@@ -112,20 +122,69 @@ public class SeeVideoActivity extends BaseActivity {
         controller.addControlComponent(new CompleteView(this));//自动完成播放界面
         TitleView titleView = new TitleView(this);//标题栏
         controller.addControlComponent(titleView);
-        vv_video.setVideoController(controller); //设置控制器
+        vv_video.setVideoController(null); //设置控制器
+ /*       vv_video.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });*/
+
+        vv_video.addOnStateChangeListener(new VideoView.OnStateChangeListener() {
+            @Override
+            public void onPlayerStateChanged(int playerState) {
+                if(playerState == PLAYER_NORMAL){ //竖屏
+                    rl_title.setVisibility(View.VISIBLE);
+                   // vv_video.stopFullScreen();
+                }else{
+                    rl_title.setVisibility(View.GONE);
+                    //vv_video.startFullScreen();
+                }
+               //ToastUtil.showToast(SeeVideoActivity.this,"横屏or竖屏");
+            }
+
+            @Override
+            public void onPlayStateChanged(int playState) {
+                if(playState == STATE_PLAYBACK_COMPLETED){
+                    tv_status.setText("播放完成");
+                    videoLong = vv_video.getDuration();
+                    videoCurrent = vv_video.getCurrentPosition();
+                    if(isSeeFinish != 1){
+                        if(videoCurrent >= videoLong){
+                            isSeeFinish = 1;
+                        }else{
+                            isSeeFinish = 0;
+                        }
+                        uploadSeeTime();
+                    }
+                }
+            }
+        });
+
         loadVideo();
     }
 
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            Toast.makeText(getApplicationContext(), "横屏", Toast.LENGTH_SHORT).show();
+            vv_video.startFullScreen();
+        }else{
+            Toast.makeText(getApplicationContext(), "竖屏", Toast.LENGTH_SHORT).show();
+            vv_video.stopFullScreen();
+        }
+    }
+
     private void loadVideo(){
 
         vv_video.setUrl(trainBean.getUrl());
+        vv_video.start(); //开始播放，不调用则不自动播放
         if(!TextUtils.isEmpty(trainBean.getReadTime()) && "0".equals(trainBean.getIsPass())){
            Long longTime =Integer.valueOf(trainBean.getReadTime()) * 1000L;
             vv_video.seekTo(longTime);
         }
-
-        vv_video.start(); //开始播放，不调用则不自动播放
         tv_title.setText(trainBean.getVideoName());
         tv_status.setText("播放中");
         ImageLoaderUtil.getInstance().displayFromNetDCircular8(this,trainBean.getImage(),iv_header,R.drawable.img_default_load);
@@ -138,22 +197,37 @@ public class SeeVideoActivity extends BaseActivity {
     }
 
     private void bindRecycleView() {
-        BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout);
+        BGARefreshLayoutUtils.initRefreshLayout(this, mBGARefreshLayout,false);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TrainAdapter(this, null, R.layout.item_train);
+        adapter = new TrainAdapter(this, null, R.layout.item_train,trainBean.getId());
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int viewType, int position) {
                 trainBean = adapter.getItem(position);
 
+
+                videoLong = vv_video.getDuration();
+                videoCurrent = vv_video.getCurrentPosition();
+
+                if(isSeeFinish != 1){
+                    if(videoCurrent >= videoLong){
+                        isSeeFinish = 1;
+                    }else{
+                        isSeeFinish = 0;
+                    }
+                    uploadSeeTime();
+                }
+
+
                 vv_video.release();
                 vv_video.setUrl(trainBean.getUrl());
                 vv_video.start();
 
-            /*    tv_title.setText(trainBean.getVideoName());
+              //  vv_video.pause();
+                tv_title.setText(trainBean.getVideoName());
                 tv_status.setText("播放中");
-                ImageLoaderUtil.getInstance().displayFromNetDCircular8(SeeVideoActivity.this,trainBean.getImage(),iv_header,R.drawable.img_default_load);*/
+                ImageLoaderUtil.getInstance().displayFromNetDCircular8(SeeVideoActivity.this,trainBean.getImage(),iv_header,R.drawable.img_default_load);
             }
         });
         recyclerView.setAdapter(adapter);
@@ -238,22 +312,19 @@ public class SeeVideoActivity extends BaseActivity {
                         List<TrainBean> beanList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"),new TypeToken<ArrayList<TrainBean>>(){});
                         if(page == 1){
                             notifyData(beanList);
-                            mBGARefreshLayout.endRefreshing();
                         }else{
                             addData(beanList);
-                            mBGARefreshLayout.endLoadingMore();
                         }
                         break;
                     default:
                         //ToastUtil.showToast(MyRequestActivity.this, common.getInfo());
                         break;
                 }
-                BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
+
             }
 
             @Override
             public void returnException(Exception e, String msg) {
-                BGARefreshLayoutUtils.endRefreshing(mBGARefreshLayout);
             }
         });
     }
@@ -280,12 +351,16 @@ public class SeeVideoActivity extends BaseActivity {
         super.onPause();
         videoLong = vv_video.getDuration();
         videoCurrent = vv_video.getCurrentPosition();
-        if(videoCurrent >= videoLong){
-            isSeeFinish = 1;
-        }else{
-            isSeeFinish = 0;
+
+        if(isSeeFinish != 1){
+            if(videoCurrent >= videoLong){
+                isSeeFinish = 1;
+            }else{
+                isSeeFinish = 0;
+            }
+            uploadSeeTime();
         }
-        uploadSeeTime();
+
         Log.d("联网成功","videoLong"+videoLong + "=========videoCurrent"+videoCurrent);
         vv_video.pause();
     }
@@ -294,6 +369,7 @@ public class SeeVideoActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         vv_video.resume();
+        loadData();
     }
 
     @Override

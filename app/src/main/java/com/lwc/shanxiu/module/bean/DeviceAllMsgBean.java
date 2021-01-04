@@ -424,6 +424,7 @@ public class DeviceAllMsgBean {
         private String companyProvinceName;
         private String companyCityName;
         private String companyTownName;
+        private String userName;
 
         public String getCreateTime() {
             return createTime;
@@ -487,6 +488,14 @@ public class DeviceAllMsgBean {
 
         public void setCompanyTownName(String companyTownName) {
             this.companyTownName = companyTownName;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
         }
     }
 

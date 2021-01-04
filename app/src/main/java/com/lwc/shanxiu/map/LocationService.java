@@ -5,14 +5,22 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.geocoder.GeocodeResult;
+import com.amap.api.services.geocoder.GeocodeSearch;
+import com.amap.api.services.geocoder.RegeocodeQuery;
+import com.amap.api.services.geocoder.RegeocodeResult;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.bean.Common;
+import com.lwc.shanxiu.configs.SophixStubApplication;
+import com.lwc.shanxiu.configs.TApplication;
 import com.lwc.shanxiu.controler.http.NetManager;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.module.bean.User;
@@ -51,6 +59,7 @@ public class LocationService extends NotiService {
 
     private AMapLocationClient mLocationClient;
     private AMapLocationClientOption mLocationOption;
+    GeocodeSearch geocoderSearch =new GeocodeSearch(TApplication.context);
 
     /**
      * 处理息屏关掉wifi的delegate类
@@ -99,6 +108,39 @@ public class LocationService extends NotiService {
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         //ELAPSED_REALTIME_WAKEUP表示让定时任务的出发时间从系统开机算起，并且会唤醒CPU。
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
+
+
+        geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
+
+            @Override
+
+            public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
+
+                String c = regeocodeResult.getRegeocodeAddress().getCity();
+
+                String a = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+
+                //这里你可以点出很多信息，根据情况自己去获取
+
+                com.lwc.shanxiu.bean.Location location = new com.lwc.shanxiu.bean.Location();
+
+                location.setStrValue(regeocodeResult.toString());
+                location.setLongitude(regeocodeResult.getRegeocodeQuery().getPoint().getLongitude());
+                location.setLatitude(regeocodeResult.getRegeocodeQuery().getPoint().getLatitude());
+                location.setCityName(regeocodeResult.getRegeocodeAddress().getCity());
+                location.setCityCode(regeocodeResult.getRegeocodeAddress().getCityCode());
+                SharedPreferencesUtils.getInstance(getApplicationContext()).saveObjectData(location);
+                Log.e("ceshi","地址逆定理 定位结果：getCityCode" + regeocodeResult.getRegeocodeAddress().getCityCode()+"longitude："+regeocodeResult.getRegeocodeQuery().getPoint().getLongitude());
+            }
+
+            @Override
+
+            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
+
+            }
+
+        });
+
 
         return START_STICKY;
     }
@@ -151,6 +193,12 @@ public class LocationService extends NotiService {
     AMapLocationListener locationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
+
+
+            LatLonPoint point =new LatLonPoint(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+            RegeocodeQuery query =new RegeocodeQuery(point, 200,GeocodeSearch.AMAP);
+            geocoderSearch.getFromLocationAsyn(query);
+
             //发送结果的通知
             sendLocationBroadcast(aMapLocation);
 
@@ -168,10 +216,10 @@ public class LocationService extends NotiService {
 
         private void sendLocationBroadcast(final AMapLocation aMapLocation) {
             //记录信息并发送广播
-            LLog.iNetSucceed("联网 定位结果：" + aMapLocation.toString());
+            Log.e("ceshi","联网 定位结果：" + aMapLocation.toString());
             new Thread(){
                 public void run(){
-// 做网络请求操作
+            // 做网络请求操作
                     if (aMapLocation != null) {
                         double lat = aMapLocation.getLatitude();
                         double lon = aMapLocation.getLongitude();
@@ -204,9 +252,19 @@ public class LocationService extends NotiService {
                         HashMap<String, String> params = new HashMap<>();
                         params.put("lat", lat + "");
                         params.put("lon", lon + "");
+/*
+                        com.lwc.shanxiu.bean.Location location = new com.lwc.shanxiu.bean.Location();
+
+                       location.setStrValue(aMapLocation.toString());
+                        location.setLongitude(aMapLocation.getLongitude());
+                        location.setLatitude(aMapLocation.getLatitude());
+                        location.setCityName(aMapLocation.getCity());
+                        location.setCityCode(aMapLocation.getCityCode());
+                        SharedPreferencesUtils.getInstance(getApplicationContext()).saveObjectData(location);*/
+
                         String DEVICE_ID = Utils.getDeviceId(getBaseContext());
-                        LLog.iNetSucceed("方法: 上传经纬度" + ",参数：" + params + ",token" + token);
-                        Log.e("ceshi","方法: 上传经纬度" + ",参数：" + params + ",token" + token);
+                        LLog.iNetSucceed("方法: 上传经纬度" + ",参数：" + params + ",token" + token +",city" + aMapLocation.getCity()+",citycode" + aMapLocation.getCityCode());
+                        Log.e("ceshi","方法: 上传经纬度" + ",参数：" + params + ",token" + token +",city" + aMapLocation.getCity()+",citycode" + aMapLocation.getCityCode());
                         OkHttpUtils.post().url(NetManager.getUrl(RequestValue.UP_USER_INFOR)).params(params).addHeader("token", token).addHeader("code", DEVICE_ID).addHeader("phoneSystem", "ANDROID").addHeader("versionCode", SystemUtil.getCurrentVersionCode() + "").build().execute(new StringCallback() {
                             @Override
                             public void onError(Call call, Exception e, int id) {

@@ -85,8 +85,7 @@ public class PartsMainActivity extends BaseActivity implements PartsMainView {
     protected void init() {
         ImmersionBar.with(this)
                 .transparentStatusBar()
-                .statusBarDarkFont(false)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(false).init();
     }
 
 

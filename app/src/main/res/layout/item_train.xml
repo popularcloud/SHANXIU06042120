@@ -45,12 +45,12 @@
                 <TextView
                     android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="11sp"
+                    android:layout_height="match_parent"
                     android:drawableLeft="@drawable/ic_see_time"
-                    android:textColor="@color/btn_blue_nomal"
                     android:drawablePadding="@dimen/dp_5"
-                    android:text="已看完"/>
+                    android:text="已看完"
+                    android:textColor="@color/btn_blue_nomal"
+                    android:textSize="11sp" />
                 <TextView
                     android:id="@+id/tv_time"
                     android:layout_width="wrap_content"

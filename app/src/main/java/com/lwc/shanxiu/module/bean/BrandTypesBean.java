@@ -25,6 +25,7 @@ public class BrandTypesBean implements Serializable, IPickerViewData {
     private String deviceTypeModel;
     private String deviceTypeModelId;
     private String configName;
+    private String type;
 
     @Override
     public String getPickerViewText() {
@@ -69,5 +70,13 @@ public class BrandTypesBean implements Serializable, IPickerViewData {
 
     public void setConfigName(String configName) {
         this.configName = configName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

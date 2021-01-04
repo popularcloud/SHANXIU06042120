@@ -43,6 +43,7 @@
                     android:layout_marginTop="@dimen/dp_3"
                     android:paddingRight="@dimen/dp_2"
                     android:text="租赁"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
                 <TextView

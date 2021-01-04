@@ -91,15 +91,6 @@ BaseActivity extends FragmentActivity {
 	 * 子类可重写改方法定制状态栏样式
 	 */
 	protected void initStatusBar(){
-
-	/*	View view = new View(this);
-		view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,45));
-		Sofia.with(this)
-				.statusBarBackground(Color.parseColor("#ffffff"))
-				.statusBarDarkFont()
-				.navigationBarBackground(Color.parseColor("#ffffff"));*/
-		//hideNavigationBar();
-
 		ImmersionBar.with(this)
 				.statusBarColor(R.color.white)
 				.statusBarDarkFont(true)

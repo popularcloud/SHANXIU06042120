@@ -11,7 +11,6 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -32,7 +31,6 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
-import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.TextureMapView;
@@ -64,7 +62,7 @@ import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.message.ui.MyMsgActivity;
 import com.lwc.shanxiu.module.order.ui.activity.OrderDetailActivity;
-import com.lwc.shanxiu.module.partsLib.ui.activity.PartsMainActivity;
+import com.lwc.shanxiu.module.sign_in.activity.CheckWorkMainActivity;
 import com.lwc.shanxiu.module.zxing.ui.CaptureActivity;
 import com.lwc.shanxiu.utils.DialogUtil;
 import com.lwc.shanxiu.utils.DisplayUtil;
@@ -111,6 +109,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
     TextView iv_red_dian;
     @BindView(R.id.ad_view)
     ImageCycleView mAdView;//轮播图
+    @BindView(R.id.tv_work)
+    TextView tv_work;
 
     RelativeLayout llGetOrderMention;
     /**
@@ -570,6 +570,9 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                 location.setStrValue(aMapLocation.toString());
                 location.setLongitude(aMapLocation.getLongitude());
                 location.setLatitude(aMapLocation.getLatitude());
+                location.setCityName(aMapLocation.getCity());
+                location.setCityCode(aMapLocation.getCityCode());
+
                 preferencesUtils.saveObjectData(location);
                 mGPSMarker.setPosition(new LatLng(currentBestLocation.getLatitude(), currentBestLocation.getLongitude()));
                 aMap.clear();
@@ -776,8 +779,15 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
                     bund.putDouble("eLat", Double.parseDouble(newestOrder.getOrderLatitude()));
                     bund.putDouble("eLon", Double.parseDouble(newestOrder.getOrderLongitude()));
                     IntentUtil.gotoActivity(getActivity(), NavigationActivity.class, bund);                }
+                break;
+            case R.id.tv_work:// 工作台
+              /*      Bundle bundle = new Bundle();
+                    bundle.putString("orderId", newestOrder.getOrderId());*/
+                    IntentUtil.gotoActivity(getActivity(), CheckWorkMainActivity.class);
+                break;
             default:
                 break;
+
         }
 
     }
@@ -957,6 +967,8 @@ public class MapFragment extends BaseFragment implements AMap.OnMarkerClickListe
             }
         });
         txtDaohang.setOnClickListener(this);
+        tv_work.setOnClickListener(this);
+        tv_work.setVisibility(View.GONE);
         return rootView;
     }
 

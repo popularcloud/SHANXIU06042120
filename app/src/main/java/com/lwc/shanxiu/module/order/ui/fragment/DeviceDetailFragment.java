@@ -74,8 +74,7 @@ public class DeviceDetailFragment extends BaseFragment implements IDeviceDetailF
 
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
     private void bindRecycleView() {

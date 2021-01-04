@@ -103,7 +103,8 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
                 convertView=View.inflate(mContext, R.layout.item_devicemsg_child_history, null);
                 ViewHolder0 holder0 = new ViewHolder0(convertView);
                 holder0.tv_work_unit.setText(updatesBean.getUserCompanyName());
-                holder0.tv_user.setText(updatesBean.getUserPhone());
+                holder0.tv_user.setText(updatesBean.getUserName());
+                holder0.tv_userPhone.setText(updatesBean.getUserPhone());
                 holder0.tv_unit_address.setText(updatesBean.getCompanyProvinceName()+ updatesBean.getCompanyCityName() + updatesBean.getCompanyTownName());
                 holder0.tv_reason.setText(updatesBean.getUpdateReason());
                 holder0.tv_time.setText(updatesBean.getCreateTime());
@@ -161,12 +162,14 @@ public class DeviceMsgAdapter extends BaseExpandableListAdapter{
     private class ViewHolder0{
         TextView tv_work_unit;
         TextView tv_user;
+        TextView tv_userPhone;
         TextView tv_unit_address;
         TextView tv_reason;
         TextView tv_time;
         public ViewHolder0(View view){
             tv_work_unit = (TextView) view.findViewById(R.id.tv_work_unit);
             tv_user = (TextView) view.findViewById(R.id.tv_user);
+            tv_userPhone = (TextView) view.findViewById(R.id.tv_userPhone);
             tv_unit_address = (TextView) view.findViewById(R.id.tv_unit_address);
             tv_reason = (TextView) view.findViewById(R.id.tv_reason);
             tv_time = (TextView) view.findViewById(R.id.tv_time);

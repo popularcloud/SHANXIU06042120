@@ -38,6 +38,8 @@ import butterknife.ButterKnife;
  * @date 2018年4月16日
  * @Copyright: lwc
  */
+
+@Deprecated
 public class RepairHistoryActivity extends BaseActivity {
 
 	@BindView(R.id.tv_brand)

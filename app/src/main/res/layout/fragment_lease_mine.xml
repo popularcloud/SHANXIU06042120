@@ -42,6 +42,7 @@
                 android:text="未实名 >"
                 android:textSize="@dimen/sp_11"
                 android:layout_marginLeft="@dimen/dp_15"
+                android:visibility="gone"
                 android:background="@drawable/item_gray_f7_circle"
                 android:textColor="@color/blue_96"
                 android:layout_alignParentBottom="true"
@@ -111,8 +112,8 @@
                 android:paddingRight="@dimen/dp_5"
                 android:visibility="gone"
                 android:text="0"
-                android:textColor="@color/red_money"
-                android:background="@drawable/btn_red_line"/>
+                android:textColor="@color/white"
+                android:background="@drawable/btn_red_fill"/>
         </RelativeLayout>
     </RelativeLayout>
     <LinearLayout
@@ -131,7 +132,7 @@
                 android:id="@+id/rl_wallet"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/item_gray_f7_circle"
+                android:background="@drawable/ic_bg_money"
                 android:layout_marginLeft="@dimen/dp_15"
                 android:layout_height="wrap_content">
                 <TextView
@@ -159,7 +160,7 @@
                 android:id="@+id/rl_collect"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/item_gray_f7_circle"
+                android:background="@drawable/ic_bg_collect"
                 android:layout_marginLeft="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_15"
                 android:layout_height="wrap_content">
@@ -217,8 +218,8 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:visibility="gone"
                     android:text="22"
-                    android:textColor="@color/red_money"
-                    android:background="@drawable/btn_red_line"/>
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_red_fill"/>
             </FrameLayout>
             <FrameLayout
                 android:layout_width="0dp"
@@ -247,8 +248,8 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:visibility="gone"
                     android:text="22"
-                    android:textColor="@color/red_money"
-                    android:background="@drawable/btn_red_line"/>
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_red_fill"/>
             </FrameLayout>
             <FrameLayout
                 android:layout_width="0dp"
@@ -277,8 +278,8 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:visibility="gone"
                     android:text="22"
-                    android:textColor="@color/red_money"
-                    android:background="@drawable/btn_red_line"/>
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_red_fill"/>
             </FrameLayout>
             <FrameLayout
                 android:layout_width="0dp"
@@ -307,8 +308,8 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:visibility="gone"
                     android:text="22"
-                    android:textColor="@color/red_money"
-                    android:background="@drawable/btn_red_line"/>
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_red_fill"/>
             </FrameLayout>
             <FrameLayout
                 android:layout_width="0dp"
@@ -324,7 +325,7 @@
                 android:drawableTop="@drawable/ic_all"
                 android:gravity="center"
                 android:drawablePadding="@dimen/dp_10"
-                android:text="全部"/>
+                android:text="全部订单"/>
                 <TextView
                     android:id="@+id/tv_type05_msg"
                     android:layout_width="wrap_content"
@@ -337,8 +338,8 @@
                     android:layout_marginRight="@dimen/dp_10"
                     android:visibility="gone"
                     android:text="22"
-                    android:textColor="@color/red_money"
-                    android:background="@drawable/btn_red_line"/>
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_red_fill"/>
             </FrameLayout>
         </LinearLayout>
 
@@ -354,6 +355,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:padding="@dimen/dp_15">
             <TextView
                 android:layout_width="0dp"

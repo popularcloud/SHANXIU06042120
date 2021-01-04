@@ -243,6 +243,11 @@ public class RequestValue {
     public static final String READ_MESSAGE = "/message/readOne/";
 
     /**
+     * 一键已读所有消息
+     */
+    public static final String READ_READALL = "/message/readAll/";
+
+    /**
      * 机关单位订单无条件挂起
      */
     public static final String ORDER_UP = "/order/hangUp";
@@ -374,7 +379,6 @@ public class RequestValue {
      */
     public static final String SCAN_GETDEVICETYPES = "/scan/getDeviceTypes";
 
-
     /**
      * 文章和提问列表
      */
@@ -434,6 +438,11 @@ public class RequestValue {
      *  获得租赁二维码设备信息
      */
     public static final String SCAN_CODELEASEINFO = "/scan/codeLeaseInfo";
+
+    /**
+     *  模糊搜索单位信息
+     */
+    public static final String SCAN_CODECOMPANYNAME = "/scan/codeCompanyName";
 
 
     /**
@@ -710,5 +719,25 @@ public class RequestValue {
      * 清空备件库商品搜索历史
      */
     public static final String PARTSMANAGE_DELPARTSGOODSKEYWORD = "/partsManage/delPartsGoodsKeyword";
+
+    /**
+     * 获取考勤记录
+     */
+    public static final String SIGNINMANAGER_GETSIGNINHISTORY = "/signInManager/getSignInHistory";
+
+    /**
+     * 获取考勤记录
+     */
+    public static final String SIGNINMANAGER_GETPRESENTSIGNINSTATISTICS = "/signInManager/getPresentSignInStatistics";
+
+    /**
+     * 考勤打卡
+     */
+    public static final String SIGNINMANAGER_CLOCKIN = "/signInManager/clockIn";
+
+    /**
+     * 签到
+     */
+    public static final String SIGNINMANAGER_OUTSIDESIGNIN = "/signInManager/outSideSignIn";
 
 }

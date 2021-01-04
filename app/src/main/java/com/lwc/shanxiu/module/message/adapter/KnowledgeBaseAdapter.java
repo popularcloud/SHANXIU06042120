@@ -3,6 +3,7 @@ package com.lwc.shanxiu.module.message.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.Dimension;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.TimeUtil;
+import com.lwc.shanxiu.widget.AutoLayoutTagsGroup;
 import com.lwc.shanxiu.widget.TagsLayout;
 
 import org.byteam.superadapter.SuperAdapter;
@@ -39,8 +41,8 @@ public class KnowledgeBaseAdapter extends SuperAdapter<KnowledgeBaseBean>{
 
     @Override
     public void onBind(SuperViewHolder holder, int viewType, int layoutPosition, KnowledgeBaseBean item) {
-        holder.setText(R.id.tv_title, item.getKnowledgeTitle());
-        holder.setText(R.id.tv_desc, item.getKnowledgePaper());
+        holder.setText(R.id.tv_title, Html.fromHtml(item.getKnowledgeTitle()));
+        holder.setText(R.id.tv_desc,  Html.fromHtml(item.getKnowledgePaper()));
         holder.setText(R.id.tv_view_count,item.getBrowseNum()+"次");
 
         if(!TextUtils.isEmpty(item.getCreateTime())){
@@ -49,7 +51,7 @@ public class KnowledgeBaseAdapter extends SuperAdapter<KnowledgeBaseBean>{
 
         ImageView iv_header = holder.findViewById(R.id.iv_header);
         ImageView iv_is_video = holder.findViewById(R.id.iv_is_video);
-        TagsLayout tl_tags = holder.findViewById(R.id.tl_tags);
+        AutoLayoutTagsGroup tl_tags = holder.findViewById(R.id.tl_tags);
         RelativeLayout rl_header = holder.findViewById(R.id.rl_header);
 
 

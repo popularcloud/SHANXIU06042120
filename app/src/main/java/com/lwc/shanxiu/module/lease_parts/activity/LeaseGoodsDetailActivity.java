@@ -2,7 +2,6 @@ package com.lwc.shanxiu.module.lease_parts.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +26,6 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
 import com.lwc.shanxiu.activity.ImageBrowseActivity;
-import com.lwc.shanxiu.activity.MainActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.map.Utils;
@@ -45,6 +43,7 @@ import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.PopupWindowUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.ImageCycleView;
 import com.lwc.shanxiu.widget.TagsLayout;
@@ -91,29 +90,14 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
 
     @BindView(R.id.tv_good_detail)
     TextView tv_good_detail;
-    @BindView(R.id.tv_lease_desc)
-    TextView tv_lease_desc;
-    @BindView(R.id.tv_lease_rule)
-    TextView tv_lease_rule;
+
     @BindView(R.id.tv_good_detail_line)
     TextView tv_good_detail_line;
-    @BindView(R.id.tv_lease_desc_line)
-    TextView tv_lease_desc_line;
-    @BindView(R.id.tv_lease_rule_line)
-    TextView tv_lease_rule_line;
 
     @BindView(R.id.tv_good_detail_2)
     TextView tv_good_detail_2;
-    @BindView(R.id.tv_lease_desc_2)
-    TextView tv_lease_desc_2;
-    @BindView(R.id.tv_lease_rule_2)
-    TextView tv_lease_rule_2;
     @BindView(R.id.tv_good_detail_line_2)
     TextView tv_good_detail_line_2;
-    @BindView(R.id.tv_lease_desc_line_2)
-    TextView tv_lease_desc_line_2;
-    @BindView(R.id.tv_lease_rule_line_2)
-    TextView tv_lease_rule_line_2;
 
     @BindView(R.id.sv_scroll)
     ScrollView sv_scroll;
@@ -178,8 +162,7 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
         fragmentManager = getSupportFragmentManager();
     }
 
-    @OnClick({R.id.tv_add_cart,R.id.tv_shopCart,R.id.imgRight,R.id.imgRightTwo,R.id.tv_customer,R.id.tv_collect,R.id.tv_right_lease,R.id.tv_good_detail,R.id.tv_lease_desc,
-            R.id.tv_lease_rule,R.id.tv_good_detail_2,R.id.tv_lease_desc_2,R.id.tv_lease_rule_2})
+    @OnClick({R.id.tv_add_cart,R.id.tv_shopCart,R.id.imgRight,R.id.imgRightTwo,R.id.tv_customer,R.id.tv_collect,R.id.tv_right_lease,R.id.tv_good_detail,R.id.tv_good_detail_2})
     public void onBtnClick(View view){
         switch (view.getId()){
             case R.id.tv_add_cart:
@@ -251,7 +234,7 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 break;
             case R.id.imgRightTwo:
-              //  PopupWindowUtil.showHeaderPopupWindow(LeaseGoodsDetailActivity.this,imgRightTwo,leaseShoppingCartFragment,fragment_container,fragmentManager);
+                PopupWindowUtil.showHeaderPopupWindow(LeaseGoodsDetailActivity.this,imgRightTwo,leaseShoppingCartFragment,fragment_container,fragmentManager);
                 break;
             case R.id.tv_collect:
                 if("1".equals(leaseGoodBean.getIsCollection())){
@@ -271,18 +254,6 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
                      }
                  }, "", "呼叫 400-881-0769");
                  picturePopupWindow.show();
-                break;
-            case R.id.tv_good_detail:
-            case R.id.tv_good_detail_2:
-                showGoodDetail(0);
-                break;
-            case R.id.tv_lease_desc:
-            case R.id.tv_lease_desc_2:
-                showGoodDetail(1);
-                break;
-             case R.id.tv_lease_rule:
-             case R.id.tv_lease_rule_2:
-                showGoodDetail(2);
                 break;
         }
     }
@@ -329,7 +300,7 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
                                 }
 
                                 String goodsPrice = Utils.chu(leaseGoodBean.getGoodsPrice(), "100");
-                                String goodsPriceStr = "￥" + goodsPrice + "/月";
+                                String goodsPriceStr = "￥" + goodsPrice + "";
                                 SpannableStringBuilder showPrices = Utils.getSpannableStringBuilder(1, goodsPrice.length()+1, LeaseGoodsDetailActivity.this.getResources().getColor(R.color.red_money), goodsPriceStr, 24, true);
                                 tv_prices.setText(showPrices);
 
@@ -365,9 +336,9 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
                                 }
 
                                 String goodsName = leaseGoodBean.getGoodsName();
-                                String goodsNameStr = "租赁  " + goodsName;
-                                SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, LeaseGoodsDetailActivity.this.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-                               tv_title.setText(showGoodsName);
+                                //String goodsNameStr = "租赁  " + goodsName;
+                                //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, LeaseGoodsDetailActivity.this.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+                               tv_title.setText(goodsName);
 
 
                                 if("1".equals(leaseGoodBean.getIsCollection())){
@@ -403,9 +374,15 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
 
 
     private void showGoodDetail(int type) {
-        String htmlContent = getNewContent(leaseGoodBean.getGoodsDetail());
 
-        switch (type){
+        if(TextUtils.isEmpty(leaseGoodBean.getGoodsDetail())){
+            wv_content.setVisibility(View.GONE);
+        }
+
+        String htmlContent = getNewContent(leaseGoodBean.getGoodsDetail());
+        wv_content.loadData(htmlContent,"text/html","UTF-8");
+
+       /* switch (type){
             case 0:
                 wv_content.loadData(htmlContent,"text/html","UTF-8");
                 tv_good_detail_line.setVisibility(View.VISIBLE);
@@ -474,7 +451,7 @@ public class LeaseGoodsDetailActivity extends BaseActivity {
                 tv_lease_rule_2.setTextColor(getResources().getColor(R.color.black));
                 tv_lease_rule_2.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 break;
-        }
+        }*/
     }
 
     int[] location = new int[2];

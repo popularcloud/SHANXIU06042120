@@ -262,9 +262,7 @@ public class MyCollectActivity extends BaseActivity {
                             }
                         });
                         leaseCollectAdapter.setManager(false);
-
                     }
-
 
                     if(page == 1){
                         leaseCollectAdapter.replaceAll(leaseGoodBeans);

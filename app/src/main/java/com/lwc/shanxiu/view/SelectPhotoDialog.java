@@ -2,6 +2,7 @@ package com.lwc.shanxiu.view;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -73,8 +74,13 @@ public class SelectPhotoDialog extends Dialog implements View.OnClickListener{
 		//startRecordBtn = (Button) mMenuView.findViewById(R.id.btn_upload_record);
 		cancelBtn = (Button) findViewById(R.id.btn_cancel_join);
 		photoGraphBtn.setText(one);
-		albumBtn.setText(two);
-		albumBtn.setOnClickListener(this);
+		if(TextUtils.isEmpty(two)){
+			albumBtn.setVisibility(View.GONE);
+		}else{
+			albumBtn.setText(two);
+			albumBtn.setOnClickListener(this);
+		}
+
 		photoGraphBtn.setOnClickListener(this);
 		cancelBtn.setOnClickListener(this);
 	}

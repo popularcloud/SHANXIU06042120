@@ -245,11 +245,11 @@ public class LoadingActivity extends Activity {
         }
         String token = preferencesUtils.loadString("token");
         if (token != null && !token.equals("")) {
-            if("3".equals(user.getCompanySecrecy())){
+     /*       if("3".equals(user.getCompanySecrecy())){
                 IntentUtil.gotoActivityAndFinish(LoadingActivity.this, NewMainActivity.class);
-            }else{
+            }else{*/
                 IntentUtil.gotoActivityAndFinish(LoadingActivity.this, MainActivity.class);
-            }
+           // }
           //  IntentUtil.gotoActivityAndFinish(LoadingActivity.this, NewMainActivity.class);
         } else {
             IntentUtil.gotoActivityAndFinish(LoadingActivity.this, LoginOrRegistActivity.class);

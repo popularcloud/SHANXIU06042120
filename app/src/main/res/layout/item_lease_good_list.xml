@@ -45,6 +45,7 @@
                     android:layout_marginTop="@dimen/dp_3"
                     android:paddingRight="@dimen/dp_2"
                     android:text="租赁"
+                    android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="10sp" />
                 <TextView
@@ -83,6 +84,16 @@
                     android:textColor="@color/red_money"
                     android:layout_marginTop="@dimen/dp_10"
                     android:text="￥30.00"/>
+                <TextView
+                    android:id="@+id/tv_stock"
+                    android:layout_toRightOf="@+id/tv_prices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:textSize="@dimen/sp_11"
+                    android:layout_marginLeft="@dimen/dp_5"
+                    android:textColor="@color/gray_99"
+                    android:text=""/>
                 <ImageView
                     android:id="@+id/iv_add_car"
                     android:layout_width="wrap_content"

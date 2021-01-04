@@ -2,15 +2,21 @@ package com.lwc.shanxiu.module.order.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.BaseActivity;
+import com.lwc.shanxiu.adapter.SimpleItemAdapter;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.bean.PickerView;
 import com.lwc.shanxiu.bean.Sheng;
@@ -21,6 +27,7 @@ import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.BrandTypesBean;
 import com.lwc.shanxiu.module.bean.BrandsBean;
 import com.lwc.shanxiu.module.bean.DeviceType;
+import com.lwc.shanxiu.module.bean.LeaseCompanyBean;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.pickerview.OptionsPickerView;
 import com.lwc.shanxiu.utils.FileUtil;
@@ -64,6 +71,10 @@ public class BindDeviceActivity extends BaseActivity {
     EditText et_used_name; //单位使用人 
     @BindView(R.id.et_used_room)
     EditText et_used_room; //使用科室
+    @BindView(R.id.rl_device_type)
+    RelativeLayout rl_device_type; //使用科室
+    @BindView(R.id.down_data)
+    ListView down_data;
     
     private String device, companyName,qrcodeIndex,companyPhone;
     private ArrayList<DeviceType> deviceTypes  = new ArrayList<>();
@@ -91,6 +102,13 @@ public class BindDeviceActivity extends BaseActivity {
     private Xian selectedXian;
     private String usedName;
     private String usedRoom;
+    private String device_type_id;
+    private String submitType;
+
+    private ArrayList<LeaseCompanyBean> leaseCompanyBeans = new ArrayList<>();
+    private List<String> mOrders = new ArrayList<>();
+    private SimpleItemAdapter simpleItemAdapter;
+    private boolean spinnerIsShowIng = false;
 
     @Override
     protected int getContentViewId(Bundle savedInstanceState) {
@@ -101,6 +119,23 @@ public class BindDeviceActivity extends BaseActivity {
     protected void findViews() {
         ButterKnife.bind(this);
         setTitle("二维码信息绑定");
+
+        qrcodeIndex = getIntent().getStringExtra("qrcodeIndex");
+        device_type_id = getIntent().getStringExtra("device_type_id");
+        submitType = getIntent().getStringExtra("submitType");
+
+        if(!TextUtils.isEmpty(submitType)){
+            if(qrcodeIndex.startsWith("SM")){
+                //ToastUtil.showToast(BindDeviceActivity.this,"涉密设备");
+                submitType = "1";
+            }else if(qrcodeIndex.startsWith("FM")){
+               // ToastUtil.showToast(BindDeviceActivity.this,"信创设备");
+                submitType = "2";
+            };
+        }else{
+            submitType = "1";
+        }
+
         getAreaData();
         myThread.start();
         showBack();
@@ -214,11 +249,162 @@ public class BindDeviceActivity extends BaseActivity {
 
     @Override
     protected void initGetData() {
-        qrcodeIndex = getIntent().getStringExtra("qrcodeIndex");
+
     }
 
     @Override
     protected void widgetListener() {
+
+ /*       et_company_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(selectedXian == null || TextUtils.isEmpty(selectedXian.getDmId())){
+                    ToastUtil.showLongToast(BindDeviceActivity.this, "请先选择单位地址");
+                    // et_company_name.setFocusable(false);
+                    et_company_name.setText("");
+                    KeyboardUtil.showInput(false,BindDeviceActivity.this);
+                    return;
+                }
+            }
+        });
+
+        et_company_name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                        if(selectedXian == null || TextUtils.isEmpty(selectedXian.getDmId())){
+                            ToastUtil.showLongToast(BindDeviceActivity.this, "请先选择单位地址");
+                            // et_company_name.setFocusable(false);
+                            et_company_name.setText("");
+                            KeyboardUtil.showInput(false,BindDeviceActivity.this);
+                            return;
+                        }
+                }
+            }
+        });*/
+
+        et_company_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s) && !spinnerIsShowIng) {
+
+                    if(selectedXian == null || TextUtils.isEmpty(selectedXian.getDmId())){
+                        ToastUtil.showLongToast(BindDeviceActivity.this, "请先选择单位地址");
+                        // et_company_name.setFocusable(false);
+                        et_company_name.setText("");
+                        KeyboardUtil.showInput(false,BindDeviceActivity.this);
+                        return;
+                    }
+
+                    getCompanyName(s.toString());
+                }
+
+                if(TextUtils.isEmpty(s)) {
+                    down_data.setVisibility(View.GONE);
+                }
+                spinnerIsShowIng = false;
+            }
+        });
+
+        simpleItemAdapter = new SimpleItemAdapter(BindDeviceActivity.this, mOrders, R.layout.item_simple_item);
+        down_data.setAdapter(simpleItemAdapter);
+        down_data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if(leaseCompanyBeans != null && leaseCompanyBeans.size() >= position){
+
+                    LeaseCompanyBean leaseCompanyBean = leaseCompanyBeans.get(position);
+
+                    spinnerIsShowIng = true;
+                    //   ToastUtil.showToast(LeaseDevicesActivity.this,leaseCompanyBean.getUserCompanyName());
+                    mOrders.clear();
+                    et_company_name.setText(leaseCompanyBean.getUserCompanyName());
+                    et_company_name.setSelection(leaseCompanyBean.getUserCompanyName().length());
+
+
+                    selectedSheng = new Sheng();
+                    selectedSheng.setDmId(leaseCompanyBean.getCompanyProvinceId());
+                    selectedSheng.setName(leaseCompanyBean.getCompanyProvinceName());
+
+                    selectedShi = new Shi();
+
+                    selectedShi.setDmId(leaseCompanyBean.getCompanyCityId());
+                    selectedShi.setName(leaseCompanyBean.getCompanyCityName());
+
+                    selectedXian = new Xian();
+                    selectedXian.setDmId(leaseCompanyBean.getCompanyTownId());
+                    selectedXian.setName(leaseCompanyBean.getCompanyTownName());
+                }
+
+                down_data.setVisibility(View.GONE);
+            }
+        });
+
+    }
+
+
+    /**
+     * 模糊搜索单位
+     * @param searchCompanyName
+     */
+    private void getCompanyName(final String searchCompanyName) {
+        Map<String, String> params = new HashMap<>();
+        params.put("userCompanyName", searchCompanyName);
+        HttpRequestUtils.httpRequest(this, "模糊搜索单位信息", RequestValue.SCAN_CODECOMPANYNAME, params, "GET", new HttpRequestUtils.ResponseListener() {
+
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        //leaseCompanyBeans.clear();
+                        leaseCompanyBeans = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<LeaseCompanyBean>>() {
+                        });
+
+                        if(leaseCompanyBeans == null){
+                            return;
+                        }
+
+                        mOrders.clear();
+                        for (int i = 0; i < leaseCompanyBeans.size(); i++) {
+                            if(selectedXian != null && !TextUtils.isEmpty(selectedXian.getDmId())){
+                                if(selectedXian.getDmId().equals(leaseCompanyBeans.get(i).getCompanyTownId())){
+                                    mOrders.add(leaseCompanyBeans.get(i).getUserCompanyName());
+                                }
+                            }
+
+                        }
+
+                        if(mOrders.size() > 0){
+                            Log.d("联网成功:","获取到了数据"+mOrders.size());
+                            down_data.setVisibility(View.VISIBLE);
+                            if(simpleItemAdapter != null){
+                                simpleItemAdapter.notifyDataSetChanged();
+                            }
+                        }else{
+                            down_data.setVisibility(View.GONE);
+                        }
+
+                        break;
+                    default:
+                        LLog.i("getDeviceTypes" + common.getInfo());
+                        mOrders.clear();
+                        down_data.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                LLog.eNetError(e.toString());
+            }
+        });
     }
 
     /**
@@ -234,6 +420,18 @@ public class BindDeviceActivity extends BaseActivity {
                     case "1":
                         deviceTypes = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<DeviceType>>() {
                         });
+
+                        if(!TextUtils.isEmpty(device_type_id) && deviceTypes != null){
+                            for(int i = 0; i < deviceTypes.size();i++){
+                                if(device_type_id.equals(deviceTypes.get(i).getDeviceTypeId())){
+                                    tv_device.setText(deviceTypes.get(i).getDeviceTypeName());
+                                    checkedDeviceType = deviceTypes.get(i);
+                                    rl_device_type.setEnabled(false);
+                                    getBrands();
+                                }
+                            }
+                        }
+
                         break;
                     default:
                         LLog.i("getDeviceTypes" + common.getInfo());
@@ -308,8 +506,17 @@ public class BindDeviceActivity extends BaseActivity {
                 switch (common.getStatus()) {
                     case "1":
                         LLog.i("getModels:获取数据成功" + common.getInfo());
-                        brandTypesBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<BrandTypesBean>>() {
+
+                        List<BrandTypesBean> myBrandTypesBeenList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<BrandTypesBean>>() {
                         });
+
+                        if(myBrandTypesBeenList != null && myBrandTypesBeenList.size() > 0){
+                            for(int i = 0;i < myBrandTypesBeenList.size();i ++){
+                                if(!TextUtils.isEmpty(submitType) && submitType.equals(myBrandTypesBeenList.get(i).getType())){
+                                    brandTypesBeenList.add(myBrandTypesBeenList.get(i));
+                                }
+                            }
+                        }
 
                         if(brandTypesBeenList != null && brandTypesBeenList.size() > 0){
                             initBrandTypesPicker();
@@ -337,6 +544,10 @@ public class BindDeviceActivity extends BaseActivity {
                 companyPhone = et_company_phone.getText().toString().trim();
                 usedName = et_used_name.getText().toString().trim();
                 usedRoom = et_used_room.getText().toString().trim();
+                if (selectedXian == null || TextUtils.isEmpty(selectedXian.getDmId())) {
+                    ToastUtil.showLongToast(this, "请选择单位地址");
+                    return;
+                }
                 if (TextUtils.isEmpty(companyName) ) {
                     ToastUtil.showLongToast(this, "请输入单位名称");
                     return;
@@ -350,10 +561,7 @@ public class BindDeviceActivity extends BaseActivity {
                     ToastUtil.showLongToast(this, "请输入使用科室");
                     return;
                 }
-                if (selectedSheng == null) {
-                    ToastUtil.showLongToast(this, "请选择单位地址");
-                    return;
-                }
+
                 if (TextUtils.isEmpty(device) || checkedDeviceType == null) {
                     ToastUtil.showLongToast(this, "请选择设备类别");
                     return;
@@ -396,6 +604,10 @@ public class BindDeviceActivity extends BaseActivity {
         map.put("deviceTypeModel", checkedBrandTypesBean.getDeviceTypeModel());
         map.put("userCompanyName", companyName);
         map.put("userName", usedName);
+        if(!TextUtils.isEmpty(submitType)){
+            map.put("type", submitType);
+        }
+
         map.put("userDetailCompanyName", usedRoom);
 
         if (!TextUtils.isEmpty(companyPhone) ) {
@@ -613,6 +825,9 @@ public class BindDeviceActivity extends BaseActivity {
                         selectedShi.getName() + "-" +
                         selectedXian.getName();
                 tv_address.setText(tx);
+
+                et_company_name.setFocusable(true);
+                et_company_name.findFocus();
             }
         })
 

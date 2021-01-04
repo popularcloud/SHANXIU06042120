@@ -26,10 +26,9 @@ import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
+import com.lwc.shanxiu.utils.MsgReadUtil;
+import com.lwc.shanxiu.utils.PopupWindowUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -167,7 +166,7 @@ public class LeaseOrderDetailActivity extends BaseActivity {
         tv_msg.setBackgroundResource(R.drawable.btn_fill_white);
         tv_msg.setTextColor(getResources().getColor(R.color.red_money));
         //获取未读租赁消息
-       // MsgReadUtil.hasMessage(LeaseOrderDetailActivity.this,tv_msg);
+        MsgReadUtil.hasMessage(LeaseOrderDetailActivity.this,tv_msg);
     }
 
     @Override
@@ -180,8 +179,8 @@ public class LeaseOrderDetailActivity extends BaseActivity {
                 .statusBarColor(R.color.red_money)
                 .statusBarDarkFont(false).init();
 
-        reasons.add("我不想租了");
-        reasons.add("信息填写错误，我不想拍了");
+        reasons.add("多拍/拍错/不想要");
+        reasons.add("未按约定时间发货");
         reasons.add("平台缺货");
         reasons.add("其他原因");
 
@@ -197,7 +196,7 @@ public class LeaseOrderDetailActivity extends BaseActivity {
         imgRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // PopupWindowUtil.showHeaderPopupWindow(LeaseOrderDetailActivity.this,imgRight,leaseShoppingCartFragment,fragment_container,fragmentManager);
+                PopupWindowUtil.showHeaderPopupWindow(LeaseOrderDetailActivity.this,imgRight,leaseShoppingCartFragment,fragment_container,fragmentManager);
             }
         });
 
@@ -304,9 +303,9 @@ public class LeaseOrderDetailActivity extends BaseActivity {
                     ImageLoaderUtil.getInstance().displayFromNetDCircular(LeaseOrderDetailActivity.this,orderDetailBean.getGoodsImg(),iv_header,R.drawable.image_default_picture);
 
                     String goodsName = orderDetailBean.getGoodsName();
-                    String goodsNameStr = "租赁  " + goodsName;
-                    SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-                    tv_title.setText(showGoodsName);
+                   // String goodsNameStr = "租赁  " + goodsName;
+                    //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+                    tv_title.setText(goodsName);
 
                     tv_spece.setText(orderDetailBean.getLeaseSpecs());
 
@@ -363,18 +362,18 @@ public class LeaseOrderDetailActivity extends BaseActivity {
                         case "2": //待收货(已发货)
                             tv_btn01.setVisibility(View.VISIBLE);
                             tv_btn01.setText("确认收货");
-                            tv_btn02.setVisibility(View.VISIBLE);
-                            tv_btn02.setText("查看物流");
+                            tv_btn02.setVisibility(View.GONE);
+                            tv_btn02.setText("");
                             tv_btn03.setVisibility(View.VISIBLE);
-                            tv_btn02.setText("退货");
+                            tv_btn03.setText("退货");
                             tv_btn04.setVisibility(View.GONE);
                             tv_btn05.setVisibility(View.GONE);
                             break;
                         case "3": //已收货
                             tv_btn01.setVisibility(View.GONE);
                             tv_btn01.setText("删除订单");
-                            tv_btn02.setVisibility(View.VISIBLE);
-                            tv_btn02.setText("查看物流");
+                            tv_btn02.setVisibility(View.GONE);
+                            tv_btn02.setText("");
                             tv_btn03.setVisibility(View.VISIBLE);
                             tv_btn03.setText("退货");
                             tv_btn04.setVisibility(View.GONE);

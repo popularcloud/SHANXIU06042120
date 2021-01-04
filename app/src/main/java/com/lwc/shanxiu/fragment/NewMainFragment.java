@@ -1,6 +1,5 @@
 package com.lwc.shanxiu.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,27 +9,33 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.maps.AMapUtils;
+import com.amap.api.maps.model.LatLng;
 import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
 import com.lwc.shanxiu.R;
 import com.lwc.shanxiu.activity.InformationDetailsActivity;
 import com.lwc.shanxiu.activity.KnowledgeBaseActivity;
 import com.lwc.shanxiu.activity.MainActivity;
-import com.lwc.shanxiu.activity.NewMainActivity;
 import com.lwc.shanxiu.activity.QuestionBaseActivity;
 import com.lwc.shanxiu.bean.Common;
 import com.lwc.shanxiu.controler.http.RequestValue;
+import com.lwc.shanxiu.map.Utils;
 import com.lwc.shanxiu.module.bean.ADInfo;
+import com.lwc.shanxiu.module.bean.Order;
 import com.lwc.shanxiu.module.lease_parts.activity.LeaseGoodsDetailActivity;
 import com.lwc.shanxiu.module.lease_parts.activity.LeaseHomeActivity;
-import com.lwc.shanxiu.module.lease_parts.bean.IndexAdBean;
 import com.lwc.shanxiu.module.message.adapter.KnowledgeBaseAdapter;
 import com.lwc.shanxiu.module.message.bean.KnowledgeBaseBean;
 import com.lwc.shanxiu.module.message.ui.KnowledgeDetailWebActivity;
 import com.lwc.shanxiu.module.question.bean.QuestionIndexBean;
 import com.lwc.shanxiu.module.question.ui.activity.QuestionDetailActivity;
 import com.lwc.shanxiu.module.question.ui.adapter.RequestQuestionAdapter;
+import com.lwc.shanxiu.module.zxing.ui.CaptureActivity;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.ImageLoaderUtil;
@@ -38,8 +43,10 @@ import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.LLog;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
+import com.lwc.shanxiu.utils.SystemUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.view.ImageCycleView;
+import com.lwc.shanxiu.widget.CircleImageView;
 
 import org.byteam.superadapter.OnItemClickListener;
 
@@ -51,6 +58,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
 
 public class NewMainFragment extends BaseFragment {
 
@@ -60,6 +68,26 @@ public class NewMainFragment extends BaseFragment {
     RecyclerView rv_hot_anwser;
     @BindView(R.id.rv_hot_article)
     RecyclerView rv_hot_article;
+    @BindView(R.id.mBGARefreshLayout)
+    BGARefreshLayout mBGARefreshLayout;
+    @BindView(R.id.imgRight)
+    ImageView imgRight;
+    @BindView(R.id.img_icon)
+    CircleImageView imgIcon;
+    @BindView(R.id.txtOrderStatus)
+    TextView txtOrderStatus;
+    @BindView(R.id.txtDistance)
+    TextView txtDistance;
+    @BindView(R.id.txtMaintainName)
+    TextView txtMaintainName;
+
+    @BindView(R.id.ll_get_order_mention)
+    RelativeLayout llGetOrderMention;
+
+    //最新订单
+    private Order newestOrder = null;
+
+    public AMapLocation currentBestLocation;
 
     //List<KnowledgeBaseBean> articleList = new ArrayList<>();
     private KnowledgeBaseAdapter knowledgeAdapter;
@@ -70,7 +98,7 @@ public class NewMainFragment extends BaseFragment {
     /**
      * 轮播图数据
      */
-    private ArrayList<ADInfo> infos;
+    private ArrayList<ADInfo> infos = new ArrayList<>();
 
     @Override
     public void init() {
@@ -87,6 +115,8 @@ public class NewMainFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        //获取最新订单
+        getNewestOrder();
     }
 
     @Override
@@ -96,6 +126,9 @@ public class NewMainFragment extends BaseFragment {
             ImmersionBar.with(getActivity())
                     .statusBarColor(R.color.white)
                     .statusBarDarkFont(true).init();
+
+            //获取最新订单
+            getNewestOrder();
         }
     }
 
@@ -105,6 +138,16 @@ public class NewMainFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
+        BGARefreshLayoutUtils.initRefreshLayout(getContext(), mBGARefreshLayout,false);
+
+        imgRight.setVisibility(View.VISIBLE);
+        imgRight.setImageResource(R.drawable.sweep_code);
+        imgRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentUtil.gotoActivityForResult(getActivity(), CaptureActivity.class, 8869);
+            }
+        });
         return rootView;
     }
 
@@ -163,7 +206,21 @@ public class NewMainFragment extends BaseFragment {
             }
         });
 
-        getWheelPic();
+
+        mBGARefreshLayout.setDelegate(new BGARefreshLayout.BGARefreshLayoutDelegate() {
+            @Override
+            public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+                getBannerData();
+                mBGARefreshLayout.endRefreshing();
+            }
+
+            @Override
+            public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+                return false;
+            }
+        });
+
+        getBannerData();
 
     }
 
@@ -171,7 +228,7 @@ public class NewMainFragment extends BaseFragment {
     /*
      *  获取轮播图
      */
-    public void getWheelPic() {
+    /*public void getWheelPic() {
         Map<String,String> params = new HashMap<>();
         params.put("image_type","1");//租赁商城页
         HttpRequestUtils.httpRequest(getActivity(), "获取首页租赁轮播图", RequestValue.GET_PARTSMANAGE_GETPARTSMAGES, params, "GET", new HttpRequestUtils.ResponseListener() {
@@ -211,6 +268,45 @@ public class NewMainFragment extends BaseFragment {
                 LLog.eNetError(e.toString());
             }
         });
+    }*/
+
+
+    /**
+     * 获取配件库首页轮播
+     */
+    public void getBannerData(){
+        HttpRequestUtils.httpRequest(getActivity(), "getBannerData", RequestValue.GET_ADVERTISING+"?local=1&role=2",null, "GET", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        ArrayList<ADInfo> adInfoArrayList = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<ADInfo>>() {});
+                        infos.clear();
+                        infos.addAll(adInfoArrayList);
+                        if ( infos != null && infos.size() > 0) {
+                            mAdView.setImageResources(infos, mAdCycleViewListener);
+                            if(infos.size() > 1){
+                                mAdView.startImageCycle();
+                            }else{
+                                mAdView.pushImageCycle();
+                            }
+                        }
+                        break;
+                    default:
+                        ToastUtil.showToast(getActivity(),common.getInfo());
+                        break;
+                }
+
+                getQuestion();
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                ToastUtil.showToast(getActivity(),msg);
+                getQuestion();
+            }
+        });
     }
 
     private void getQuestion(){
@@ -242,6 +338,7 @@ public class NewMainFragment extends BaseFragment {
             @Override
             public void returnException(Exception e, String msg) {
                 ToastUtil.showToast(getActivity(),msg);
+                getKnowledge();
             }
         });
     }
@@ -286,6 +383,63 @@ public class NewMainFragment extends BaseFragment {
         mAdView.startImageCycle();
     }
 
+
+    /**
+     * 获取最新订单
+     * 有显示地图视图相关的操作
+     */
+    public void getNewestOrder() {
+        if (SystemUtil.isBackground(getContext()) || SystemUtil.isFastClick(10000)) {
+            return;
+        }
+        //当uid存在
+        HttpRequestUtils.httpRequest(getActivity(), "getNewestOrder", RequestValue.ORDER_VIEW, null, "GET", new HttpRequestUtils.ResponseListener() {
+            @Override
+            public void getResponseData(String response) {
+                Common common = JsonUtil.parserGsonToObject(response, Common.class);
+                switch (common.getStatus()) {
+                    case "1":
+                        String date = JsonUtil.getGsonValueByKey(response, "data");
+                        if (date == null || date.length() < 5) {
+//                            aMap.clear();
+//                            drawNavigationIcon();
+                            llGetOrderMention.setVisibility(View.GONE);
+                            break;
+                        }
+                        ArrayList<Order> newestOrders = JsonUtil.parserGsonToArray(JsonUtil.getGsonValueByKey(response, "data"), new TypeToken<ArrayList<Order>>() {
+                        });
+                        if (newestOrders != null && newestOrders.size() > 0) {
+                            llGetOrderMention.setVisibility(View.VISIBLE);
+                            newestOrder = newestOrders.get(0);
+                            if (newestOrder != null) {
+                                llGetOrderMention.setVisibility(View.VISIBLE);
+                                setJuli();
+                                String picture = newestOrder.getUserHeadImage();
+                                if (!TextUtils.isEmpty(picture)) {
+                                    ImageLoaderUtil.getInstance().displayFromNet(getContext(), newestOrder.getUserHeadImage(), imgIcon,R.drawable.ic_default_user);
+                                } else {
+                                    ImageLoaderUtil.getInstance().displayFromLocal(getContext(), imgIcon, R.drawable.ic_default_user);
+                                }
+                                txtOrderStatus.setText(newestOrder.getStatusName());
+                                txtMaintainName.setText(newestOrder.getOrderContactName());
+                            } else {
+                                llGetOrderMention.setVisibility(View.GONE);
+                            }
+                        }
+                        break;
+                    case "0":
+                        LLog.iNetSucceed("   getNewestOrder 9999   " + common.getInfo());
+                        break;
+                }
+            }
+
+            @Override
+            public void returnException(Exception e, String msg) {
+                LLog.eNetError(e.toString());
+            }
+        });
+    }
+
     /**
      * 轮播图点击事件
      */
@@ -313,6 +467,16 @@ public class NewMainFragment extends BaseFragment {
             ImageLoaderUtil.getInstance().displayFromNetDCircular(getActivity(), imageURL, imageView,R.drawable.image_default_picture);// 使用ImageLoader对图片进行加装！
         }
     };
+
+    private void setJuli() {
+        if (newestOrder == null || currentBestLocation == null) {
+            return;
+        }
+        LatLng latLng2 = new LatLng(Double.parseDouble(newestOrder.getOrderLatitude()), Double.parseDouble(newestOrder.getOrderLongitude()));
+        float calculateLineDistance = AMapUtils.calculateLineDistance(
+                new LatLng(currentBestLocation.getLatitude(), currentBestLocation.getLongitude()), latLng2);
+        txtDistance.setText("距离您  " + (calculateLineDistance > 1000 ? Utils.chu(calculateLineDistance+"", 1000+"") + "km" : (int)calculateLineDistance + " m"));
+    }
 
 
     @OnClick({R.id.iv_beijian,R.id.iv_knowledge,R.id.iv_customer,R.id.iv_question,R.id.tv_hot_article,R.id.tv_electric})

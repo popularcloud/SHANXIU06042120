@@ -18,8 +18,10 @@ import com.lwc.shanxiu.module.BaseFragment;
 import com.lwc.shanxiu.module.authentication.activity.SeeVideoActivity;
 import com.lwc.shanxiu.module.authentication.adapter.TrainAdapter;
 import com.lwc.shanxiu.module.authentication.bean.TrainBean;
+import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.utils.BGARefreshLayoutUtils;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
+import com.lwc.shanxiu.utils.ImageLoaderUtil;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
@@ -50,6 +52,8 @@ public class TrainFragment extends BaseFragment {
     TextView tv_submit;
     //加载的page页
     private int page = 1;
+    private User user = null;
+    private ImageLoaderUtil imageLoaderUtil = null;
 
     private SharedPreferencesUtils preferencesUtils = null;
 
@@ -59,6 +63,9 @@ public class TrainFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_train, null);
         ButterKnife.bind(this, view);
         BGARefreshLayoutUtils.initRefreshLayout(getContext(), mBGARefreshLayout,false);
+
+        preferencesUtils = SharedPreferencesUtils.getInstance(getContext());
+        user = preferencesUtils.loadObjectData(User.class);
         return view;
     }
 
@@ -76,12 +83,13 @@ public class TrainFragment extends BaseFragment {
                 .statusBarDarkFont(true).init();
 
         tv_submit.setVisibility(View.GONE);
+
     }
 
 
     private void bindRecycleView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TrainAdapter(getContext(), null, R.layout.item_train);
+        adapter = new TrainAdapter(getContext(), null, R.layout.item_train,null);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -92,14 +100,18 @@ public class TrainFragment extends BaseFragment {
             }
         });
         recyclerView.setAdapter(adapter);
-
-        mBGARefreshLayout.beginRefreshing();
     }
 
 
     @Override
     protected void lazyLoad() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBGARefreshLayout.beginRefreshing();
     }
 
     @Override

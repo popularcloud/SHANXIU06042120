@@ -81,8 +81,7 @@ public class WalletActivity extends Activity {
 		init();
 		ImmersionBar.with(this)
 				.statusBarColor(R.color.btn_blue_nomal)
-				.statusBarDarkFont(true)
-				.navigationBarColor(R.color.white).init();
+				.statusBarDarkFont(true).init();
 	}
 
 	public void onBack(View view) {

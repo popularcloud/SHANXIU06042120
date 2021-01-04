@@ -17,6 +17,8 @@ public class Location implements Serializable {
 	private double longitude;
 	private double latitude;
 	private String strValue;
+	private String cityName;
+	private String cityCode;
 
 	public String getStrValue() {
 		return strValue;
@@ -40,5 +42,21 @@ public class Location implements Serializable {
 
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
 	}
 }

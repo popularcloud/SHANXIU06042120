@@ -28,6 +28,7 @@ public class TrainBean implements Serializable {
     private String userId;
     private String url;
     private String isPass;
+    private String date;
 
     public String getImage() {
         return image;
@@ -115,5 +116,13 @@ public class TrainBean implements Serializable {
 
     public void setIsPass(String isPass) {
         this.isPass = isPass;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

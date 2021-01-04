@@ -3,16 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/f0_gray_line">
+    <RelativeLayout
+        android:id="@+id/rl_video"
+        android:layout_width="match_parent"
+        android:layout_height="230dp">
     <com.dueeeke.videoplayer.player.VideoView
         android:id="@+id/vv_video"
         android:layout_width="match_parent"
+        android:visibility="visible"
         android:layout_height="230dp" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/dp_10"
+        android:padding="15dp">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:onClick="onBack"
+            android:src="@drawable/ic_black_bg_back" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1px"
+            android:layout_weight="1"
+            android:background="@color/transparent" />
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_current"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:layout_below="@+id/vv_video"
+        android:layout_below="@+id/rl_video"
         android:paddingTop="11dp"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
@@ -77,6 +107,7 @@
         android:id="@+id/mBGARefreshLayout"
         android:layout_below="@id/ll_current"
         android:layout_width="match_parent"
+        android:layout_marginBottom="@dimen/dp_5"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"

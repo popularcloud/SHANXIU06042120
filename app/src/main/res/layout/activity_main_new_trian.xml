@@ -37,19 +37,19 @@
 					android:id="@+id/radio_main"
 					style="@style/main_menu_radiobutton_style"
 					android:checked="true"
-					android:drawableTop="@drawable/tab_map_selector"
+					android:drawableTop="@drawable/tab_new_main_selector"
 					android:text="首页" />
 
 				<RadioButton
 					android:id="@+id/radio_order"
 					style="@style/main_menu_radiobutton_style"
-					android:drawableTop="@drawable/tab_order_selector"
+					android:drawableTop="@drawable/tab_new_order_selector"
 					android:text="附近订单" />
 				<RadioButton
 					android:id="@+id/radio_information"
 					style="@style/main_menu_radiobutton_style"
-					android:drawableTop="@drawable/tab_question_selector"
-					android:text="资讯" />
+					android:drawableTop="@drawable/tab_new_msg_selector"
+					android:text="消息" />
 
 				<RadioButton
 					android:id="@+id/radio_mine"

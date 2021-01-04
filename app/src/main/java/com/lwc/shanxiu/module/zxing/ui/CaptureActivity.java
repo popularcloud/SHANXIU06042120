@@ -116,6 +116,8 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 //    private User user;
     private int type;
     private String qrcodeIndex;
+    private String device_type_id;
+    private String submitType;
 
     public Handler getHandler() {
         return handler;
@@ -437,33 +439,53 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
     }
 
     private void bindCompany(String uid) {
-        String uidStr = "";
-        if (TextUtils.isEmpty(uid) || !uid.contains("bindOrderIndex=")) {
+
+        if (TextUtils.isEmpty(uid)) {
+            ToastUtil.showLongToast(this, "无法识别的二维码");
+            finish();
+            return;
+        }
+
+        if (!uid.contains("bindOrderIndex=")) {
             if (type != 1 && !TextUtils.isEmpty(uid) && uid.startsWith("http")) {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", uid);
                 bundle.putString("title", "扫描结果");
                 IntentUtil.gotoActivityAndFinish(this, InformationDetailsActivity.class, bundle);
-            } else {
-                ToastUtil.showLongToast(this, "无法识别的二维码");
-                finish();
             }
             return;
-        } else {
-            uidStr = uid.substring(uid.indexOf("bindOrderIndex=") + 15, uid.length());
         }
-        if (TextUtils.isEmpty(uidStr)) {
-            ToastUtil.showLongToast(this, "无法识别的二维码");
-            finish();
-            return;
-        }
-        scanCode(uidStr);
+
+        scanCode(uid);
     }
 
-    private void scanCode(final String uidStr) {
-        qrcodeIndex = uidStr;
+    private void scanCode(final String uid) {
+
+        //截取二维码字串的参数
+        int questionIndex = uid.indexOf("?");
+        String noQuestionStr = uid.substring(questionIndex, uid.length());
+
+        //分割各个参数
+        String[]  mapKey = noQuestionStr.split("&");
+
+        for(int i = 0;i < mapKey.length; i++){
+            String presentKey = mapKey[i];
+
+            if(presentKey.contains("bindOrderIndex=")){
+                qrcodeIndex = presentKey.split("=")[1];
+            }
+
+            if(presentKey.contains("type=")){
+                submitType = presentKey.split("=")[1];
+            }
+
+            if(presentKey.contains("device_type_id=")){
+                device_type_id = presentKey.split("=")[1];
+            }
+        }
+
         Map<String, String> map = new HashMap<>();
-        map.put("qrcodeIndex", uidStr);
+        map.put("qrcodeIndex", qrcodeIndex);
         HttpRequestUtils.httpRequest(this, "scanCode", RequestValue.SCAN_CODE, map, "GET", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
@@ -472,7 +494,9 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                     case "1":
                         if (!response.contains("data")) {
                             Bundle bundle = new Bundle();
-                            bundle.putString("qrcodeIndex", uidStr);
+                            bundle.putString("qrcodeIndex", qrcodeIndex);
+                            bundle.putString("device_type_id", device_type_id);
+                            bundle.putString("submitType", submitType);
                             if (type == 1) {
                                 IntentUtil.gotoActivityForResult(CaptureActivity.this, BindDeviceActivity.class, bundle, 1520);
                             } else {
@@ -481,14 +505,14 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
                         } else {
                             if (type == 1) {
                                 Intent data = new Intent();
-                                data.putExtra("qrcodeIndex", uidStr);
+                                data.putExtra("qrcodeIndex", qrcodeIndex);
                                 setResult(RESULT_OK, data);
                                 finish();
                             } else {
                                 ACache aCache = ACache.get(CaptureActivity.this);
-                                aCache.put("qrcodeIndex" + uidStr, response, 100);
+                                aCache.put("qrcodeIndex" + qrcodeIndex, response, 100);
                                 Bundle bundle = new Bundle();
-                                bundle.putString("qrcodeIndex", uidStr);
+                                bundle.putString("qrcodeIndex", qrcodeIndex);
                                 IntentUtil.gotoActivityAndFinish(CaptureActivity.this, RepairHistoryNewActivity.class, bundle);
                             }
                         }

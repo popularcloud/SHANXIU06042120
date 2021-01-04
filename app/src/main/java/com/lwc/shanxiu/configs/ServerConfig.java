@@ -15,12 +15,13 @@ public class ServerConfig {
    */
   public static final String RESPONSE_STATUS_SUCCESS = "1";
  //测试服务器
- public final static String DOMAIN = "https://47.97.217.243";
+ ///public final static String DOMAIN = "http://47.97.217.243";
  //本地服务器
-  //public final static String DOMAIN = "http://192.168.0.116";
+ //public final static String DOMAIN = "http://192.168.3.19";
+  //public final static String DOMAIN = "http://192.168.10.17";
  // public final static String DOMAIN = "http://192.168.3.7";
  //正式服务器
-  //public final static String DOMAIN = "https://www.ls-mx.com";
+  public final static String DOMAIN = "https://www.ls-mx.com";
 
   public final static String SERVER_API_URL = DOMAIN+"/api";
   //  测试服务器
@@ -47,6 +48,7 @@ public class ServerConfig {
   public static final int REQUEST_CODE_SELECT_IMAGE = 29;
   public static Object VERSION_CODE;
   public static String VERSION_NAME;
+
   /**
    * 拍照获取图片请求码
    */

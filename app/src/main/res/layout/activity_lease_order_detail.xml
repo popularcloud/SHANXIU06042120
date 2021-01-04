@@ -132,6 +132,7 @@
                             android:paddingLeft="@dimen/dp_3"
                             android:layout_marginTop="@dimen/dp_3"
                             android:paddingRight="@dimen/dp_2"
+                            android:visibility="gone"
                             android:text="租赁"
                             android:textColor="@color/white"
                             android:textSize="10sp" />

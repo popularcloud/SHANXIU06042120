@@ -34,6 +34,7 @@
                     android:background="@drawable/btn_red_fill_3a_3px"
                     android:paddingLeft="@dimen/dp_3"
                     android:layout_marginTop="@dimen/dp_3"
+                    android:visibility="gone"
                     android:paddingRight="@dimen/dp_2"
                     android:text="租赁"
                     android:textColor="@color/white"
@@ -187,6 +188,7 @@ android:orientation="horizontal">
     android:layout_height="wrap_content"
     android:maxLines="5"
     android:hint="建议留言时先与客服沟通确认"
+    android:layout_marginBottom="@dimen/dp_3"
     android:background="@color/white"
     />
 </LinearLayout>

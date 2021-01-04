@@ -83,8 +83,7 @@ public class OrderDetailActivity extends BaseFragmentActivity {
 
         ImmersionBar.with(this)
                 .statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .navigationBarColor(R.color.white).init();
+                .statusBarDarkFont(true).init();
     }
 
     private void initData(){
@@ -347,9 +346,9 @@ public class OrderDetailActivity extends BaseFragmentActivity {
 
     @Override
     public void finish() {
-        if (MainActivity.activity == null) {
+    /*    if (MainActivity.activity == null) {
             IntentUtil.gotoActivityAndFinish(this, MainActivity.class);
-        }
+        }*/
         super.finish();
     }
 }

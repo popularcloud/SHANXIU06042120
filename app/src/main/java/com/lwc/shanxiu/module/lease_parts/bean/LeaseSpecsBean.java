@@ -22,6 +22,7 @@ public class LeaseSpecsBean implements Serializable {
     private int isValid;
     private String id;
     private String goodsName;
+    private int num;
 
     public String getLeaseSpecsTypeId() {
         return leaseSpecsTypeId;
@@ -85,5 +86,13 @@ public class LeaseSpecsBean implements Serializable {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

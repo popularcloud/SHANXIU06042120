@@ -50,6 +50,7 @@ public class LeaseGoodListAdapter extends SuperAdapter<LeaseGoodBean>{
         TagsLayout tl_tags = holder.findViewById(R.id.tl_tags);
         ImageView iv_display = holder.findViewById(R.id.iv_display);
         final CheckBox cb_isAdd = holder.findViewById(R.id.cb_isAdd);
+        TextView tv_stock = holder.findViewById(R.id.tv_stock);
 
         if(isManager){
            cb_isAdd.setVisibility(View.VISIBLE);
@@ -71,9 +72,11 @@ public class LeaseGoodListAdapter extends SuperAdapter<LeaseGoodBean>{
         }
 
         String goodsName = item.getGoodsName();
-        String goodsNameStr = "租赁  " + goodsName;
-        SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-        tv_title.setText(showGoodsName);
+      //  String goodsNameStr = "租赁  " + goodsName;
+        //SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, mContext.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+        tv_title.setText(goodsName);
+
+        tv_stock.setText("库存"+String.valueOf(item.getNum())+"件");
 
         tv_specs.setText(item.getLeaseSpecs());
         String goodsPrice = Utils.chu(item.getGoodsPrice(), "100");

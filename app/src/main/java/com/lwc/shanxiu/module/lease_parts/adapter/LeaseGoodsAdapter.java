@@ -62,20 +62,23 @@ public class LeaseGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 		TextView tv_name = holder.itemView.findViewById(R.id.tv_name);
 		TextView tv_spc = holder.itemView.findViewById(R.id.tv_spc);
 		TextView tv_price = holder.itemView.findViewById(R.id.tv_price);
+		TextView tv_stock = holder.itemView.findViewById(R.id.tv_stock);
 
 
 		ImageLoaderUtil.getInstance().displayFromNetDCircular(context,leaseGoodBean.getGoodsImg(),iv_img,R.drawable.image_default_picture);
 
 		String goodsName = leaseGoodBean.getGoodsName();
-		String goodsNameStr = "租赁  " + goodsName;
-		SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, context.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
-		tv_name.setText(showGoodsName);
+	///	String goodsNameStr = "租赁  " + goodsName;
+		///SpannableStringBuilder showGoodsName = Utils.getSpannableStringBuilder(0, 2, context.getResources().getColor(R.color.transparent), goodsNameStr, 10, true);
+		tv_name.setText(goodsName);
 
 		tv_spc.setText(leaseGoodBean.getLeaseSpecs());
 
+		tv_stock.setText("库存"+String.valueOf(leaseGoodBean.getNum())+"件");
+
 
 		String goodPrice = Utils.chu(leaseGoodBean.getGoodsPrice(),"100");
-		String goodPriceStr = "￥"+goodPrice+"起";
+		String goodPriceStr = "￥"+goodPrice;
 		SpannableStringBuilder showPrices = Utils.getSpannableStringBuilder(1, goodPrice.length()+1,context.getResources().getColor(R.color.red_money), goodPriceStr, 18,true);
 		tv_price.setText(showPrices);
 

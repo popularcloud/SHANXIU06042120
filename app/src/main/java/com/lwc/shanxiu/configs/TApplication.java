@@ -79,7 +79,7 @@ public class TApplication extends MultiDexApplication {//MultiDexApplication
 		// 新浪微博 appkey appsecret
 		// PlatformConfig.setSinaWeibo("3921700954","04b48b094faeb16683c32669824ebdad");
 		//QQ空间
-		PlatformConfig.setQQZone("1106294740", "9moOfi0GY2prjqkY");
+		PlatformConfig.setQQZone("1106524418", "gMmVmcewhHBaUPCg");
 //		PlatformConfig.setQQZone("1106524418", "gMmVmcewhHBaUPCg");
 //		Config.DEBUG = true;
 //		UMConfigure.init(this,"58c8823b677baa0d81001491"

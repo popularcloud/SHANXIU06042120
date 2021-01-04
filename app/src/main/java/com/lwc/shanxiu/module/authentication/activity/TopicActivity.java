@@ -19,6 +19,7 @@ import com.lwc.shanxiu.utils.DialogUtil;
 import com.lwc.shanxiu.utils.HttpRequestUtils;
 import com.lwc.shanxiu.utils.IntentUtil;
 import com.lwc.shanxiu.utils.JsonUtil;
+import com.lwc.shanxiu.utils.ProgressDialogUtil;
 import com.lwc.shanxiu.utils.ToastUtil;
 import com.lwc.shanxiu.widget.CommonDialog;
 import com.lwc.shanxiu.widget.CustomDialog;
@@ -50,6 +51,7 @@ public class TopicActivity extends BaseActivity {
     private AnswerTopicrDialog answerTopicrDialog;
     private MyPagerAdapter myPagerAdapter;
     private String parentId;
+
 
     private List<SubmitTopicBean> submitTopicBeans = new ArrayList<>(100);
 
@@ -163,9 +165,12 @@ public class TopicActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        ProgressDialogUtil.showDialog(this,"分数计算中,请稍后");
+
         HttpRequestUtils.httpRequestJson(this, "提交试卷", RequestValue.EXAMMANAGE_SAVEEXAMPAPER,map, "POST", new HttpRequestUtils.ResponseListener() {
             @Override
             public void getResponseData(String response) {
+                ProgressDialogUtil.dismissDialog();
                 Common common = JsonUtil.parserGsonToObject(response, Common.class);
                 switch (common.getStatus()) {
                     case "1":
@@ -182,6 +187,7 @@ public class TopicActivity extends BaseActivity {
 
             @Override
             public void returnException(Exception e, String msg) {
+                ProgressDialogUtil.dismissDialog();
                 ToastUtil.showToast(TopicActivity.this, msg);
             }
         });

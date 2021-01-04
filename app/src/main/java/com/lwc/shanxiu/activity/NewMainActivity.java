@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,7 +20,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.gyf.immersionbar.ImmersionBar;
@@ -34,7 +31,6 @@ import com.lwc.shanxiu.configs.ServerConfig;
 import com.lwc.shanxiu.controler.http.RequestValue;
 import com.lwc.shanxiu.fragment.InformationFragment;
 import com.lwc.shanxiu.fragment.KnowledgeBaseFragment;
-import com.lwc.shanxiu.fragment.MapFragment;
 import com.lwc.shanxiu.fragment.MineFragment;
 import com.lwc.shanxiu.fragment.MyRequestQuestionFragment;
 import com.lwc.shanxiu.fragment.NearOrderFragment;
@@ -45,7 +41,7 @@ import com.lwc.shanxiu.module.bean.LeaseDevicesHistoryBean;
 import com.lwc.shanxiu.module.bean.User;
 import com.lwc.shanxiu.module.common_adapter.FragmentsPagerAdapter;
 import com.lwc.shanxiu.module.message.bean.HasMsg;
-import com.lwc.shanxiu.module.message.ui.MyMsgActivity;
+import com.lwc.shanxiu.module.message.ui.MyMsgFragment;
 import com.lwc.shanxiu.module.order.ui.activity.LeaseDevicesActivity;
 import com.lwc.shanxiu.module.order.ui.activity.LeaseDevicesHistoryActivity;
 import com.lwc.shanxiu.module.user.LoginOrRegistActivity;
@@ -295,7 +291,7 @@ public class NewMainActivity extends BaseFragmentActivity {
         mineFragment = new MineFragment();
         fragmentHashMap.put(0, newMainFragment);
         fragmentHashMap.put(1, nearOrderFragment);
-        fragmentHashMap.put(2,new KnowledgeBaseFragment());
+        fragmentHashMap.put(2,new MyMsgFragment());
         fragmentHashMap.put(3, mineFragment);
     }
 
@@ -514,15 +510,19 @@ public class NewMainActivity extends BaseFragmentActivity {
         switch (view.getId()) {
             case R.id.radio_main:
                 cViewPager.setCurrentItem(0, false);
+                nearOrderFragment.goneTj();
                 break;
             case R.id.radio_order:
                 cViewPager.setCurrentItem(1, false);
+                nearOrderFragment.goneTj();
                 break;
             case R.id.radio_information:
                 cViewPager.setCurrentItem(2, false);
+                nearOrderFragment.goneTj();
                 break;
             case R.id.radio_mine:
                 cViewPager.setCurrentItem(3, false);
+                nearOrderFragment.goneTj();
                 break;
         }
     }

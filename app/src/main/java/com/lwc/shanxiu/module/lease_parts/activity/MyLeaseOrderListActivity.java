@@ -19,6 +19,7 @@ import com.lwc.shanxiu.module.lease_parts.fragment.LeaseOrderFragment;
 import com.lwc.shanxiu.module.message.bean.MyMsg;
 import com.lwc.shanxiu.module.message.ui.MsgListActivity;
 import com.lwc.shanxiu.utils.IntentUtil;
+import com.lwc.shanxiu.utils.MsgReadUtil;
 import com.lwc.shanxiu.utils.SharedPreferencesUtils;
 import com.lwc.shanxiu.widget.CustomViewPager;
 
@@ -61,7 +62,7 @@ public class MyLeaseOrderListActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				MyMsg msg = new MyMsg();
-				msg.setMessageType("5");
+				msg.setMessageType("6");
 				msg.setMessageTitle("租赁消息");
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("myMsg", msg);
@@ -113,7 +114,7 @@ public class MyLeaseOrderListActivity extends BaseFragmentActivity {
 	protected void onResume() {
 		super.onResume();
 		//获取未读租赁消息
-		//MsgReadUtil.hasMessage(MyLeaseOrderListActivity.this,tv_msg);
+		MsgReadUtil.hasMessage(MyLeaseOrderListActivity.this,tv_msg);
 	}
 
 	/**

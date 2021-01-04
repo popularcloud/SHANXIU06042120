@@ -516,8 +516,7 @@
         <!-- 认证首页 -->
         <activity android:name=".module.authentication.activity.AuthenticationMainActivity" android:launchMode="singleTask"/>
         <!-- 播放培训视频 -->
-        <activity android:name=".module.authentication.activity.SeeVideoActivity"  android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".module.authentication.activity.SeeVideoActivity"  android:configChanges="orientation|keyboard|layoutDirection|screenSize"/>
         <!-- 题目 -->
         <activity android:name=".module.authentication.activity.TopicActivity" android:launchMode="singleTask"/>
 
@@ -550,7 +549,10 @@
         <!-- 确认订单 -->
         <activity android:name=".module.lease_parts.activity.PaySuccessActivity" />
         <!-- 确认订单 -->
-        <activity android:name=".module.lease_parts.activity.ShareType2Activity" />
+        <activity android:name=".module.lease_parts.activity.ShareType2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity android:name=".module.addressmanager.AddressManagerActivity" />
         <activity android:name=".module.addressmanager.AddAddressActivity" />
         <activity android:name=".module.addressmanager.SelectAddressByMapActivity" />
@@ -560,6 +562,21 @@
         <activity android:name=".module.lease_parts.activity.LeaseSearchActivity" />
         <activity android:name=".activity.KnowledgeBaseActivity" />
         <activity android:name=".activity.QuestionBaseActivity" />
+
+        <!-- 工作台 -->
+        <activity android:name=".module.sign_in.activity.CheckWorkMainActivity" />
+        <!-- 考勤打卡 -->
+        <activity android:name=".module.sign_in.activity.CheckWorkClockInActivity" />
+        <!-- 考勤日历 -->
+        <activity android:name=".module.sign_in.activity.CheckWorkHistoryActivity" android:launchMode="singleTop"/>
+        <!-- 签到记录 -->
+        <activity android:name=".module.sign_in.activity.SignInHistoryActivity" android:launchMode="singleTop"/>
+        <!-- 签到记录 -->
+        <activity android:name=".module.sign_in.activity.SignInOutSideActivity" android:windowSoftInputMode="adjustPan|stateHidden"/>
+        <!-- 签到微调地址 -->
+        <activity android:name=".module.sign_in.activity.SignInSelectAddressActivity"/>
+        <!-- 签到选择图片 -->
+        <activity android:name=".module.sign_in.activity.SignInSelectPicActivity"/>
 
     </application>
 

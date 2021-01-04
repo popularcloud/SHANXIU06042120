@@ -53,6 +53,7 @@ public class SelectGoodTypeDialog extends Dialog implements View.OnClickListener
 
 	private ImageView iv_header;
 	private TextView tv_price;
+	private TextView tv_stock;
 
 	public SelectGoodTypeDialog(Context context, CallBack callBack, List<LeaseSpecsBean> specsBeanList, String money, String img) {
 		super(context, R.style.BottomDialogStyle);
@@ -105,6 +106,7 @@ public class SelectGoodTypeDialog extends Dialog implements View.OnClickListener
 		iv_header = findViewById(R.id.iv_header);
 		TextView tv_submit = findViewById(R.id.tv_submit);
 		tv_price = findViewById(R.id.tv_price);
+		tv_stock = findViewById(R.id.tv_stock);
 		ImageView tv_reduce = findViewById(R.id.tv_reduce);
 		ImageView tv_add = findViewById(R.id.tv_add);
 		final EditText et_sum = findViewById(R.id.et_sum);
@@ -122,9 +124,10 @@ public class SelectGoodTypeDialog extends Dialog implements View.OnClickListener
 		ImageLoaderUtil.getInstance().displayFromNetDCircular(context, img, iv_header,R.drawable.image_default_picture);// 使用ImageLoader对图片进行加装！
 
 		String goodsPrice = Utils.chu(money, "100");
-		String goodsPriceStr = "￥" + goodsPrice + "/月";
+		String goodsPriceStr = "￥" + goodsPrice;
 		SpannableStringBuilder showPrices = Utils.getSpannableStringBuilder(1, goodsPrice.length()+1,context.getResources().getColor(R.color.red_money), goodsPriceStr, 24, true);
 		tv_price.setText(showPrices);
+		tv_stock.setText("库存"+selSpecsBean.getNum()+"件");
 
 		ic_close.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -242,6 +245,7 @@ public class SelectGoodTypeDialog extends Dialog implements View.OnClickListener
 						String goodsPriceStr = "￥" + goodsPrice + "/月";
 						SpannableStringBuilder showPrices = Utils.getSpannableStringBuilder(1, goodsPrice.length()+1,context.getResources().getColor(R.color.red_money), goodsPriceStr, 24, true);
 						tv_price.setText(showPrices);
+						tv_stock.setText("库存"+obj.getNum()+"件");
 					}
 				});
 			}

@@ -90,14 +90,6 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 
-			<ImageView
-				android:id="@+id/iv_nodate"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerInParent="true"
-				android:src="@drawable/ic_no_data"
-				android:visibility="gone"/>
-
 			<cn.bingoogolapple.refreshlayout.BGARefreshLayout
 				android:id="@+id/mBGARefreshLayout"
 				android:layout_width="match_parent"
@@ -109,6 +101,13 @@
 					android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 			</cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+			<ImageView
+				android:id="@+id/iv_nodate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:src="@drawable/ic_no_data"
+				android:visibility="gone"/>
 		</RelativeLayout>
 
 		<LinearLayout

@@ -30,6 +30,7 @@
         android:layout_alignParentBottom="true"
         android:paddingRight="15dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:background="@color/white">
         <TextView
             android:layout_width="wrap_content"

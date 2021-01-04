@@ -29,6 +29,17 @@
                 android:textStyle="bold"
                 android:layout_toRightOf="@id/iv_header"
                 android:layout_marginTop="@dimen/dp_30"/>
+            <TextView
+                android:id="@+id/tv_stock"
+                android:layout_toRightOf="@id/iv_header"
+                android:layout_below="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:textSize="@dimen/sp_12"
+                android:layout_marginLeft="@dimen/dp_5"
+                android:textColor="@color/gray_99"
+                android:text=""/>
             <ImageView
                 android:id="@+id/ic_close"
                 android:layout_width="@dimen/dp_18"

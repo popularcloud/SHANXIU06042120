@@ -98,7 +98,8 @@ public class MyRequestActivity extends BaseActivity {
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IntentUtil.gotoActivity(MyRequestActivity.this, MainActivity.class);
+               // IntentUtil.gotoActivity(MyRequestActivity.this, MainActivity.class);
+                finish();
             }
         });
 
